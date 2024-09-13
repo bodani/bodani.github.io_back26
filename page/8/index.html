@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+	<meta name="generator" content="Hugo 0.81.0" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>Let&#39;s go 🐌 🐌 🐌 | Let&#39;s build our own cloud native together  </title>
+    <meta property="og:title" content="Let&#39;s go 🐌 🐌 🐌 | Let&#39;s build our own cloud native together  ">
+    <meta property="og:type" content="website">
+    <meta name="Keywords" content="postgres 、python、pg 、linix 、docker、 kubernetes、 cloud、hadoop、promethues ">
+    <meta name="description" content="python 软件架构等">
+    <meta property="og:url" content="https://bodani.github.io/">
+    <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <link rel="alternate" type="application/rss+xml+xml" href="https://bodani.github.io/index.xml" title="Let's go 🐌 🐌 🐌" />
+    
+    
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+   
+    
+    
+    
+    
+    
+    
+        <link rel="stylesheet" href='/css/douban.css'>
+    
+        <link rel="stylesheet" href='/css/other.css'>
+    
+   
+        <a href=https://github.com/eamonzhang><img style="position: absolute; top: 0; left: 0; border: 0;" src="/images/forkme_left_red_aa0000.png" alt="Fork me on GitHub" data-canonical-src="/images/forkme_left_red_aa0000.png"></a>
+
+   
+        <script>
+          var _hmt = _hmt || [];
+            (function() {
+            var hm = document.createElement("script");
+            <!-- hm.src = "https://hm.baidu.com/hm.js?1f6605a363a50554aa03adcc685b7699"; -->
+            hm.src = "https://hm.baidu.com/hm.js?0010600e9ae6ff8f5814bb7ec6b36072";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+          })();
+       </script>
+</head>
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <h1>
+                        <a id="logo" href="https://bodani.github.io">
+                            Let&#39;s go 🐌 🐌 🐌
+                        </a>
+                    </h1>
+                
+                <p class="description">Let&#39;s build our own cloud native together  </p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://bodani.github.io">首页</a>
+                    
+                    <a  href="https://bodani.github.io/archives" title="归档">归档</a>
+                    
+                    <a  href="https://bodani.github.io/postgresql" title="Postgres">Postgres</a>
+                    
+                    <a  href="https://bodani.github.io/linux" title="Linux">Linux</a>
+                    
+                    <a  href="https://bodani.github.io/about/me" title="关于">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/linux/bmcpasswd/" title="修改远程管理卡密码">修改远程管理卡密码</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年3月29日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/linux'>linux</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            更改BMC密码 BMC：基板管理控制器 Baseboard Management Controller 更改BMC密码，需要基于Ipmitool工具实现，需要先下载该工具 安装ipmitool ubuntu安装命令： sudo apt-get -y install ipmitool centos安装命令： yum -y install epel-release（先） yum -y install ipmitool（后） 查看登陆账户名列表 ipmitool user list 2（技嘉主……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/linux/bmcpasswd/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/linux/ssdiotimeout/" title="SSD IO request Time Out">SSD IO request Time Out</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年3月29日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/linux'>linux</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            Intel 论坛相似问题讨论 https://community.intel.com/t5/Solid-State-Drives/I-O-request-timeouts-on-Linux-with-Intel-P3520-P4600-NVMe-PCIe/td-p/577474 临时解决 mkfs.xfs -K /dev/nvme01 -K Do not attempt to discard blocks at mkfs time. 带来问题 [Tue Mar 30 12:19:12 2021] [&lt;ffffffffa8188cf9&gt;] schedule_preempt_disabled+0x29/0x70 [Tue Mar 30 12:19:12 2021] [&lt;ffffffffa8186c67&gt;] __mutex_lock_slowpath+0xc7/0x1d0 [Tue Mar 30 12:19:12 2021] [&lt;ffffffffa818603f&gt;] mutex_lock+0x1f/0x2f [Tue Mar 30 12:19:12 2021] [&lt;ffffffffa7d2d596&gt;] ima_file_check+0xa6/0x1b0 [Tue Mar 30 12:19:12 2021] [&lt;ffffffffa7c5dfba&gt;] do_last+0x59a/0x1340 [Tue Mar 30 12:19:12 2021] [&lt;ffffffffa7c28ba6&gt;] ? kmem_cache_alloc_trace+0x1d6/0x200 [Tue Mar 30 12:19:12 2021] [&lt;ffffffffa7c5ee2d&gt;] path_openat+0xcd/0x5a0 [Tue Mar 30 12:19:12 2021] [&lt;ffffffffa7c01158&gt;] ? page_add_new_anon_rmap+0xb8/0x170 [Tue Mar 30 12:19:12 2021] [&lt;ffffffffa7c6107d&gt;] do_filp_open+0x4d/0xb0 [Tue Mar 30 12:19:12 2021] [&lt;ffffffffa7c6f177&gt;] ? __alloc_fd+0x47/0x170 [Tue Mar 30 12:19:12 2021] [&lt;ffffffffa7c4cbc4&gt;] do_sys_open+0x124/0x220 [Tue Mar 30 12:19:12 2021] [&lt;ffffffffa7c4ccde&gt;] SyS_open+0x1e/0x20 [Tue Mar 30 12:19:12 2021] [&lt;ffffffffa8194f92&gt;] system_call_fastpath+0x25/0x2a [Tue Mar 30 12:19:12 2021] INFO: task postmaster:119438 blocked for more than 120 seconds. [Tue……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/linux/ssdiotimeout/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/postgres/ha_fd/" title="数据库高可用设计分析">数据库高可用设计分析</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年3月23日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/postgres'>postgres</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            基本概念 集群： 一组多个同时对外提供相同服务的实体机组成一个集群。这里的集群为主从结构，可写节点为主节点，其他只读节点为从节点。 高可用： 在发生局部故障时对整体业务影响很低。即不可用的时间要尽量的短。 对外部应用的访问来说，无需关注如何实现，如同只访问一个节点。并能得到持续的服务能力。……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/postgres/ha_fd/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/linux/github-dns/" title="Github DNS 加速">Github DNS 加速</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年3月17日
+        </date>
+        
+        <div class="post-content">
+            IP 查询 https://www.ipaddress.com/ 直接点击下面链接查询 github.com assets-cdn.github.com github.global.ssl.fastly.net 修改本地dns vi /etc/hosts 140.82.114.4 github.com 185.199.108.153 assets-cdn.github.com 199.232.69.194 github.global.ssl.fastly.net……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/linux/github-dns/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/postgres/replication02/" title="流复制同步级别">流复制同步级别</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年3月17日
+        </date>
+        
+        <div class="post-content">
+            流复制过程 synchronous_commit = on ） # synchronization level; on default # off, local, remote_write, or on 同步级别 remote_apply：事务commit或rollback时，等待其redo在primary、以及同步standby(s)已持久化，并且其redo在同步 standby(s)已apply。 on：事务commit或rollback时，……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/postgres/replication02/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/redis/redis-scence/" title="Redis 应用场景">Redis 应用场景</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年3月9日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/redis'>redis</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            应用场景 作为一名匠人，当熟悉手里各样工具的特点。用起来才能得心应手。什么时候使用锯子，什么时候当用斧子。 同理熟知产品的技术特性，方可灵活运用。 在面对不同的业务需求时才能提供具有针对性的解决方案。 不求十八般兵器样样精通，但求不置斧锯于一旁只顾轮打锤。 Redis 都能干点啥 缓存 消息队列 循环列表……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/redis/redis-scence/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/redis/redis-durability/" title="Redis 持久化策略">Redis 持久化策略</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年3月9日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/redis'>redis</a></span>
+            
+            <span class="meta-category"><a href='/categories/python'>python</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            持久化的两种方式 RDB 快照 AOF 日志 RDB 快照 快照一次全量备份。 特点： 保存时比较耗系统资源容易造成业务卡顿，恢复比较快。 原理： 使用操作系统的多进程COW(COPY ON Write)机制来实现快照持久化 命令： 堵塞 save ，非堵塞后台执行 bgsave 配置： save m n #配置快照(rdb)促发规则，格式：save &lt;seconds&gt; &lt;changes&gt; #save 900 1……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/redis/redis-durability/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/redis/redis-cluster/" title="Redis Cluster">Redis Cluster</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年3月9日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/redis'>redis</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            主从复制 原理说明参考 https://www.cnblogs.com/daofaziran/p/10978628.html 基本原理 主要是Redis没有wal日志机制。aof是先执行命令再记录。主从同步不是依赖aof日志。 通过单独的进程完成主从的同步。 初始时全量复制，SYNC。 然后进行增量复制PSYNC。在主库内存中维护一个偏移量master run id 。 当断开重新连接上比较偏移量，尝试……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/redis/redis-cluster/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/storage/rclone/" title="云存储同步 rclone">云存储同步 rclone</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年3月9日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/%E5%AD%98%E5%82%A8'>存储</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            云端对象同步 Rclone (&ldquo;rsync for cloud storage&rdquo;) is a command line program to sync files and directories to and from different cloud storage providers. https://github.com/rclone/rclone……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/storage/rclone/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/postgres/pg_rman/" title="pg_rman 备份恢复数据库">pg_rman 备份恢复数据库</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年3月9日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/postgres'>postgres</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            适用场景 PG_RMAN 基于本地数据拷贝的方式，要求与数据库需要安装在同一个机器节点上。 适用于项目初期，对数据库的规划处于初级阶段。实体机不充分的情况是个很好的选择。 数据库使用ssd盘，备份磁盘采用企业sata大盘。或nfs网盘等。 PG_RMAN 支持全备份，增量备份，备份验证，保留策略等 应用软件包地址 https://github.com/ossc-db/pg_rman/releases 基……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/postgres/pg_rman/">阅读全文</a></p>
+    </article>
+    
+    
+
+
+
+<ol class="page-navigator">
+    
+    <li class="prev">
+        <a href="https://bodani.github.io/page/7/">上一页</a>
+    </li>
+    
+
+    
+
+    
+        
+        
+    
+    
+
+    
+        
+        
+        <li >
+            <a href="https://bodani.github.io/">1</a>
+        </li>
+        
+    
+        
+        <li>
+            <span>...</span>
+        </li>
+        
+    
+        
+        
+        <li >
+            <a href="https://bodani.github.io/page/6/">6</a>
+        </li>
+        
+    
+        
+        
+        <li >
+            <a href="https://bodani.github.io/page/7/">7</a>
+        </li>
+        
+    
+        
+        
+        <li  class="current">
+            <a href="https://bodani.github.io/page/8/">8</a>
+        </li>
+        
+    
+        
+        
+        <li >
+            <a href="https://bodani.github.io/page/9/">9</a>
+        </li>
+        
+    
+        
+        
+        <li >
+            <a href="https://bodani.github.io/page/10/">10</a>
+        </li>
+        
+    
+        
+        <li>
+            <span>...</span>
+        </li>
+        
+    
+        
+        
+        <li >
+            <a href="https://bodani.github.io/page/29/">29</a>
+        </li>
+        
+    
+
+    
+    
+
+    <li class="next">
+        <a href="https://bodani.github.io/page/9/">下一页</a>
+    </li>
+    
+</ol>
+
+
+
+
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2018 - 2024 <a href="https://bodani.github.io"> By Eamon</a>
+        
+        | <a rel="nofollow" target="_blank" href="http://beian.miit.gov.cn/">辽ICP备2022000054号-1</a>
+        
+    </div>
+    <br />
+  
+</footer>
+
+
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+
+
+
+    <script src='/js/douban.js'></script>
+
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://bodani.github.io/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://bodani.github.io">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://bodani.github.io/python/pip/" title="python pip">python pip</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/postgres/repmgrd/" title="repmgrd介绍">repmgrd介绍</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/linux/linux_tunning/" title="Linux 优化指南">Linux 优化指南</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/monitor/nginx-log-exporter/" title="prometheus-nginxlog-exporter构建Nginx日志监控">prometheus-nginxlog-exporter构建Nginx日志监控</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/postgres/logical-replication_failover/" title="逻辑复制故障转移">逻辑复制故障转移</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/linux/nice/" title="nice, ionice, cpulimit">nice, ionice, cpulimit</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/linux/backlog-config/" title="Linux backlog/somaxconn 内核参数">Linux backlog/somaxconn 内核参数</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/storage/minio_ec/" title="Minio存储类别">Minio存储类别</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/postgres/wal_lsn/" title="LSN 和 wal日志文件名对应关系">LSN 和 wal日志文件名对应关系</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/middleware/kafka_install/" title="Kafka集群安装">Kafka集群安装</a>
+    </li>
+    
+</ul>
+
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/categories'>分类</a></h3>
+<ul class="widget-list">
+    
+    <li><a href="https://bodani.github.io/categories/ansible/">ansible (4)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/docker/">docker (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/etcd/">etcd (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/haproxy/">haproxy (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/kafka/">kafka (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/kvm/">kvm (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/linux/">linux (21)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/minio/">minio (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/mysql/">mysql (4)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/nginx/">nginx (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/postgres/">postgres (48)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/python/">python (18)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/rabbitmq/">rabbitmq (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/redis/">redis (9)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/tidb/">tidb (5)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件 (8)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E5%AD%98%E5%82%A8/">存储 (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E5%AE%89%E5%85%A8/">安全 (3)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E6%95%B0%E4%BB%93/">数仓 (3)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E7%9B%91%E6%8E%A7/">监控 (3)</a></li>
+    
+</ul>
+
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/tags.html'>标签</a></h3>
+<div class="tagcloud">
+    
+    <a href="https://bodani.github.io/tags/%E4%BC%98%E5%8C%96/">优化</a>
+    
+    <a href="https://bodani.github.io/tags/%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86/">配置管理</a>
+    
+    <a href="https://bodani.github.io/tags/%E9%AB%98%E5%8F%AF%E7%94%A8/">高可用</a>
+    
+</div>
+
+    </section>
+
+    
+<section class="widget">
+    <h3 class="widget-title">友情链接</h3>
+    <ul class="widget-list">
+        
+        <li>
+            <a target="_blank" href="http://www.cnblogs.com/zhangeamon" title="历史博客">历史博客</a>
+        </li>
+        
+    </ul>
+</section>
+
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://bodani.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+   
+</body>
+
+</html>

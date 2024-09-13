@@ -1,0 +1,551 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+	<meta name="generator" content="Hugo 0.81.0" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>Let&#39;s go 🐌 🐌 🐌 | Let&#39;s build our own cloud native together  </title>
+    <meta property="og:title" content="Let&#39;s go 🐌 🐌 🐌 | Let&#39;s build our own cloud native together  ">
+    <meta property="og:type" content="website">
+    <meta name="Keywords" content="postgres 、python、pg 、linix 、docker、 kubernetes、 cloud、hadoop、promethues ">
+    <meta name="description" content="python 软件架构等">
+    <meta property="og:url" content="https://bodani.github.io/">
+    <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <link rel="alternate" type="application/rss+xml+xml" href="https://bodani.github.io/index.xml" title="Let's go 🐌 🐌 🐌" />
+    
+    
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+   
+    
+    
+    
+    
+    
+    
+        <link rel="stylesheet" href='/css/douban.css'>
+    
+        <link rel="stylesheet" href='/css/other.css'>
+    
+   
+        <a href=https://github.com/eamonzhang><img style="position: absolute; top: 0; left: 0; border: 0;" src="/images/forkme_left_red_aa0000.png" alt="Fork me on GitHub" data-canonical-src="/images/forkme_left_red_aa0000.png"></a>
+
+   
+        <script>
+          var _hmt = _hmt || [];
+            (function() {
+            var hm = document.createElement("script");
+            <!-- hm.src = "https://hm.baidu.com/hm.js?1f6605a363a50554aa03adcc685b7699"; -->
+            hm.src = "https://hm.baidu.com/hm.js?0010600e9ae6ff8f5814bb7ec6b36072";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+          })();
+       </script>
+</head>
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <h1>
+                        <a id="logo" href="https://bodani.github.io">
+                            Let&#39;s go 🐌 🐌 🐌
+                        </a>
+                    </h1>
+                
+                <p class="description">Let&#39;s build our own cloud native together  </p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://bodani.github.io">首页</a>
+                    
+                    <a  href="https://bodani.github.io/archives" title="归档">归档</a>
+                    
+                    <a  href="https://bodani.github.io/postgresql" title="Postgres">Postgres</a>
+                    
+                    <a  href="https://bodani.github.io/linux" title="Linux">Linux</a>
+                    
+                    <a  href="https://bodani.github.io/about/me" title="关于">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/postgres/high_level_sql/" title="高级SQL">高级SQL</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年1月11日
+        </date>
+        
+        <div class="post-content">
+            分组集 排序集 假象集 窗口函数 递归 递归应用 递归加速count(distint) 查询。 使用场景，数据分布：大数据集但其中的类型却很少 -- 创建表 test1=# create table recurive_t(user_id int,free float,info text); CREATE TABLE -- 加入数据 test1=# insert into recurive_t select 1 ,generate_series(0,1000000),'user 1 pay !!!'; test1=# insert into recurive_t select 2 ,generate_series(0,2000000),'user 2 pay !!!'; test1=# insert into recurive_t select 3 ,generate_series(0,3000000),'user 3 pay !!!'; test1=# insert into recurive_t select 4 ,generate_series(0,4000000),'user 4 pay !!!'; test1=# insert into recurive_t select 5 ,generate_series(0,4000000),'user 5 pay !!!'; test1=# analyze recurive_t ; ANALYZE -- count(distinct()) 查询……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/postgres/high_level_sql/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/postgres/thinking_in_db_fd/" title="数据库优化思考 - 结构设计">数据库优化思考 - 结构设计</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年1月11日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/postgres'>postgres</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            DB 与 APP 的不同 有无状态 无状态应用，每个实例提供的服务都是等价、对等的。APP 应用为无状态应用，DB应用为有状态应用。 数据库正是因为有状态，所以维护起来更有挑战。 APP 在面对大量高并发请求时可以无所顾及的增加实例，加机器进行扩容。处理能里也会将得到线性提升。简单粗暴又有效。 DB 面对同样的压……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/postgres/thinking_in_db_fd/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/postgres/auto_vacuum_trigger/" title="auto vacuum 触发机制">auto vacuum 触发机制</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年1月8日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/postgres'>postgres</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            数据库自动垃圾回收触发条件分析 在postgres 中 垃圾回收的重要意义及在执行垃圾回收时具体都做了些什么很多地方都有介绍。 但是何时触发垃圾回收，即垃圾回收的触发条件是什么。 官网的介绍一般是有如下几个参数决定 #autovacuum = on # Enable autovacuum subprocess? 'on' #autovacuum_vacuum_threshold = 50 # min number of row updates before vacuum #autovacuum_analyze_threshold = 50 # min number of row updates before analyze #autovacuum_vacuum_scale_factor = 0.2 # fraction of table size……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/postgres/auto_vacuum_trigger/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/postgres/partition/" title="原生分区表">原生分区表</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年12月31日
+        </date>
+        
+        <div class="post-content">
+            分区表 数据库分区是一种将数据做物理分片的数据库设计技术，虽然分区技术可以有多种实现方法， 但其主要目的是为了在特定的SQL操作中减少数据读取的总量以缩减响应时间。 使用分区表对应用程序是透明的，对于INSERT,UPDATE,DELETE,SELECT操作，都只需要对父表tbl进行操……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/postgres/partition/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/postgres/pg_fdw/" title="跨库操作">跨库操作</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年12月24日
+        </date>
+        
+        <div class="post-content">
+            dblink https://www.cnblogs.com/lottu/p/13331387.html fdw https://www.cnblogs.com/lottu/p/13345187.html 注意事项 查询条件下推，新版本功能更全 ddl 操作 , fdw 如果用于历史归档……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/postgres/pg_fdw/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/postgres/reback_supper_user/" title="找回supper user 权限">找回supper user 权限</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年12月22日
+        </date>
+        
+        <div class="post-content">
+            背景 意外删除postgres supper user 权限 找回方法 关闭数据库 用单用户模式重新启动 /usr/lib/postgresql/xxxx/bin/postgres --single -D $PGDATA 重新设置supper user 权限 alter user postgres with superuser;……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/postgres/reback_supper_user/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/postgres/monitor_explain/" title="数据库监控指标">数据库监控指标</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年11月20日
+        </date>
+        
+        <div class="post-content">
+            实体机 硬盘空间 cup利用率 内存利用率 IO 网络带宽 tcp连接情况 温度 数据库年龄 -- 数据库database 年龄 select datname,age(datfrozenxid),pg_size_pretty(pg_database_size(oid)) from pg_database order by age(datfrozenxid) desc limit 10 ; -- 表年龄 select relname,age(relfrozenxid), pg_size_pretty(pg_table_size(oid)) from pg_class where relkind in ('t','r') order by age(relfrozenxid) desc limit 10; 说明： 当age到达2亿（默认）时触发自动回卷，期间会大量占用系统资源。提前做好监控避免在业务高峰时发生。可在库级别操作……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/postgres/monitor_explain/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/postgres/compile_kylin/" title="kylin系统postgresql编译安装">kylin系统postgresql编译安装</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年11月16日
+        </date>
+        
+        <div class="post-content">
+            背景 麒麟系统默认自带postgresql10.5 安装过程与centos基本相同 , 注意事项 1 安装postgresql-dev 2 编译 postgis 时./configure &ndash;with-pgconfig=/usr/bin/pg_config 但是如果想安装其他版本的postgres 需一番周折 首先第一个问题麒麟系统对openssl过进行改造。在编译postgres支……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/postgres/compile_kylin/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/linux/frp/" title="网络穿透">网络穿透</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年11月1日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/linux'>linux</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            背景 一个类似于花生壳的服务。将一个内网服务暴露在公网中提供访问。 前提条件 拥有公网IP的服务器。比如 xx云服务器 准备 下载安装包 wget https://github.com/fatedier/frp/releases/download/v0.38.0/frp_0.38.0_linux_amd64.tar.gz 解压后 . ├── frpc ├── frpc_full.ini ├── frpc.ini ├── frps ├── frps_full.ini ├── frps.ini ├── LICENSE └── systemd ├── frpc.service ├── frpc@.service ├── frps.service └── frps@.service 分为客户端和服务端 客户端： 内网服务器 服务端： 拥有……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/linux/frp/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/linux/ubuntu2004-network/" title="Ubuntu 20.04 网络配置">Ubuntu 20.04 网络配置</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年9月21日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/linux'>linux</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            配置 vim /etc/netplan/00-installer-config.yaml # This is the network config written by 'subiquity' network: ethernets: enp2s0: addresses: - 192.168.6.111/24 gateway4: 192.168.6.1 nameservers: addresses: [119.29.29.29] version: 2 生效 netplan apply 查看网卡 #ethtool enp2s0 Settings for enp2s0: Supported ports: [ TP MII ] Supported link modes: 10baseT/Half 10baseT/Full 100baseT/Half 100baseT/Full 1000baseT/Full Supported pause frame use: Symmetric Receive-only Supports auto-negotiation: Yes Supported FEC modes: Not reported Advertised link modes: 10baseT/Half 10baseT/Full 100baseT/Half 100baseT/Full 1000baseT/Full Advertised pause frame use: Symmetric Receive-only Advertised auto-negotiation: Yes Advertised FEC modes: Not reported Link partner advertised link modes: 10baseT/Half 10baseT/Full 100baseT/Half 100baseT/Full Link partner advertised pause frame use: Symmetric Receive-only Link partner advertised auto-negotiation: Yes Link partner advertised FEC modes: Not reported Speed: 100Mb/s Duplex: Full Port: MII PHYAD: 0 Transceiver: internal Auto-negotiation: on Supports Wake-on: pumbg Wake-on: d Current message level: 0x00000033 (51)……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/linux/ubuntu2004-network/">阅读全文</a></p>
+    </article>
+    
+    
+
+
+
+<ol class="page-navigator">
+    
+    <li class="prev">
+        <a href="https://bodani.github.io/page/9/">上一页</a>
+    </li>
+    
+
+    
+
+    
+        
+        
+    
+    
+
+    
+        
+        
+        <li >
+            <a href="https://bodani.github.io/">1</a>
+        </li>
+        
+    
+        
+        <li>
+            <span>...</span>
+        </li>
+        
+    
+        
+        
+        <li >
+            <a href="https://bodani.github.io/page/8/">8</a>
+        </li>
+        
+    
+        
+        
+        <li >
+            <a href="https://bodani.github.io/page/9/">9</a>
+        </li>
+        
+    
+        
+        
+        <li  class="current">
+            <a href="https://bodani.github.io/page/10/">10</a>
+        </li>
+        
+    
+        
+        
+        <li >
+            <a href="https://bodani.github.io/page/11/">11</a>
+        </li>
+        
+    
+        
+        
+        <li >
+            <a href="https://bodani.github.io/page/12/">12</a>
+        </li>
+        
+    
+        
+        <li>
+            <span>...</span>
+        </li>
+        
+    
+        
+        
+        <li >
+            <a href="https://bodani.github.io/page/29/">29</a>
+        </li>
+        
+    
+
+    
+    
+
+    <li class="next">
+        <a href="https://bodani.github.io/page/11/">下一页</a>
+    </li>
+    
+</ol>
+
+
+
+
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2018 - 2024 <a href="https://bodani.github.io"> By Eamon</a>
+        
+        | <a rel="nofollow" target="_blank" href="http://beian.miit.gov.cn/">辽ICP备2022000054号-1</a>
+        
+    </div>
+    <br />
+  
+</footer>
+
+
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+
+
+
+    <script src='/js/douban.js'></script>
+
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://bodani.github.io/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://bodani.github.io">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://bodani.github.io/python/pip/" title="python pip">python pip</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/postgres/repmgrd/" title="repmgrd介绍">repmgrd介绍</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/linux/linux_tunning/" title="Linux 优化指南">Linux 优化指南</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/monitor/nginx-log-exporter/" title="prometheus-nginxlog-exporter构建Nginx日志监控">prometheus-nginxlog-exporter构建Nginx日志监控</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/postgres/logical-replication_failover/" title="逻辑复制故障转移">逻辑复制故障转移</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/linux/nice/" title="nice, ionice, cpulimit">nice, ionice, cpulimit</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/linux/backlog-config/" title="Linux backlog/somaxconn 内核参数">Linux backlog/somaxconn 内核参数</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/storage/minio_ec/" title="Minio存储类别">Minio存储类别</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/postgres/wal_lsn/" title="LSN 和 wal日志文件名对应关系">LSN 和 wal日志文件名对应关系</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/middleware/kafka_install/" title="Kafka集群安装">Kafka集群安装</a>
+    </li>
+    
+</ul>
+
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/categories'>分类</a></h3>
+<ul class="widget-list">
+    
+    <li><a href="https://bodani.github.io/categories/ansible/">ansible (4)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/docker/">docker (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/etcd/">etcd (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/haproxy/">haproxy (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/kafka/">kafka (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/kvm/">kvm (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/linux/">linux (21)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/minio/">minio (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/mysql/">mysql (4)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/nginx/">nginx (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/postgres/">postgres (48)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/python/">python (18)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/rabbitmq/">rabbitmq (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/redis/">redis (9)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/tidb/">tidb (5)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件 (8)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E5%AD%98%E5%82%A8/">存储 (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E5%AE%89%E5%85%A8/">安全 (3)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E6%95%B0%E4%BB%93/">数仓 (3)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E7%9B%91%E6%8E%A7/">监控 (3)</a></li>
+    
+</ul>
+
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/tags.html'>标签</a></h3>
+<div class="tagcloud">
+    
+    <a href="https://bodani.github.io/tags/%E4%BC%98%E5%8C%96/">优化</a>
+    
+    <a href="https://bodani.github.io/tags/%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86/">配置管理</a>
+    
+    <a href="https://bodani.github.io/tags/%E9%AB%98%E5%8F%AF%E7%94%A8/">高可用</a>
+    
+</div>
+
+    </section>
+
+    
+<section class="widget">
+    <h3 class="widget-title">友情链接</h3>
+    <ul class="widget-list">
+        
+        <li>
+            <a target="_blank" href="http://www.cnblogs.com/zhangeamon" title="历史博客">历史博客</a>
+        </li>
+        
+    </ul>
+</section>
+
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://bodani.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+   
+</body>
+
+</html>

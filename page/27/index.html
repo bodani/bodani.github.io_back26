@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+	<meta name="generator" content="Hugo 0.81.0" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>Let&#39;s go 🐌 🐌 🐌 | Let&#39;s build our own cloud native together  </title>
+    <meta property="og:title" content="Let&#39;s go 🐌 🐌 🐌 | Let&#39;s build our own cloud native together  ">
+    <meta property="og:type" content="website">
+    <meta name="Keywords" content="postgres 、python、pg 、linix 、docker、 kubernetes、 cloud、hadoop、promethues ">
+    <meta name="description" content="python 软件架构等">
+    <meta property="og:url" content="https://bodani.github.io/">
+    <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <link rel="alternate" type="application/rss+xml+xml" href="https://bodani.github.io/index.xml" title="Let's go 🐌 🐌 🐌" />
+    
+    
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+   
+    
+    
+    
+    
+    
+    
+        <link rel="stylesheet" href='/css/douban.css'>
+    
+        <link rel="stylesheet" href='/css/other.css'>
+    
+   
+        <a href=https://github.com/eamonzhang><img style="position: absolute; top: 0; left: 0; border: 0;" src="/images/forkme_left_red_aa0000.png" alt="Fork me on GitHub" data-canonical-src="/images/forkme_left_red_aa0000.png"></a>
+
+   
+        <script>
+          var _hmt = _hmt || [];
+            (function() {
+            var hm = document.createElement("script");
+            <!-- hm.src = "https://hm.baidu.com/hm.js?1f6605a363a50554aa03adcc685b7699"; -->
+            hm.src = "https://hm.baidu.com/hm.js?0010600e9ae6ff8f5814bb7ec6b36072";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+          })();
+       </script>
+</head>
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <h1>
+                        <a id="logo" href="https://bodani.github.io">
+                            Let&#39;s go 🐌 🐌 🐌
+                        </a>
+                    </h1>
+                
+                <p class="description">Let&#39;s build our own cloud native together  </p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://bodani.github.io">首页</a>
+                    
+                    <a  href="https://bodani.github.io/archives" title="归档">归档</a>
+                    
+                    <a  href="https://bodani.github.io/postgresql" title="Postgres">Postgres</a>
+                    
+                    <a  href="https://bodani.github.io/linux" title="Linux">Linux</a>
+                    
+                    <a  href="https://bodani.github.io/about/me" title="关于">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/middleware/keepalived01/" title="Keepalived 问题集">Keepalived 问题集</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2018年11月5日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6'>中间件</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            问题描述 Q1 ip address associated with VRID 51 not present in MASTER advert : 10.1.7.58 其中 51 为 virtual_router_id 10.1.7.58 为虚拟IP 可能原因 ntp 时间不同步 局域网内 virtual_router_id 与其他集群配置冲突。 另外 router_id 主机标示，一般为hostname即可。 解决方法： unicast_peer{ } 配置成单播模式 Q2 keepalived ping不通 解决办法,注释掉配置文件中的 vrrp_strict Q3 not a regular file 解决方法 chmod 644 keepalived.conf Q4 virtual_server 该部分是用来管理LVS的，……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/middleware/keepalived01/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/docker/network01/" title="Docker 本地网络">Docker 本地网络</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2018年11月2日
+        </date>
+        
+        <div class="post-content">
+            基础命令概览 docker network --help Usage: docker network COMMAND Manage networks Commands: connect Connect a container to a network create Create a network disconnect Disconnect a container from a network inspect Display detailed information on one or more networks ls List networks prune Remove all unused networks rm Remove one or more networks 默认网络 docker network ls NETWORK ID NAME DRIVER SCOPE 0770a8275bff bridge bridge local b6617326f199 host host local 31c55ffcf0a8 none null local 创建容器时通过 &ndash;network= 指定网络类型 none 这个网络下的容器除了 lo，没有其他任何网卡。 host 共享Host的网络栈，容器的网络配置与 host 完……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/docker/network01/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/docker/cgroup-namespaces/" title="Cgroup Namespaces">Cgroup Namespaces</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2018年11月2日
+        </date>
+        
+        <div class="post-content">
+            cgroup 实现资源限额 cgroup 全称 Control Group。Linux 操作系统通过 cgroup 可以设置进程使用 CPU、内存 和 IO 资源的限额。 在启动容器时可使用参数 docker run &ndash;blkio-weight-device &ndash;cpu-shares &ndash;memory 等 。 ll /sys/fs/cgroup/cpu/docker/ ll /sys/fs/cgroup/memory/docker ll /sys/fs/cgroup/blkio/docker namespace 实现资源隔离 Mount Mount namespace 让容器看上去拥有整个文件系统。 容器有自己的 / 目录，可以执行 mount 和 umount 命令。当然我们知道这些操作只在当前容器中生效，……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/docker/cgroup-namespaces/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/docker/dumb-init/" title="Dumb Init">Dumb Init</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2018年11月1日
+        </date>
+        
+        <div class="post-content">
+            基础概念 孤儿进程：一个父进程退出，而它的一个或多个子进程还在运行，那么那些子进程将成为孤儿进程。孤儿进程将被init进程(进程号为1)所收养，并由init进程对它们完成状态收集工作。 僵尸进程：一个进程使用fork创建子进程，如果子进程退出，而父进程并没有调用wait或waitpi……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/docker/dumb-init/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/middleware/proxy/" title="代理">代理</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2018年10月31日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6'>中间件</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            科普 正向代理 对服务端来说是无感的，服务端无需配置，要在客户端指定。代理的是客户端。 访问原来无法访问的资源 用作缓存，加速访问速度 对客户端访问授权，上网进行认证 代理可以记录用户访问记录（上网行为管理），对外隐藏用户信息 反向代理 对客户端来说的无感的，客户端无需配置，要在服务端实现。代理……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/middleware/proxy/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/about/favorites/" title="我的收藏">我的收藏</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2018年10月31日
+        </date>
+        
+        <div class="post-content">
+            私有云访问管理 [SDN 网络] (https://github.com/feiskyer/sdn-handbook) LSM数据结构 LSM（Log-Structured Merge-Trees）和 B+ 树相比，是牺牲了部分读的性能来换取写的性能(通过批量写入)，实现读写之间的。 Hbase、LevelDB、Tair（Long DB）、nessDB 采用 LSM 树的结构。LSM可以快速建立索……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/about/favorites/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/postgres/backup_restore/" title="数据库备份和恢复">数据库备份和恢复</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2018年10月30日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/postgres'>postgres</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            备份恢复命令 备份：pg_dump -U postgres -v -F c -Z 4 -f ***.backup dbname 9压缩率最狠 恢复：pg_restore -U postgres -v -j 8 -d dbname ***.backup 8是采用8个线程 注意事项： 在恢复database前需要先创建好extentions 备份表：pg_dump -U postgres -t tablename dbname &gt; 33.sql 恢复表：psql -U postgres -d dbname &lt; 33.sql 只备份表结构 pg_dump -U postgres -s -t tablename dbname &gt;……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/postgres/backup_restore/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/postgres/wal-g/" title="数据库备份和恢复wal-g 应用">数据库备份和恢复wal-g 应用</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2018年10月30日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/postgres'>postgres</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            存储服务 minio 设置用户名和密码 docker run -d -p 9000:9000 -e MINIO_ACCESS_KEY=xxxxx(changeme) -e MINIO_SECRET_KEY=kkkkk(changeme) -v /data/minio/:/data minio/minio server /data 创建 bucket mc mb local/buecket003 wal-g 下载 wget https://github.com/wal-g/wal-g/releases/download/v0.2.9/wal-g.linux-amd64.tar.gz tar -zxvf wal-g.linux-amd64.tar.gz 设置环境变量 minio cat wal-g.env export PGDATA=/var/lib/pgsql/10/data/ export WALG_S3_PREFIX=s3://bucket003/ export PGPORT=5432 export PGUSER=postgres export AWS_SECRET_ACCESS_KEY=xxxxx(changeme) export AWS_REGION=us-east-1 export AWS_ACCESS_KEY_ID=kkkkk(changeme) export AWS_ENDPOINT=http://localhost:9000 export AWS_S3_FORCE_PATH_STYLE=true swift export PGDATA= export WALG_SWIFT_PREFIX=swift://buckt003/ export PGPORT= export PGUSER= export OS_USERNAME= export OS_PASSWORD= export OS_AUTH_URL=http://ip:port/auth/v1.0 全备份 source mydir/wal-g.env &amp;&amp; wal-g backup-push $PGDATA wal 备份 wal_level = archive archive_mode = on ## 从库 always archive_command = 'source mydir/wal-g.env &amp;&amp; wal-g wal-push %p' archive_timeout = 60 恢复数据 查看所有全备份 wal-g backup-list name last_modified wal_segment_backup_start base_000000020000001E000000CB 2019-11-07T01:34:08Z 000000020000001E000000CB base_000000020000001E000000CD 2019-11-07T01:37:03Z 000000020000001E000000CD base_000000020000001E000000CF 2019-11-07T02:23:34Z……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/postgres/wal-g/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/ansible/ansible-role/" title="Ansible Roles">Ansible Roles</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2018年10月29日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/ansible'>ansible</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            以特定的层级目录结构进行组织的tasks、variables、handlers、templates、files等 mkdir -pv ./{os_hard,nginx,memcached}/{files,templates,vars,handlers,meta,default,tasks}/main.yaml tree memcached/ memcached/ ├── default 设定默认变量 │ └── main.yaml ├── files 存储由copy或script等模块调用的文件 │ └── main.yaml ├── handlers │ └── main.yaml ├── meta 定义当前角色的特殊设定及其依赖关系 │ └……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/ansible/ansible-role/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/ansible/ansible-playbooks/" title="Ansible Playbooks">Ansible Playbooks</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2018年10月25日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/ansible'>ansible</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            Playbook核心元素 hosts 一个或多个组或主机的 patterns,以逗号为分隔符 。 - hosts: webservices remote_user: root Tasks 任务集 tasks: - name: install httpd yum: name=httpd - name: start httpd service: name=httpd state=started Handlers 和 notity 由特定条件触发的操作，满足条件方才执行，否则不执行。 Handlers也是task列表，这些task与前述的task并没有本质上的不同,用于当关注的资……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/ansible/ansible-playbooks/">阅读全文</a></p>
+    </article>
+    
+    
+
+
+
+<ol class="page-navigator">
+    
+    <li class="prev">
+        <a href="https://bodani.github.io/page/26/">上一页</a>
+    </li>
+    
+
+    
+
+    
+        
+        
+    
+    
+
+    
+        
+        
+        <li >
+            <a href="https://bodani.github.io/">1</a>
+        </li>
+        
+    
+        
+        <li>
+            <span>...</span>
+        </li>
+        
+    
+        
+        
+        <li >
+            <a href="https://bodani.github.io/page/25/">25</a>
+        </li>
+        
+    
+        
+        
+        <li >
+            <a href="https://bodani.github.io/page/26/">26</a>
+        </li>
+        
+    
+        
+        
+        <li  class="current">
+            <a href="https://bodani.github.io/page/27/">27</a>
+        </li>
+        
+    
+        
+        
+        <li >
+            <a href="https://bodani.github.io/page/28/">28</a>
+        </li>
+        
+    
+        
+        
+        <li >
+            <a href="https://bodani.github.io/page/29/">29</a>
+        </li>
+        
+    
+
+    
+    
+
+    <li class="next">
+        <a href="https://bodani.github.io/page/28/">下一页</a>
+    </li>
+    
+</ol>
+
+
+
+
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2018 - 2024 <a href="https://bodani.github.io"> By Eamon</a>
+        
+        | <a rel="nofollow" target="_blank" href="http://beian.miit.gov.cn/">辽ICP备2022000054号-1</a>
+        
+    </div>
+    <br />
+  
+</footer>
+
+
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+
+
+
+    <script src='/js/douban.js'></script>
+
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://bodani.github.io/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://bodani.github.io">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://bodani.github.io/python/pip/" title="python pip">python pip</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/postgres/repmgrd/" title="repmgrd介绍">repmgrd介绍</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/linux/linux_tunning/" title="Linux 优化指南">Linux 优化指南</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/monitor/nginx-log-exporter/" title="prometheus-nginxlog-exporter构建Nginx日志监控">prometheus-nginxlog-exporter构建Nginx日志监控</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/postgres/logical-replication_failover/" title="逻辑复制故障转移">逻辑复制故障转移</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/linux/nice/" title="nice, ionice, cpulimit">nice, ionice, cpulimit</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/linux/backlog-config/" title="Linux backlog/somaxconn 内核参数">Linux backlog/somaxconn 内核参数</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/storage/minio_ec/" title="Minio存储类别">Minio存储类别</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/postgres/wal_lsn/" title="LSN 和 wal日志文件名对应关系">LSN 和 wal日志文件名对应关系</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/middleware/kafka_install/" title="Kafka集群安装">Kafka集群安装</a>
+    </li>
+    
+</ul>
+
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/categories'>分类</a></h3>
+<ul class="widget-list">
+    
+    <li><a href="https://bodani.github.io/categories/ansible/">ansible (4)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/docker/">docker (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/etcd/">etcd (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/haproxy/">haproxy (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/kafka/">kafka (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/kvm/">kvm (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/linux/">linux (21)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/minio/">minio (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/mysql/">mysql (4)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/nginx/">nginx (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/postgres/">postgres (48)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/python/">python (18)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/rabbitmq/">rabbitmq (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/redis/">redis (9)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/tidb/">tidb (5)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件 (8)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E5%AD%98%E5%82%A8/">存储 (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E5%AE%89%E5%85%A8/">安全 (3)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E6%95%B0%E4%BB%93/">数仓 (3)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E7%9B%91%E6%8E%A7/">监控 (3)</a></li>
+    
+</ul>
+
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/tags.html'>标签</a></h3>
+<div class="tagcloud">
+    
+    <a href="https://bodani.github.io/tags/%E4%BC%98%E5%8C%96/">优化</a>
+    
+    <a href="https://bodani.github.io/tags/%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86/">配置管理</a>
+    
+    <a href="https://bodani.github.io/tags/%E9%AB%98%E5%8F%AF%E7%94%A8/">高可用</a>
+    
+</div>
+
+    </section>
+
+    
+<section class="widget">
+    <h3 class="widget-title">友情链接</h3>
+    <ul class="widget-list">
+        
+        <li>
+            <a target="_blank" href="http://www.cnblogs.com/zhangeamon" title="历史博客">历史博客</a>
+        </li>
+        
+    </ul>
+</section>
+
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://bodani.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+   
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>存储 on Let&#39;s go 🐌 🐌 🐌</title>
+    <link>https://bodani.github.io/categories/%E5%AD%98%E5%82%A8/</link>
+    <description>Recent content in 存储 on Let&#39;s go 🐌 🐌 🐌</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 09 Mar 2021 16:40:29 +0800</lastBuildDate><atom:link href="https://bodani.github.io/categories/%E5%AD%98%E5%82%A8/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>云存储同步 rclone</title>
+      <link>https://bodani.github.io/storage/rclone/</link>
+      <pubDate>Tue, 09 Mar 2021 16:40:29 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/storage/rclone/</guid>
+      <description>云端对象同步 Rclone (&amp;ldquo;rsync for cloud storage&amp;rdquo;) is a command line program to sync files and directories to and from different cloud storage providers. https://github.com/rclone/rclone</description>
+    </item>
+    
+    <item>
+      <title>云存储介绍</title>
+      <link>https://bodani.github.io/storage/introduce/</link>
+      <pubDate>Fri, 07 Dec 2018 11:04:12 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/storage/introduce/</guid>
+      <description>对象存储(oss) 适用于大量的小文件，RESFULL接口方式存储读取迅速,不能修改，不用担心元数据过大问题。通常的架构为使用其他的数据库软件如(Hbase,ES) 等来存放管理元数据。 swift minio 块存储 这种接口通常以QEMU Driver或者Kernel Module的方式存在，这种接口需要实</description>
+    </item>
+    
+  </channel>
+</rss>

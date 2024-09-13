@@ -1,0 +1,579 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>Haproxy  编译安装配置  | Let&#39;s go 🐌 🐌 🐌</title>
+    <meta property="og:title" content="Haproxy  编译安装配置  - Let&#39;s go 🐌 🐌 🐌">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content='2022-03-25T15:31:27&#43;08:00'>
+        
+        
+    <meta property="article:modified_time" content='2022-03-25T15:31:27&#43;08:00'>
+        
+    <meta name="Keywords" content="postgres 、python、pg 、linix 、docker、 kubernetes、 cloud、hadoop、promethues ">
+    <meta name="description" content="Haproxy  编译安装配置 ">
+        
+    <meta name="author" content="Eamon">
+    <meta property="og:url" content="https://bodani.github.io/middleware/haproxy_install/">
+    <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    
+    
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+   
+    
+    
+    
+    
+    
+    
+        <link rel="stylesheet" href='/css/douban.css'>
+    
+        <link rel="stylesheet" href='/css/other.css'>
+    
+   
+        <a href=https://github.com/eamonzhang><img style="position: absolute; top: 0; left: 0; border: 0;" src="/images/forkme_left_red_aa0000.png" alt="Fork me on GitHub" data-canonical-src="/images/forkme_left_red_aa0000.png"></a>
+
+   
+        <script>
+          var _hmt = _hmt || [];
+            (function() {
+            var hm = document.createElement("script");
+            <!-- hm.src = "https://hm.baidu.com/hm.js?1f6605a363a50554aa03adcc685b7699"; -->
+            hm.src = "https://hm.baidu.com/hm.js?0010600e9ae6ff8f5814bb7ec6b36072";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+          })();
+       </script>
+</head>
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://bodani.github.io">
+                        Let&#39;s go 🐌 🐌 🐌
+                    </a>
+                
+                <p class="description">Let&#39;s build our own cloud native together  </p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="" href="https://bodani.github.io">首页</a>
+                    
+                    <a  href="https://bodani.github.io/archives" title="归档">归档</a>
+                    
+                    <a  href="https://bodani.github.io/postgresql" title="Postgres">Postgres</a>
+                    
+                    <a  href="https://bodani.github.io/linux" title="Linux">Linux</a>
+                    
+                    <a  href="https://bodani.github.io/about/me" title="关于">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    <style type="text/css">
+    .post-toc {
+        position: fixed;
+        width: 200px;
+        margin-left: -210px;
+        padding: 5px 10px;
+        font-family: Athelas, STHeiti, Microsoft Yahei, serif;
+        font-size: 12px;
+        border: 1px solid rgba(0, 0, 0, .07);
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.98);
+        background-clip: padding-box;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        word-wrap: break-word;
+        white-space: nowrap;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        z-index: 999;
+        cursor: pointer;
+        max-height: 70%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .post-toc .post-toc-title {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 20px;
+        font-weight: 400;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .post-toc .post-toc-content {
+        font-size: 15px;
+    }
+
+    .post-toc .post-toc-content>nav>ul {
+        margin: 10px 0;
+    }
+
+    .post-toc .post-toc-content ul {
+        padding-left: 20px;
+        list-style: square;
+        margin: 0.5em;
+        line-height: 1.8em;
+    }
+
+    .post-toc .post-toc-content ul ul {
+        padding-left: 15px;
+        display: none;
+    }
+
+    @media print,
+    screen and (max-width:1057px) {
+        .post-toc {
+            display: none;
+        }
+    }
+</style>
+<div class="post-toc" style="position: absolute; top: 188px;">
+    <h2 class="post-toc-title">目录</h2>
+    <div class="post-toc-content">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#编译安装haproxy-24">编译安装Haproxy 2.4</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#服务管理">服务管理</a></li>
+    <li><a href="#配置">配置</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var postToc = $(".post-toc");
+        if (postToc.length) {
+            var leftPos = $("#main").offset().left;
+            if(leftPos<220){
+                postToc.css({"width":leftPos-10,"margin-left":(0-leftPos)})
+            }
+
+            var t = postToc.offset().top - 20,
+                a = {
+                    start: {
+                        position: "absolute",
+                        top: t
+                    },
+                    process: {
+                        position: "fixed",
+                        top: 20
+                    },
+                };
+            $(window).scroll(function () {
+                var e = $(window).scrollTop();
+                e < t ? postToc.css(a.start) : postToc.css(a.process)
+            })
+        }
+    })
+</script>
+
+    <article class="post">
+        <header>
+            <h1 class="post-title">Haproxy  编译安装配置 </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2022年3月25日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/haproxy'>haproxy</a></span>
+            
+        </div>
+        
+        
+        
+        <div class="clear" style="display: none">
+            <div class="toc-article">
+                <div class="toc-title">文章目录</div>
+            </div>
+        </div>
+        
+        <div class="post-content">
+            <h2 id="编译安装haproxy-24">编译安装Haproxy 2.4</h2>
+<h4 id="下载预备">下载预备</h4>
+<pre><code>sudo wget https://www.haproxy.org/download/2.4/src/haproxy-2.4.15.tar.gz -O /usr/local/src/haproxy-2.4.15.tar.gz
+sudo wget http://www.lua.org/ftp/lua-5.3.5.tar.gz -O /usr/local/src/lua-5.3.5.tar.gz
+sudo yum  install make gcc build-essential libssl-devel zlib1g-devel pcre3 pcre3-devel systemd-devel readline-devel openssl openssl-devel -y 
+</code></pre><h4 id="编译安装">编译安装</h4>
+<p>lua</p>
+<pre><code>cd /usr/local/src &amp;&amp; tar -zxvf lua-5.3.5.tar.gz
+cd /usr/local/src/lua-5.3.5 &amp;&amp; make linux
+src/lua -v
+</code></pre><p>haproxy</p>
+<pre><code>cd /usr/local/src &amp;&amp; tar -zxvf haproxy-2.4.15.tar.gz
+cd /usr/local/src/haproxy-2.4.15 
+make -j `lscpu |awk 'NR==4{print $2}'` ARCH=x86_64 TARGET=linux-glibc USE_PCRE=1 USE_ZLIB=1 USE_SYSTEMD=1 USE_CPU_AFFINITY=1 USE_LUA=1 LUA_INC=/usr/local/src/lua-5.3.5/src/ LUA_LIB=/usr/local/src/lua-5.3.5/src/ PREFIX=/usr/local/haproxy
+make install PREFIX=/usr/local/haproxy
+/usr/local/haproxy/sbin/haproxy -v
+</code></pre><p>如果想添加 openssl 支持参考</p>
+<pre><code>In order to link OpenSSL statically against HAProxy, first download OpenSSL
+from https://www.openssl.org/ then build it with the &quot;no-shared&quot; keyword and
+install it to a local directory, so your system is not affected :
+
+  $ export STATICLIBSSL=/tmp/staticlibssl
+  $ ./config --prefix=$STATICLIBSSL no-shared
+  $ make &amp;&amp; make install_sw
+
+Then when building haproxy, pass that path via SSL_INC and SSL_LIB :
+
+  $ make TARGET=generic \
+    USE_OPENSSL=1 SSL_INC=$STATICLIBSSL/include SSL_LIB=$STATICLIBSSL/lib
+</code></pre><p>更多编译参数信息请参考 INSTALL 文件,在刚刚下载的源码中</p>
+<h2 id="服务管理">服务管理</h2>
+<pre><code>mkdir /etc/haproxy
+mkdir /var/lib/haproxy
+</code></pre><pre><code>cat &gt;&gt; /lib/systemd/system/haproxy.service &lt;&lt; EOF
+
+[Unit]
+Description=HAProxy Load Balancer
+After=syslog.target network.target
+
+[Service]
+ExecStartPre=/usr/local/haproxy/sbin/haproxy -f /etc/haproxy/haproxy.cfg -c
+ExecStart=/usr/local/haproxy/sbin/haproxy -Ws -f /etc/haproxy/haproxy.cfg -p /var/lib/haproxy/haproxy.pid
+ExecReload=/bin/kill -USR2 $MAINPID
+
+[Install]
+WantedBy=multi-user.target
+
+EOF
+</code></pre><h2 id="配置">配置</h2>
+<h4 id="pg数据库负载均衡demo">pg数据库负载均衡demo</h4>
+<pre><code>global
+    maxconn 10000
+    #安全目录
+    chroot /usr/local/haproxy
+    stats socket /var/lib/haproxy/haproxy.sock mode 600 level admin
+    uid  99
+    gid  99
+    daemon
+    #开启工作进程数
+    #nbproc 1
+    #一个进程开启线程数，单进程时可用
+    nbthread 1
+    #spread-checks 后端server状态check。随机百分百检测时间误差范围 2-5 （20%-50%）之间
+    pidfile /var/lib/haproxy/haproxy.pid
+    log 127.0.0.1 local3 info
+
+defaults
+    # 后端服务挂掉后重新分发
+    option redispatch
+    option http-keep-alive
+    #客户端真实IP到后端服务地址
+    option forwardfor
+    maxconn 100000
+    mode http
+    #超时时间
+    timeout connect 30s
+    timeout client  30s
+    timeout server  30s
+    timeout check   5s
+
+listen stats
+    bind  :9009
+    stats enable
+    stats uri /status
+    stats auth admin:123456
+    stats realm HAPorxy\ Stats\ Page
+
+listen pg_master
+    bind 0.0.0.0:15432
+    mode tcp
+    balance roundrobin # leastconn
+#   后端pg为patroni 
+#    option httpchk
+#    option http-keep-alive
+#   http-check send meth OPTION uri /primary
+#   http-check expect status 200
+    default-server inter 3s fastinter 1s downinter 5s rise 3 fall 3 on-marked-down shutdown-sessions slowstart 30s maxconn 1000 maxqueue 128 weight 100
+    server pg1 127.0.0.1:5432 check port 5432 weight 100;
+    server pg2 127.0.0.1:5432 check port 5432 weight 100;   
+listen pg_standby
+    bind 0.0.0.0:25432
+    mode tcp
+    server pg1 127.0.0.1:5432 maxconn 997 check addr 127.0.0.1 port 5432 inter 3s fall 3 rise 5 weight 100
+    server pg2 127.0.0.1:5432 maxconn 997 check addr 127.0.0.1 port 5432 inter 3s fall 3 rise 5 weight 100 backup
+
+</code></pre><p>检查配置</p>
+<pre><code>usr/local/haproxy/sbin/haproxy -f /etc/haproxy/haproxy.cfg -c
+</code></pre><h4 id="健康检查-check-配置">健康检查 check 配置</h4>
+<ul>
+<li>inter <!-- raw HTML omitted -->：设定健康状态检查的时间间隔，单位为毫秒，默认为2000；也可以使用fastinter和downinter来根据服务器端状态优化此时间延迟；</li>
+<li>fastinter <!-- raw HTML omitted -->：过渡上架、过渡下架的检查时间间隔。</li>
+<li>downinter <!-- raw HTML omitted -->：当后端服务器下架后，检查的时间间隔。</li>
+<li>rise <!-- raw HTML omitted -->：设定健康状态检查中，某离线的server从离线状态转换至正常状态需要成功检查的次数；</li>
+<li>fall <!-- raw HTML omitted -->：确认server从正常状态转换为不可用状态需要检查的次数。</li>
+</ul>
+<p>配置文档 <a href="http://cbonte.github.io/haproxy-dconv/">http://cbonte.github.io/haproxy-dconv/</a></p>
+<h4 id="动态更新">动态更新</h4>
+<p>socat</p>
+<h4 id="ubuntu-参见">Ubuntu 参见</h4>
+<p><a href="https://www.yisu.com/zixun/4383.html">https://www.yisu.com/zixun/4383.html</a></p>
+
+        </div>
+
+        
+
+
+        
+
+<div class="post-archive">
+    <h2>其他文章</h2>
+    <ul class="listing">
+        
+        <li><a href="/postgres/login_nopasswd/">数据库免密码登陆</a></li>
+        
+        <li><a href="/postgres/vacuum_limit/">vacuum 限流</a></li>
+        
+        <li><a href="/postgres/monitor-sql/">查看数据信息常用sql整理</a></li>
+        
+    </ul>
+</div>
+
+
+
+        <div class="post-meta meta-tags">
+            
+            没有标签
+            
+        </div>
+    </article>
+    
+    
+
+    
+    
+    <div class="post bg-white">
+      <script src="https://utteranc.es/client.js"
+            repo= "your github repo"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+      </script>
+    </div>
+    
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2018 - 2024 <a href="https://bodani.github.io"> By Eamon</a>
+        
+        | <a rel="nofollow" target="_blank" href="http://beian.miit.gov.cn/">辽ICP备2022000054号-1</a>
+        
+    </div>
+    <br />
+  
+</footer>
+
+
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+
+
+
+    <script src='/js/douban.js'></script>
+
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://bodani.github.io/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://bodani.github.io">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://bodani.github.io/python/pip/" title="python pip">python pip</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/postgres/repmgrd/" title="repmgrd介绍">repmgrd介绍</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/linux/linux_tunning/" title="Linux 优化指南">Linux 优化指南</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/monitor/nginx-log-exporter/" title="prometheus-nginxlog-exporter构建Nginx日志监控">prometheus-nginxlog-exporter构建Nginx日志监控</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/postgres/logical-replication_failover/" title="逻辑复制故障转移">逻辑复制故障转移</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/linux/nice/" title="nice, ionice, cpulimit">nice, ionice, cpulimit</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/linux/backlog-config/" title="Linux backlog/somaxconn 内核参数">Linux backlog/somaxconn 内核参数</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/storage/minio_ec/" title="Minio存储类别">Minio存储类别</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/postgres/wal_lsn/" title="LSN 和 wal日志文件名对应关系">LSN 和 wal日志文件名对应关系</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/middleware/kafka_install/" title="Kafka集群安装">Kafka集群安装</a>
+    </li>
+    
+</ul>
+
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/categories'>分类</a></h3>
+<ul class="widget-list">
+    
+    <li><a href="https://bodani.github.io/categories/ansible/">ansible (4)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/docker/">docker (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/etcd/">etcd (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/haproxy/">haproxy (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/kafka/">kafka (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/kvm/">kvm (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/linux/">linux (21)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/minio/">minio (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/mysql/">mysql (4)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/nginx/">nginx (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/postgres/">postgres (48)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/python/">python (18)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/rabbitmq/">rabbitmq (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/redis/">redis (9)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/tidb/">tidb (5)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件 (8)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E5%AD%98%E5%82%A8/">存储 (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E5%AE%89%E5%85%A8/">安全 (3)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E6%95%B0%E4%BB%93/">数仓 (3)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E7%9B%91%E6%8E%A7/">监控 (3)</a></li>
+    
+</ul>
+
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/tags.html'>标签</a></h3>
+<div class="tagcloud">
+    
+    <a href="https://bodani.github.io/tags/%E4%BC%98%E5%8C%96/">优化</a>
+    
+    <a href="https://bodani.github.io/tags/%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86/">配置管理</a>
+    
+    <a href="https://bodani.github.io/tags/%E9%AB%98%E5%8F%AF%E7%94%A8/">高可用</a>
+    
+</div>
+
+    </section>
+
+    
+<section class="widget">
+    <h3 class="widget-title">友情链接</h3>
+    <ul class="widget-list">
+        
+        <li>
+            <a target="_blank" href="http://www.cnblogs.com/zhangeamon" title="历史博客">历史博客</a>
+        </li>
+        
+    </ul>
+</section>
+
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://bodani.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+   
+</body>
+
+</html>

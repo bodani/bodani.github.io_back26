@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>python | Let&#39;s go 🐌 🐌 🐌</title>
+    <meta property="og:title" content="python - Let&#39;s go 🐌 🐌 🐌">
+    <meta property="og:type" content="article">
+        
+        
+    <meta name="Keywords" content="postgres 、python、pg 、linix 、docker、 kubernetes、 cloud、hadoop、promethues ">
+    <meta name="description" content="python">
+        
+    <meta name="author" content="Eamon">
+    <meta property="og:url" content="https://bodani.github.io/categories/python/">
+    <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <link rel="alternate" type="application/rss+xml+xml" href="https://bodani.github.io/categories/python/index.xml" title="Let's go 🐌 🐌 🐌" />
+    
+    
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+   
+    
+    
+    
+    
+    
+    
+        <link rel="stylesheet" href='/css/douban.css'>
+    
+        <link rel="stylesheet" href='/css/other.css'>
+    
+   
+        <a href=https://github.com/eamonzhang><img style="position: absolute; top: 0; left: 0; border: 0;" src="/images/forkme_left_red_aa0000.png" alt="Fork me on GitHub" data-canonical-src="/images/forkme_left_red_aa0000.png"></a>
+
+   
+        <script>
+          var _hmt = _hmt || [];
+            (function() {
+            var hm = document.createElement("script");
+            <!-- hm.src = "https://hm.baidu.com/hm.js?1f6605a363a50554aa03adcc685b7699"; -->
+            hm.src = "https://hm.baidu.com/hm.js?0010600e9ae6ff8f5814bb7ec6b36072";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+          })();
+       </script>
+</head>
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://bodani.github.io">
+                        Let&#39;s go 🐌 🐌 🐌
+                    </a>
+                
+                <p class="description">Let&#39;s build our own cloud native together  </p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="" href="https://bodani.github.io">首页</a>
+                    
+                    <a  href="https://bodani.github.io/archives" title="归档">归档</a>
+                    
+                    <a  href="https://bodani.github.io/postgresql" title="Postgres">Postgres</a>
+                    
+                    <a  href="https://bodani.github.io/linux" title="Linux">Linux</a>
+                    
+                    <a  href="https://bodani.github.io/about/me" title="关于">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    
+    <h3 class="archive-title">
+        分类
+        <span class="keyword">python</span>
+        中的文章
+    </h3>
+    
+
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/python/pip/">python pip</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2023年4月26日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/python'>python</a>
+            
+        </div>
+        
+        <div class="post-content">
+            介绍 pip python第三方库管理工具,从 Python 3.4 开始，pip 已经内置在 Python。 升级 pip install --upgrade pip 或 pip install -U pip 安装第三方库 pip install package_name==包版本 批量安装 pip install -r requirements.txt cat requirements.txt tensorflow==2.3.1 uvicorn==0.12.2 fastapi==0.63.0 卸载 pip uninstall package_name 升级 pip install -U package_name 冻结当前环境 有时您想输出当前环境中所有已安装的包，或生成一个需求文件 pip freeze 查看需要升……
+            <p class="readmore"><a href="https://bodani.github.io/python/pip/">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/python/simple-demo/">python 简单示例</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年12月3日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/python'>python</a>
+            
+        </div>
+        
+        <div class="post-content">
+            快速启动一个本地服务 可临时充当文件下载服务 # python2 python -m SimpleHTTPServer 8888 # python3 python3 -m http.server 8888 flask 服务 from flask import Flask app = Flask(__name__) @app.route(&quot;/&quot;) def hello_world(): result = find_result() return result @app.route('/login', methods=['GET', 'POST']) def login(): if request.method == 'POST': pass else: pass if __name__ == '__main__': app.run(host='0.0.0.0',port='8000') python app.py gunicorn -w 1 -b 127.0.0.1:4000 app:app 操作PG数据库 import psycopg2 import time conn = None try: conn = psycopg2.connect(database=&quot;postgres&quot;, user=&quot;postgres&quot;, host=&quot;192.168.*.*&quot;, port=&quot;5432&quot;,password='*****') print(&quot;Opened database successfully&quot;) cur = conn.cursor() cur.execute(&quot;select * from api&quot;) rows = cur.fetchall() result = '' all_field = cur.description for filed in all_field: print(filed[0]) for row in rows: result += str(row[0]) result += &quot;\n&quot; print(result) print(&quot;Operation done successfully&quot;) conn.close() except Exception as e:……
+            <p class="readmore"><a href="https://bodani.github.io/python/simple-demo/">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/redis/long-polling/">长轮询</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年11月16日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/python'>python</a>
+            
+            <a href='/categories/redis'>redis</a>
+            
+        </div>
+        
+        <div class="post-content">
+            长轮询 实现原理： 与传统的轮询方式不同的是，当服务端接收到客户端的请求的时候，如果没有最新消息时不是立刻返回请求，而是等待一个最大超时时间。如果等待期间有最新消息则立刻返回。 相对于暴力的轮询，长轮询能够很大程度的减少客户端与服务端的连接进而缓解服务端的压力。 利用长轮询模拟推送服务，……
+            <p class="readmore"><a href="https://bodani.github.io/redis/long-polling/">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/redis/automated-keyword/">联想搜索</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年11月16日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/python'>python</a>
+            
+            <a href='/categories/redis'>redis</a>
+            
+        </div>
+        
+        <div class="post-content">
+            Redis 联想搜索实现 基于redis ZSET 例子: 当输入n时显示所有n开头的数据，当输入nb时显示所有nb开头的数据。 # 数据录入 127.0.0.1:6379&gt; ZADD ss 0 'n' (integer) 1 127.0.0.1:6379&gt; ZADD ss 0 'nb' (integer) 1 127.0.0.1:6379&gt; ZADD ss 0 'nba' (integer) 1 # 搜索n 127.0.0.1:6379&gt; ZRANK ss 'n' (integer) 0 127.0.0.1:6379&gt; ZRANGE ss 0 -1 1) &quot;n&quot; 2) &quot;nb&quot; 3) &quot;nba&quot; # 搜索nb 127.0.0.1:6379&gt; ZRANK ss 'nb' (integer) 1 127.0.0.1:6379&gt; ZRANGE ss 1 -1 1) &quot;nb&quot; 2) &quot;nba&quot;……
+            <p class="readmore"><a href="https://bodani.github.io/redis/automated-keyword/">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/python/push_messages/">消息推送</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年11月15日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/python'>python</a>
+            
+        </div>
+        
+        <div class="post-content">
+            基于jango channel 实现推送 在官方demo 的基础上自定义推送 Consumer 。 由于只是服务端到客户端单方向推送信息。类中只实现如下3个方法即可 &quot;&quot;&quot; connect 建立连接 disconnet 断开连接 push_messages 推送消息 &quot;&quot;&quot; from channels.generic.websocket import AsyncWebsocketConsumer # # 推送consumer class PushConsumer(AsyncWebsocketConsumer): async def connect(self): # 将username名称设定为 group 名 # self.group_name = self.scope['url_route']['kwargs']['username'] self.room_name = self.scope['url_route']['kwargs']['room_name'] self.room_group_name = 'chat_%s' % self.room_name await self.channel_layer.group_add( self.room_group_name, self.channel_name ) await self.accept() async def disconnect(self, close_code):……
+            <p class="readmore"><a href="https://bodani.github.io/python/push_messages/">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/redis/pubsub/">发布订阅</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年8月12日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/redis'>redis</a>
+            
+            <a href='/categories/python'>python</a>
+            
+        </div>
+        
+        <div class="post-content">
+            发布订阅 消息多播，一个发布消息可以同时被多个订阅者收听 常用命令 发布 PUBLISH channel message 订阅 SUBSCRIBE channel [channel ...] PSUBSCRIBE pattern [pattern ...] python demo #!/usr/bin/env python import redis import time redis_pool = redis.ConnectionPool(host=&quot;192.168.6.14&quot;,port=&quot;6379&quot;) redis_client = redis.Redis(connection_pool=redis_pool) #生产者 def publishMessages(): while True: redis_client.publish(&quot;channel.shenyang&quot;,&quot;hello news &quot;+time.asctime(time.localtime(time.time()))) time.sleep(2) #消费者 def subscibeMessages(): p = redis_client.pubsub() p.subscribe(&quot;channel.shenyang&quot;) while True: message = p.get_message() if message: print(message) else: time.sleep(1) ##加入超时时间堵塞读 def subscibeMessages(): p = redis_client.pubsub() p.subscribe(&quot;channel.shenyang&quot;) while True: message = p.get_message(timeout=10) # 10秒等待 if message: print(message) #阻塞消费者 def subscibeBlockMessages(): p = redis_client.pubsub() p.subscribe(&quot;channel.shenyang&quot;) for item in p.listen(): print(item['type'])……
+            <p class="readmore"><a href="https://bodani.github.io/redis/pubsub/">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/redis/distributedlock/">基于Redis 的分布式锁实现</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年8月10日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/redis'>redis</a>
+            
+            <a href='/categories/python'>python</a>
+            
+        </div>
+        
+        <div class="post-content">
+            分布式锁场景 秒杀抢购茅台，车票 提前预约抢订车位，共享单车 特点，多个用户同一时间对同一个资源进行申请，并且只能允许一个用户申请成功。 分布式锁必要条件 布式系统环境下，一个方法在同一时间只能被一个机器的一个线程执行； 高可用的获取锁与释放锁； 高性能的获取锁与释放锁； 具备可重入特性； 具备锁……
+            <p class="readmore"><a href="https://bodani.github.io/redis/distributedlock/">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/python/ctypes/">python 与 C 交互编程</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年5月28日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/python'>python</a>
+            
+        </div>
+        
+        <div class="post-content">
+            python 访问C 动态库 很多核心的算法库都是C/C++写的,成果物通常以动态库的方式对外提供。 如何利用python访问动态代码库 python访问C/C++的方式 ctypes pybind11 cffi swig ctypes的优势 不要修改动态库的源码 只需要动态库和头文件 使用比较简单,而且目前大部分库都是兼容C/C++ 参考 https://www.cnblogs.com/gaowengang/p/7919219.html……
+            <p class="readmore"><a href="https://bodani.github.io/python/ctypes/">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/python/django_max_con_age/">Django CONN_MAX_AGE 对数据连接的影响</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年4月20日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/python'>python</a>
+            
+            <a href='/categories/postgres'>postgres</a>
+            
+        </div>
+        
+        <div class="post-content">
+            Django的数据库连接 Django对数据库的链接处理是这样的，Django程序接受到请求之后，在第一访问数据库的时候会创建一个数据库连接,直到请求结束，关闭连接。下次请求也是如此。因此，这种情况下，随着访问的并发数越来越高，就会产生大量的数据库连接 使用CONN_MAX_AGE减……
+            <p class="readmore"><a href="https://bodani.github.io/python/django_max_con_age/">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/python/setup-packet/">使用setup打包</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年4月16日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/python'>python</a>
+            
+        </div>
+        
+        <div class="post-content">
+            使用setup 对python进行打包 将python打包后可在其他项目中直接引用 pip install *** 具体步骤 1 将代码复制到一个新的文件夹下 2 创建README.rst 3 创建 LICENSE 4 编写 setup.py setup.cfg setup.cfg [metadata] name = django-polls version = 0.1 description = A Django app to conduct Web-based polls. long_description = file: README.rst url = https://www.example.com/ author = Your Name author_email = yourname@example.com license = BSD-3-Clause # Example license classifiers = Environment :: Web Environment Framework :: Django Framework :: Django :: X.Y # Replace &quot;X.Y&quot; as appropriate Intended……
+            <p class="readmore"><a href="https://bodani.github.io/python/setup-packet/">阅读全文</a></p>
+        </div>
+    </article>
+    
+
+    
+
+
+
+<ol class="page-navigator">
+    
+
+    
+    <li  class="current">
+        <a href="https://bodani.github.io/categories/python/">1</a>
+    </li>
+    
+    <li >
+        <a href="https://bodani.github.io/categories/python/page/2/">2</a>
+    </li>
+    
+
+    
+    <li class="next">
+        <a href="https://bodani.github.io/categories/python/page/2/">下一页</a>
+    </li>
+    
+</ol>
+
+
+
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2018 - 2024 <a href="https://bodani.github.io"> By Eamon</a>
+        
+        | <a rel="nofollow" target="_blank" href="http://beian.miit.gov.cn/">辽ICP备2022000054号-1</a>
+        
+    </div>
+    <br />
+  
+</footer>
+
+
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+
+
+
+    <script src='/js/douban.js'></script>
+
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://bodani.github.io/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://bodani.github.io">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://bodani.github.io/python/pip/" title="python pip">python pip</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/postgres/repmgrd/" title="repmgrd介绍">repmgrd介绍</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/linux/linux_tunning/" title="Linux 优化指南">Linux 优化指南</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/monitor/nginx-log-exporter/" title="prometheus-nginxlog-exporter构建Nginx日志监控">prometheus-nginxlog-exporter构建Nginx日志监控</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/postgres/logical-replication_failover/" title="逻辑复制故障转移">逻辑复制故障转移</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/linux/nice/" title="nice, ionice, cpulimit">nice, ionice, cpulimit</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/linux/backlog-config/" title="Linux backlog/somaxconn 内核参数">Linux backlog/somaxconn 内核参数</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/storage/minio_ec/" title="Minio存储类别">Minio存储类别</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/postgres/wal_lsn/" title="LSN 和 wal日志文件名对应关系">LSN 和 wal日志文件名对应关系</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/middleware/kafka_install/" title="Kafka集群安装">Kafka集群安装</a>
+    </li>
+    
+</ul>
+
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/categories'>分类</a></h3>
+<ul class="widget-list">
+    
+    <li><a href="https://bodani.github.io/categories/ansible/">ansible (4)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/docker/">docker (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/etcd/">etcd (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/haproxy/">haproxy (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/kafka/">kafka (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/kvm/">kvm (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/linux/">linux (21)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/minio/">minio (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/mysql/">mysql (4)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/nginx/">nginx (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/postgres/">postgres (48)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/python/">python (18)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/rabbitmq/">rabbitmq (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/redis/">redis (9)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/tidb/">tidb (5)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件 (8)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E5%AD%98%E5%82%A8/">存储 (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E5%AE%89%E5%85%A8/">安全 (3)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E6%95%B0%E4%BB%93/">数仓 (3)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E7%9B%91%E6%8E%A7/">监控 (3)</a></li>
+    
+</ul>
+
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/tags.html'>标签</a></h3>
+<div class="tagcloud">
+    
+    <a href="https://bodani.github.io/tags/%E4%BC%98%E5%8C%96/">优化</a>
+    
+    <a href="https://bodani.github.io/tags/%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86/">配置管理</a>
+    
+    <a href="https://bodani.github.io/tags/%E9%AB%98%E5%8F%AF%E7%94%A8/">高可用</a>
+    
+</div>
+
+    </section>
+
+    
+<section class="widget">
+    <h3 class="widget-title">友情链接</h3>
+    <ul class="widget-list">
+        
+        <li>
+            <a target="_blank" href="http://www.cnblogs.com/zhangeamon" title="历史博客">历史博客</a>
+        </li>
+        
+    </ul>
+</section>
+
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://bodani.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+   
+</body>
+
+</html>

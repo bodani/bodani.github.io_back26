@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+	<meta name="generator" content="Hugo 0.81.0" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>Let&#39;s go 🐌 🐌 🐌 | Let&#39;s build our own cloud native together  </title>
+    <meta property="og:title" content="Let&#39;s go 🐌 🐌 🐌 | Let&#39;s build our own cloud native together  ">
+    <meta property="og:type" content="website">
+    <meta name="Keywords" content="postgres 、python、pg 、linix 、docker、 kubernetes、 cloud、hadoop、promethues ">
+    <meta name="description" content="python 软件架构等">
+    <meta property="og:url" content="https://bodani.github.io/">
+    <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <link rel="alternate" type="application/rss+xml+xml" href="https://bodani.github.io/index.xml" title="Let's go 🐌 🐌 🐌" />
+    
+    
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+   
+    
+    
+    
+    
+    
+    
+        <link rel="stylesheet" href='/css/douban.css'>
+    
+        <link rel="stylesheet" href='/css/other.css'>
+    
+   
+        <a href=https://github.com/eamonzhang><img style="position: absolute; top: 0; left: 0; border: 0;" src="/images/forkme_left_red_aa0000.png" alt="Fork me on GitHub" data-canonical-src="/images/forkme_left_red_aa0000.png"></a>
+
+   
+        <script>
+          var _hmt = _hmt || [];
+            (function() {
+            var hm = document.createElement("script");
+            <!-- hm.src = "https://hm.baidu.com/hm.js?1f6605a363a50554aa03adcc685b7699"; -->
+            hm.src = "https://hm.baidu.com/hm.js?0010600e9ae6ff8f5814bb7ec6b36072";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+          })();
+       </script>
+</head>
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <h1>
+                        <a id="logo" href="https://bodani.github.io">
+                            Let&#39;s go 🐌 🐌 🐌
+                        </a>
+                    </h1>
+                
+                <p class="description">Let&#39;s build our own cloud native together  </p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://bodani.github.io">首页</a>
+                    
+                    <a  href="https://bodani.github.io/archives" title="归档">归档</a>
+                    
+                    <a  href="https://bodani.github.io/postgresql" title="Postgres">Postgres</a>
+                    
+                    <a  href="https://bodani.github.io/linux" title="Linux">Linux</a>
+                    
+                    <a  href="https://bodani.github.io/about/me" title="关于">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/linux/stat/" title="Access Modify Change 三种时间戳">Access Modify Change 三种时间戳</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2018年12月20日
+        </date>
+        
+        <div class="post-content">
+            三种时间对应关系 访问时间 Access atime 修改时间 Modify mtime 状态改动时间 Change ctime 如何查看文件文件的三种时间戳 stat filename 三种时间戳的解释 访问时间：读一次文件的内容，这个时间就会更新。比如more、cat等命令。ls、stat命令不会修改atime 修改时间：修改时间是文件内容最后一次被修改的时间。比如：vim操作……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/linux/stat/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/postgres/role-manager/" title="权限管理">权限管理</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2018年12月20日
+        </date>
+        
+        <div class="post-content">
+            创建用户 # user 与 role 区别 ， user 具有login权限 postgres=# create user tester with password '123456'; CREATE ROLE 创建数据库,并关联所有者 postgres=# create database test owner tester ; CREATE DATABASE 变更数据库用户所有者 postgres=# alter database test owner to tester; ALTER DATABASE 修改用户&amp;数据库 #用户连接数 postgres=# alter user tester connection limit 100; ALTER ROLE #数据库连接数 postgres=# alter database test connection limit 100; ALTER DATABASE #用户其他属性修改 postgres=# alter user tester BYPASSRLS CREATEDB ENCRYPTED PASSWORD LOGIN NOCREATEDB NOINHERIT NOREPLICATION PASSWORD REPLICATION SET VALID UNTIL CONNECTION……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/postgres/role-manager/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/postgres/dba/" title="DBA 日常">DBA 日常</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2018年12月19日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/postgres'>postgres</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            备份 恢复 时时热备 定期冷备 升级 每年大版本小版本升级，新特性调研，性能测试，稳定性。 可用当前最新的上一个版本。 HA 手动 自动 读写分离 sharding 多副本 安全 权限管理 资源隔离 审计 ddl 慢sql 锁长时间占用 巡检 定期巡检 awr 报告 监控 系统 数据库 诊断 优化 背景 应用程序的野蛮生长，由产品为驱动的开发，一切以快速上线为目……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/postgres/dba/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/linux/ln-s/" title="ln -s 建立软连接">ln -s 建立软连接</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2018年12月19日
+        </date>
+        
+        <div class="post-content">
+            创建软连接 类似于windows中的创建快捷方式 ln -s source target 具体方法举例 需求 数据库的数据实际存放位置为 /data/pgsql/10/data/ 数据库的应用访问地址为 /var/lib/pgsql/10/data/ 创建软连接 1 切换目录到需要创建快捷方式的文件目录 cd /var/lib/pgsql/10/ 2.1 创建软连接 ln -s /data/pgsql/10/data/ data 2.2 删除软连接 rm data 删除软连接和数据 rm data/ 3 权限和所有者 chmod chown 修改软连接的所用者 使用 -h 参数 chown -h……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/linux/ln-s/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/linux/hdparm/" title="查看硬盘型号">查看硬盘型号</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2018年12月19日
+        </date>
+        
+        <div class="post-content">
+            通过总线查看硬盘连接 cat /proc/scsi/scsi Attached devices: Host: scsi0 Channel: 00 Id: 00 Lun: 00 Vendor: ATA Model: INTEL SSDSC2KB24 Rev: 0110 Type: Direct-Access ANSI SCSI revision: 05 Host: scsi1 Channel: 00 Id: 00 Lun: 00 Vendor: ATA Model: INTEL SSDSC2KB96 Rev: 0110 Type: Direct-Access ANSI SCSI revision: 05 Host: scsi2 Channel: 00 Id: 00 Lun: 00 Vendor: ATA Model: INTEL SSDSC2KB96 Rev: 0110 Type: Direct-Access ANSI SCSI revision: 05 通过系统查看 安装 yum install hdparm 查看 -i参数是在引导驱动器时获得的识别信息，这个信息有时候不完整也不一 定准确 hdparm -i /dev/sdb /dev/sdb: Model=INTEL SSDSC2KW512G8, FwRev=LHF002C, SerialNo=PHLA75210153512DGN Config={ Fixed } RawCHS=16383/16/63, TrkSize=0, SectSize=0,……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/linux/hdparm/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/about/3brothers/" title="扁鹊三兄弟">扁鹊三兄弟</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2018年12月17日
+        </date>
+        
+        <div class="post-content">
+            系统运维与安全的三种境界 封侯非我意， 我愿海波平。 -- 戚继光……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/about/3brothers/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/postgres/normal-form/" title="数据库三范式五约束">数据库三范式五约束</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2018年12月17日
+        </date>
+        
+        <div class="post-content">
+            三范式 第一范式：数据表中的每一列（每个字段）必须是不可拆分的最小单元，也就是确保每一列的原子性； 第二范式（2NF）：满足1NF后，要求表中的所有列，都必须依赖于主键，而不能有任何一列与主键没有关系，也就是说一个表只描述一件事情； 第三范式：必须先满足第二范式（2NF），要求：表中的……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/postgres/normal-form/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/postgres/insert01/" title="快速生成大量数据">快速生成大量数据</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2018年12月14日
+        </date>
+        
+        <div class="post-content">
+            在数据库中快速生成1w条数据，或测试数据库的写入性能。 创建数据库表 postgres=# create table tbl(id int, info text, crt_time timestamp); CREATE TABLE 方法一 generate_series 查看方法函数 postgres=# \df generate_series 函数列表 架构模式 | 名称 | 结果数据类型 | 参数数据类型 | 类型 ------------+-----------------+-----------------------------------+--------------------------------------------------------------------+------ pg_catalog | generate_series | SETOF bigint | bigint, bigint | 常规 pg_catalog | generate_series | SETOF bigint | bigint, bigint, bigint | 常规 pg_catalog | generate_series | SETOF integer | integer, integer | 常规 pg_catalog | generate_series | SETOF integer | integer, integer, integer | 常规 pg_catalog | generate_series |……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/postgres/insert01/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/postgres/pipelinedb02/" title="Pipelinedb 简介">Pipelinedb 简介</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2018年12月12日
+        </date>
+        
+        <div class="post-content">
+            项目已经停止维护 适配支持版本 PostgreSQL 10: 10.1, 10.2, 10.3, 10.4, 10.5 PostgreSQL 11: 11.0 基本概念 流(Stream) 流是基础，Continuous Views和transform则是基于流中的数据进行处理的手段。 对于同一份数据，只需要定义一个流，写入一份即可。 如果对同一份数据有多个维度的统计，可以写在一条SQL完成的（如同……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/postgres/pipelinedb02/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/postgres/pipelinedb01/" title="Pipelinedb文档概览">Pipelinedb文档概览</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2018年12月12日
+        </date>
+        
+        <div class="post-content">
+            官方文档 介绍 What PipelineDB is What PipelineDB is not QuitStart 一个统计wiki浏览的例子 安装 各种环境安装 Continuous Views 定义流视图，其实就是定义 统计分析的QUERY， 例如select id, count(*), avg(x), &hellip; from table group by &hellip;; 定义好之后，数据插入table，这个流视图就会不断增量的进行统计，你只要查询这个流视图，就可以查看到实时的统计结果。 数据库中存……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/postgres/pipelinedb01/">阅读全文</a></p>
+    </article>
+    
+    
+
+
+
+<ol class="page-navigator">
+    
+    <li class="prev">
+        <a href="https://bodani.github.io/page/21/">上一页</a>
+    </li>
+    
+
+    
+
+    
+        
+        
+    
+    
+
+    
+        
+        
+        <li >
+            <a href="https://bodani.github.io/">1</a>
+        </li>
+        
+    
+        
+        <li>
+            <span>...</span>
+        </li>
+        
+    
+        
+        
+        <li >
+            <a href="https://bodani.github.io/page/20/">20</a>
+        </li>
+        
+    
+        
+        
+        <li >
+            <a href="https://bodani.github.io/page/21/">21</a>
+        </li>
+        
+    
+        
+        
+        <li  class="current">
+            <a href="https://bodani.github.io/page/22/">22</a>
+        </li>
+        
+    
+        
+        
+        <li >
+            <a href="https://bodani.github.io/page/23/">23</a>
+        </li>
+        
+    
+        
+        
+        <li >
+            <a href="https://bodani.github.io/page/24/">24</a>
+        </li>
+        
+    
+        
+        <li>
+            <span>...</span>
+        </li>
+        
+    
+        
+        
+        <li >
+            <a href="https://bodani.github.io/page/29/">29</a>
+        </li>
+        
+    
+
+    
+    
+
+    <li class="next">
+        <a href="https://bodani.github.io/page/23/">下一页</a>
+    </li>
+    
+</ol>
+
+
+
+
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2018 - 2024 <a href="https://bodani.github.io"> By Eamon</a>
+        
+        | <a rel="nofollow" target="_blank" href="http://beian.miit.gov.cn/">辽ICP备2022000054号-1</a>
+        
+    </div>
+    <br />
+  
+</footer>
+
+
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+
+
+
+    <script src='/js/douban.js'></script>
+
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://bodani.github.io/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://bodani.github.io">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://bodani.github.io/python/pip/" title="python pip">python pip</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/postgres/repmgrd/" title="repmgrd介绍">repmgrd介绍</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/linux/linux_tunning/" title="Linux 优化指南">Linux 优化指南</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/monitor/nginx-log-exporter/" title="prometheus-nginxlog-exporter构建Nginx日志监控">prometheus-nginxlog-exporter构建Nginx日志监控</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/postgres/logical-replication_failover/" title="逻辑复制故障转移">逻辑复制故障转移</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/linux/nice/" title="nice, ionice, cpulimit">nice, ionice, cpulimit</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/linux/backlog-config/" title="Linux backlog/somaxconn 内核参数">Linux backlog/somaxconn 内核参数</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/storage/minio_ec/" title="Minio存储类别">Minio存储类别</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/postgres/wal_lsn/" title="LSN 和 wal日志文件名对应关系">LSN 和 wal日志文件名对应关系</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/middleware/kafka_install/" title="Kafka集群安装">Kafka集群安装</a>
+    </li>
+    
+</ul>
+
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/categories'>分类</a></h3>
+<ul class="widget-list">
+    
+    <li><a href="https://bodani.github.io/categories/ansible/">ansible (4)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/docker/">docker (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/etcd/">etcd (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/haproxy/">haproxy (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/kafka/">kafka (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/kvm/">kvm (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/linux/">linux (21)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/minio/">minio (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/mysql/">mysql (4)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/nginx/">nginx (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/postgres/">postgres (48)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/python/">python (18)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/rabbitmq/">rabbitmq (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/redis/">redis (9)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/tidb/">tidb (5)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件 (8)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E5%AD%98%E5%82%A8/">存储 (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E5%AE%89%E5%85%A8/">安全 (3)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E6%95%B0%E4%BB%93/">数仓 (3)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E7%9B%91%E6%8E%A7/">监控 (3)</a></li>
+    
+</ul>
+
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/tags.html'>标签</a></h3>
+<div class="tagcloud">
+    
+    <a href="https://bodani.github.io/tags/%E4%BC%98%E5%8C%96/">优化</a>
+    
+    <a href="https://bodani.github.io/tags/%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86/">配置管理</a>
+    
+    <a href="https://bodani.github.io/tags/%E9%AB%98%E5%8F%AF%E7%94%A8/">高可用</a>
+    
+</div>
+
+    </section>
+
+    
+<section class="widget">
+    <h3 class="widget-title">友情链接</h3>
+    <ul class="widget-list">
+        
+        <li>
+            <a target="_blank" href="http://www.cnblogs.com/zhangeamon" title="历史博客">历史博客</a>
+        </li>
+        
+    </ul>
+</section>
+
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://bodani.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+   
+</body>
+
+</html>

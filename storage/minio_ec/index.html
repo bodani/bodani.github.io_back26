@@ -1,0 +1,598 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>Minio存储类别 | Let&#39;s go 🐌 🐌 🐌</title>
+    <meta property="og:title" content="Minio存储类别 - Let&#39;s go 🐌 🐌 🐌">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content='2022-08-22T11:37:58&#43;08:00'>
+        
+        
+    <meta property="article:modified_time" content='2022-08-22T11:37:58&#43;08:00'>
+        
+    <meta name="Keywords" content="postgres 、python、pg 、linix 、docker、 kubernetes、 cloud、hadoop、promethues ">
+    <meta name="description" content="Minio存储类别">
+        
+    <meta name="author" content="Eamon">
+    <meta property="og:url" content="https://bodani.github.io/storage/minio_ec/">
+    <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    
+    
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+   
+    
+    
+    
+    
+    
+    
+        <link rel="stylesheet" href='/css/douban.css'>
+    
+        <link rel="stylesheet" href='/css/other.css'>
+    
+   
+        <a href=https://github.com/eamonzhang><img style="position: absolute; top: 0; left: 0; border: 0;" src="/images/forkme_left_red_aa0000.png" alt="Fork me on GitHub" data-canonical-src="/images/forkme_left_red_aa0000.png"></a>
+
+   
+        <script>
+          var _hmt = _hmt || [];
+            (function() {
+            var hm = document.createElement("script");
+            <!-- hm.src = "https://hm.baidu.com/hm.js?1f6605a363a50554aa03adcc685b7699"; -->
+            hm.src = "https://hm.baidu.com/hm.js?0010600e9ae6ff8f5814bb7ec6b36072";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+          })();
+       </script>
+</head>
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://bodani.github.io">
+                        Let&#39;s go 🐌 🐌 🐌
+                    </a>
+                
+                <p class="description">Let&#39;s build our own cloud native together  </p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="" href="https://bodani.github.io">首页</a>
+                    
+                    <a  href="https://bodani.github.io/archives" title="归档">归档</a>
+                    
+                    <a  href="https://bodani.github.io/postgresql" title="Postgres">Postgres</a>
+                    
+                    <a  href="https://bodani.github.io/linux" title="Linux">Linux</a>
+                    
+                    <a  href="https://bodani.github.io/about/me" title="关于">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    <style type="text/css">
+    .post-toc {
+        position: fixed;
+        width: 200px;
+        margin-left: -210px;
+        padding: 5px 10px;
+        font-family: Athelas, STHeiti, Microsoft Yahei, serif;
+        font-size: 12px;
+        border: 1px solid rgba(0, 0, 0, .07);
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.98);
+        background-clip: padding-box;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        word-wrap: break-word;
+        white-space: nowrap;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        z-index: 999;
+        cursor: pointer;
+        max-height: 70%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .post-toc .post-toc-title {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 20px;
+        font-weight: 400;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .post-toc .post-toc-content {
+        font-size: 15px;
+    }
+
+    .post-toc .post-toc-content>nav>ul {
+        margin: 10px 0;
+    }
+
+    .post-toc .post-toc-content ul {
+        padding-left: 20px;
+        list-style: square;
+        margin: 0.5em;
+        line-height: 1.8em;
+    }
+
+    .post-toc .post-toc-content ul ul {
+        padding-left: 15px;
+        display: none;
+    }
+
+    @media print,
+    screen and (max-width:1057px) {
+        .post-toc {
+            display: none;
+        }
+    }
+</style>
+<div class="post-toc" style="position: absolute; top: 188px;">
+    <h2 class="post-toc-title">目录</h2>
+    <div class="post-toc-content">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#副本机制与纠删码方式对比">副本机制与纠删码方式对比</a></li>
+    <li><a href="#minio-中的存储类别">Minio 中的存储类别</a></li>
+    <li><a href="#终端指定类别">终端指定类别</a></li>
+    <li><a href="#思考">思考</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var postToc = $(".post-toc");
+        if (postToc.length) {
+            var leftPos = $("#main").offset().left;
+            if(leftPos<220){
+                postToc.css({"width":leftPos-10,"margin-left":(0-leftPos)})
+            }
+
+            var t = postToc.offset().top - 20,
+                a = {
+                    start: {
+                        position: "absolute",
+                        top: t
+                    },
+                    process: {
+                        position: "fixed",
+                        top: 20
+                    },
+                };
+            $(window).scroll(function () {
+                var e = $(window).scrollTop();
+                e < t ? postToc.css(a.start) : postToc.css(a.process)
+            })
+        }
+    })
+</script>
+
+    <article class="post">
+        <header>
+            <h1 class="post-title">Minio存储类别</h1>
+        </header>
+        <date class="post-meta meta-date">
+            2022年8月22日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/minio'>minio</a></span>
+            
+        </div>
+        
+        
+        
+        <div class="clear" style="display: none">
+            <div class="toc-article">
+                <div class="toc-title">文章目录</div>
+            </div>
+        </div>
+        
+        <div class="post-content">
+            <h1 id="minio-存储类别">minio 存储类别</h1>
+<h2 id="副本机制与纠删码方式对比">副本机制与纠删码方式对比</h2>
+<p>在分布式数据存储服务中，通常使用的方式有副本机制，与纠删码机制。</p>
+<p><strong>原理对比</strong></p>
+<p>副本技术的原理比较简单，通过副本机制，数据的冗余写来保证数据的可靠性</p>
+<p>纠删码类似于raid5、raid6类似。通过引入校验数据块保障数据冗余，从而获得更多的存储空间</p>
+<p>EC ( Erasure Coding) 相对 RAID 技术更加灵活，条带由 K 个数据块和 M 个校验数据块组成，而且 K 和 M 是可以调整的。</p>
+<p><strong>空间利用率</strong></p>
+<p>副本机制空间利用率为只有两个副本时，使用率为50%。副本数越多可靠性越高，空间利用率越低。计算比较简单。</p>
+<p>纠删码通过调整K 数据块,M 校验块比例来设置可靠性与空间利用率。空间利用率 K / (K+M)。 K 越大空间利用率越高，M越大 可靠性越高。</p>
+<p><strong>可靠性</strong></p>
+<p>容忍节点或磁盘故障数量 副本数 (N-1 ) ,N为节点的数量。纠删码 M，为校验块的比例。损失达到M后变为只读</p>
+<p><strong>纠删码代价</strong></p>
+<p>纠删码通过CPU代价补偿硬盘的空间利用率。CPU的开销会更高</p>
+<h2 id="minio-中的存储类别">Minio 中的存储类别</h2>
+<p>minio采用纠删码的方式保证数据的可靠性。不同于raid5 、minio的纠删码使用在对象级别。</p>
+<ul>
+<li><strong><a href="https://docs.min.io/minio/baremetal/concepts/erasure-coding.html#erasure-sets"> Erasure Sets</a>.</strong></li>
+</ul>
+<p>Erasure set size is automatically calculated based on the number of disks. MinIO  supports unlimited number of disks but each erasure set can be upto 16  disks and a minimum of 2 disks</p>
+<p>首先需要了解一个概念， Erasure Sets。 他是一集合，就是前面纠删码中提到的k+M，minio会根据集群中的磁盘总数，将磁盘划分为多个组，每个组就是一个单独的集合（Erasure Sets), 每个集合拥有的磁盘数为4-16个。</p>
+<p>参考关系表格见 <a href="https://github.com/minio/minio/blob/master/docs/distributed/SIZING.md">https://github.com/minio/minio/blob/master/docs/distributed/SIZING.md</a></p>
+<p><a href="https://min.io/product/erasure-code-calculator">具体计算ES</a></p>
+<ul>
+<li>minio中存储类别有两个级别，<strong>STANDARD</strong>、<strong>REDUCED_REDUNDANCY</strong></li>
+</ul>
+<p>STANDARD 的N 值大于 REDUCED_REDUNDANCY 中的N 值。 并且小于 磁盘总数的1/2。</p>
+<ul>
+<li><strong>设置纠删码中的N 值</strong></li>
+</ul>
+<p>​	通过在启动集群时设置环境变量的方式</p>
+<pre><code># 设置环境变量
+export MINIO_STORAGE_CLASS_STANDARD=EC:3
+export MINIO_STORAGE_CLASS_RRS=EC:2
+</code></pre><p>​    通过命令方式 mc admin config get/set</p>
+<pre><code># 命令修改EC:N
+
+$mc admin  config get  myplay/ storage_class
+storage_class standard=EC:3 rrs=EC:1
+
+$mc admin  config set  myplay/ storage_class standard=EC:2 rrs=EC:1
+Successfully applied new settings.
+</code></pre><pre><code>查看修改 ec 值对总容量的影响
+$ mc admin  decommission status myplay/
+┌─────┬───────────────────────────────────────────────┬─────────────────────────────────┬────────┐
+│ ID  │ Pools                                         │ Capacity                        │ Status │
+│ 1st │ http://***** │ 1.1 TiB (used) / 44 TiB (total) │ Active │
+└─────┴───────────────────────────────────────────────┴─────────────────────────────────┴────────┘
+</code></pre><ul>
+<li><strong>默认值</strong></li>
+</ul>
+<p>如果在启动minio集群时没有设置EC值，将采用默认值。</p>
+<p>​       通过以下代码与实现测试环境观察。与 <a href="https://docs.min.io/minio/baremetal/concepts/erasure-coding.html#">Erasure Coding </a> 文档中的描述 略有不符。</p>
+<pre><code> MinIO sets the `REDUCED_REDUNDANCY` parity to `EC:2` by default
+</code></pre><pre><code>代码位置 https://github.com/minio/minio/blob/master/internal/config/storageclass/storage-class.go
+
+// Default RRS parity is always minimum parity. 默认RRS parity 值 1
+	defaultRRSParity = 1
+
+// DefaultParityBlocks returns default parity blocks for 'drive' count 默认 Standy parity 值与dirve 个数的对应关系
+func DefaultParityBlocks(drive int) int {
+	switch drive {
+	case 1:
+		return 0
+	case 3, 2:
+		return 1
+	case 4, 5:
+		return 2
+	case 6, 7:
+		return 3
+	default:
+		return 4
+	}
+}
+
+// DefaultKVS - default storage class config 配置文件中的默认描述  storage_class standard= rrs=EC:1 # 通过命令 `mc admin config get myplay/ storage_class`
+var (
+	DefaultKVS = config.KVS{
+		config.KV{
+			Key:   ClassStandard,
+			Value: &quot;&quot;,
+		},
+		config.KV{
+			Key:   ClassRRS,
+			Value: &quot;EC:1&quot;,
+		},
+	}
+)
+
+// Standard constats for config info storage class
+const (
+	ClassStandard = &quot;standard&quot;
+	ClassRRS      = &quot;rrs&quot;
+
+	// Reduced redundancy storage class environment variable
+	RRSEnv = &quot;MINIO_STORAGE_CLASS_RRS&quot;
+	// Standard storage class environment variable
+	StandardEnv = &quot;MINIO_STORAGE_CLASS_STANDARD&quot;
+
+	// Supported storage class scheme is EC
+	schemePrefix = &quot;EC&quot;
+
+	// Min parity disks
+	minParityDisks = 0
+
+	// Default RRS parity is always minimum parity.
+	defaultRRSParity = 1
+)
+</code></pre><h2 id="终端指定类别">终端指定类别</h2>
+<p>通过 StorageClass设定使用存储类型</p>
+<pre><code># minio-client.go
+s3Client, err := minio.New(&quot;localhost:9000&quot;, &quot;YOUR-ACCESSKEYID&quot;, &quot;YOUR-SECRETACCESSKEY&quot;, true)
+if err != nil {
+ log.Fatalln(err)
+}
+
+object, err := os.Open(&quot;my-testfile&quot;)
+if err != nil {
+ log.Fatalln(err)
+}
+defer object.Close()
+objectStat, err := object.Stat()
+if err != nil {
+ log.Fatalln(err)
+}
+
+n, err := s3Client.PutObject(&quot;my-bucketname&quot;, &quot;my-objectname&quot;, object, objectStat.Size(), minio.PutObjectOptions{ContentType: &quot;application/octet-stream&quot;, StorageClass: &quot;REDUCED_REDUNDANCY&quot;})
+if err != nil {
+ log.Fatalln(err)
+}
+log.Println(&quot;Uploaded&quot;, &quot;my-objectname&quot;, &quot; of size: &quot;, n, &quot;Successfully.&quot;)
+</code></pre><p>没有指定Storage Class的情况</p>
+<pre><code>    If STANDARD storage class is set via environment variables or mc admin config get/set commands, and x-amz-storage-class is not present in request metadata, MinIO server will apply STANDARD storage class to the object. This means the data and parity disks will be used as set in STANDARD storage class.
+    
+    如果集群中设置了STANDARD 而在终端代码中没有使用 storage-class类别，则默认使用STANDARD
+
+    If storage class is not defined before starting MinIO server, and subsequent PutObject metadata field has x-amz-storage-class present with values REDUCED_REDUNDANCY or STANDARD, MinIO server uses default parity values.
+    
+    如果集群中没有指定 storage class 类别。终端代码中指定的storage-class类别的值将采用集群的默认值
+</code></pre><p>参考</p>
+<p><a href="https://github.com/minio/minio/blob/9c605ad153fec94df496906bb94ec8733b5620df/docs/erasure/storage-class/README.md">https://github.com/minio/minio/blob/9c605ad153fec94df496906bb94ec8733b5620df/docs/erasure/storage-class/README.md</a></p>
+<h2 id="思考">思考</h2>
+<p><strong>minio 分布式部署方案为什么推荐只是需要4块磁盘，而不是3块</strong></p>
+<p>如果只有3块磁盘，EC最大值为 小于等于3/2 即EC 1， 当其中任何一块磁盘坏掉的情况下，整个集群降为只读模式。</p>
+<p>如果有4块磁盘，EC为2，当坏掉其中一块磁盘的时候，整个集群依然具有读写能力。</p>
+<p>理解minio中EC 对集群如何做到高可用及集群的扩容将非常有帮助</p>
+
+        </div>
+
+        
+
+
+        
+
+<div class="post-archive">
+    <h2>其他文章</h2>
+    <ul class="listing">
+        
+        <li><a href="/postgres/wal_lsn/">LSN 和 wal日志文件名对应关系</a></li>
+        
+        <li><a href="/middleware/kafka_install/">Kafka集群安装</a></li>
+        
+        <li><a href="/postgres/upset/">upset 用法</a></li>
+        
+    </ul>
+</div>
+
+
+
+        <div class="post-meta meta-tags">
+            
+            没有标签
+            
+        </div>
+    </article>
+    
+    
+
+    
+    
+    <div class="post bg-white">
+      <script src="https://utteranc.es/client.js"
+            repo= "your github repo"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+      </script>
+    </div>
+    
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2018 - 2024 <a href="https://bodani.github.io"> By Eamon</a>
+        
+        | <a rel="nofollow" target="_blank" href="http://beian.miit.gov.cn/">辽ICP备2022000054号-1</a>
+        
+    </div>
+    <br />
+  
+</footer>
+
+
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+
+
+
+    <script src='/js/douban.js'></script>
+
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://bodani.github.io/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://bodani.github.io">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://bodani.github.io/python/pip/" title="python pip">python pip</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/postgres/repmgrd/" title="repmgrd介绍">repmgrd介绍</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/linux/linux_tunning/" title="Linux 优化指南">Linux 优化指南</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/monitor/nginx-log-exporter/" title="prometheus-nginxlog-exporter构建Nginx日志监控">prometheus-nginxlog-exporter构建Nginx日志监控</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/postgres/logical-replication_failover/" title="逻辑复制故障转移">逻辑复制故障转移</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/linux/nice/" title="nice, ionice, cpulimit">nice, ionice, cpulimit</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/linux/backlog-config/" title="Linux backlog/somaxconn 内核参数">Linux backlog/somaxconn 内核参数</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/storage/minio_ec/" title="Minio存储类别">Minio存储类别</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/postgres/wal_lsn/" title="LSN 和 wal日志文件名对应关系">LSN 和 wal日志文件名对应关系</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/middleware/kafka_install/" title="Kafka集群安装">Kafka集群安装</a>
+    </li>
+    
+</ul>
+
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/categories'>分类</a></h3>
+<ul class="widget-list">
+    
+    <li><a href="https://bodani.github.io/categories/ansible/">ansible (4)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/docker/">docker (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/etcd/">etcd (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/haproxy/">haproxy (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/kafka/">kafka (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/kvm/">kvm (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/linux/">linux (21)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/minio/">minio (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/mysql/">mysql (4)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/nginx/">nginx (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/postgres/">postgres (48)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/python/">python (18)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/rabbitmq/">rabbitmq (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/redis/">redis (9)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/tidb/">tidb (5)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件 (8)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E5%AD%98%E5%82%A8/">存储 (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E5%AE%89%E5%85%A8/">安全 (3)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E6%95%B0%E4%BB%93/">数仓 (3)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E7%9B%91%E6%8E%A7/">监控 (3)</a></li>
+    
+</ul>
+
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/tags.html'>标签</a></h3>
+<div class="tagcloud">
+    
+    <a href="https://bodani.github.io/tags/%E4%BC%98%E5%8C%96/">优化</a>
+    
+    <a href="https://bodani.github.io/tags/%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86/">配置管理</a>
+    
+    <a href="https://bodani.github.io/tags/%E9%AB%98%E5%8F%AF%E7%94%A8/">高可用</a>
+    
+</div>
+
+    </section>
+
+    
+<section class="widget">
+    <h3 class="widget-title">友情链接</h3>
+    <ul class="widget-list">
+        
+        <li>
+            <a target="_blank" href="http://www.cnblogs.com/zhangeamon" title="历史博客">历史博客</a>
+        </li>
+        
+    </ul>
+</section>
+
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://bodani.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+   
+</body>
+
+</html>

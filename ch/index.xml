@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ches on Let&#39;s go 🐌 🐌 🐌</title>
+    <link>https://bodani.github.io/ch/</link>
+    <description>Recent content in ches on Let&#39;s go 🐌 🐌 🐌</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 21 Dec 2021 09:10:29 +0800</lastBuildDate><atom:link href="https://bodani.github.io/ch/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ClickHouse</title>
+      <link>https://bodani.github.io/ch/install/</link>
+      <pubDate>Tue, 21 Dec 2021 09:10:29 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/ch/install/</guid>
+      <description>调研总结 不适用于多个大表的join操作 没有事务保障机制 merage最终一致性 不适合财务相关系统 对数据精度要求不高，实时性有要求的场景比较适合。</description>
+    </item>
+    
+  </channel>
+</rss>

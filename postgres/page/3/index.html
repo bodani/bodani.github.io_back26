@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>Postgres | Let&#39;s go 🐌 🐌 🐌</title>
+    <meta property="og:title" content="Postgres - Let&#39;s go 🐌 🐌 🐌">
+    <meta property="og:type" content="article">
+        
+        
+    <meta name="Keywords" content="postgres 、python、pg 、linix 、docker、 kubernetes、 cloud、hadoop、promethues ">
+    <meta name="description" content="Postgres">
+        
+    <meta name="author" content="Eamon">
+    <meta property="og:url" content="https://bodani.github.io/postgres/">
+    <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <link rel="alternate" type="application/rss+xml+xml" href="https://bodani.github.io/postgres/index.xml" title="Let's go 🐌 🐌 🐌" />
+    
+    
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+   
+    
+    
+    
+    
+    
+    
+        <link rel="stylesheet" href='/css/douban.css'>
+    
+        <link rel="stylesheet" href='/css/other.css'>
+    
+   
+        <a href=https://github.com/eamonzhang><img style="position: absolute; top: 0; left: 0; border: 0;" src="/images/forkme_left_red_aa0000.png" alt="Fork me on GitHub" data-canonical-src="/images/forkme_left_red_aa0000.png"></a>
+
+   
+        <script>
+          var _hmt = _hmt || [];
+            (function() {
+            var hm = document.createElement("script");
+            <!-- hm.src = "https://hm.baidu.com/hm.js?1f6605a363a50554aa03adcc685b7699"; -->
+            hm.src = "https://hm.baidu.com/hm.js?0010600e9ae6ff8f5814bb7ec6b36072";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+          })();
+       </script>
+</head>
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://bodani.github.io">
+                        Let&#39;s go 🐌 🐌 🐌
+                    </a>
+                
+                <p class="description">Let&#39;s build our own cloud native together  </p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="" href="https://bodani.github.io">首页</a>
+                    
+                    <a  href="https://bodani.github.io/archives" title="归档">归档</a>
+                    
+                    <a  href="https://bodani.github.io/postgresql" title="Postgres">Postgres</a>
+                    
+                    <a  href="https://bodani.github.io/linux" title="Linux">Linux</a>
+                    
+                    <a  href="https://bodani.github.io/about/me" title="关于">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/postgres/repmgr/" title="PG高可用 repmgr 搭建">PG高可用 repmgr 搭建</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年4月7日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/postgres'>postgres</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            基于Repmgr实现数据库高可用 安装环境 软件环境 postgres 10 repmgr 5.3.2 centos7 网络环境 IP地址 运行软件 10.10.2.12/node1 repmgr,repmgrd,pg 10.10.2.13/node2 repmgr,repmgrd,pg 10.10.2.14/node3 repmgr,repmgrd,pg 前期准备 hosts 文件配置 vi /etc/hosts # 10.10.2.12 node1 10.10.2.13 node2 10.10.2.14 node3 安装PG10 $ yum install https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm $ yum update -y $ yum install -y postgresql10-server postgresql10 postgresql10-contrib # 只有主库需要初始化 $ sudo su postgres -c &quot;/usr/pgsql-10/bin/initdb --data-checksums -D /var/lib/pgsql/10/data&quot; 安装repmgr $ yum install -y repmgr10.x86_64 提升postgres 用户具有部分sudo 执行……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/postgres/repmgr/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/postgres/bgwriter/" title="Backgroud Writer 进程">Backgroud Writer 进程</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年3月31日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/postgres'>postgres</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            主要作用 负责将shared buffer 中的内容刷写到磁盘中，9.1版之后部分内容交给checkpoint完成。 参数配置 # - Background Writer - #bgwriter_delay = 200ms # 10-10000ms between rounds #bgwriter_lru_maxpages = 100 # 0-1000 max buffers written/round #bgwriter_lru_multiplier = 2.0 # 0-10.0 multiplier on buffers scanned/round #bgwriter_flush_after = 512kB # measured in pages, 0 disables bgwriter_delay 两次写入任务之间的睡眠间隔时间 bgwriter_lru_maxpages 每次bgwriter任务写buffer的最大page数，一旦达……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/postgres/bgwriter/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/postgres/view_pg_stat_bgwriter/" title="数据库试图之 pg_stat_bgwriter">数据库试图之 pg_stat_bgwriter</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年3月31日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/postgres'>postgres</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            介绍 可查看 backgroud writer， checkpoint ，backend 进程刷写 Shared buffer 情况视图 pg数据库在写入时先在内存中更新shared buffer ，然后有checkpoint机制将脏数据刷写到磁盘。 视图 select * from pg_stat_bgwriter ; -[ RECORD 1 ]---------+------------------------------ checkpoints_timed | 64017 checkpoints_req | 458 checkpoint_write_time | 9608302902 checkpoint_sync_time | 1189286 buffers_checkpoint | 578367652 buffers_clean | 329022 maxwritten_clean | 2353 buffers_backend | 29802728 buffers_backend_fsync | 0 buffers_alloc | 83826180 stats_reset | 2020-08-20 19:41:20.491551+08 负责将shared buffer 中的内容……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/postgres/view_pg_stat_bgwriter/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/postgres/ha_fd/" title="数据库高可用设计分析">数据库高可用设计分析</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年3月23日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/postgres'>postgres</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            基本概念 集群： 一组多个同时对外提供相同服务的实体机组成一个集群。这里的集群为主从结构，可写节点为主节点，其他只读节点为从节点。 高可用： 在发生局部故障时对整体业务影响很低。即不可用的时间要尽量的短。 对外部应用的访问来说，无需关注如何实现，如同只访问一个节点。并能得到持续的服务能力。……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/postgres/ha_fd/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/postgres/replication02/" title="流复制同步级别">流复制同步级别</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年3月17日
+        </date>
+        
+        <div class="post-content">
+            流复制过程 synchronous_commit = on ） # synchronization level; on default # off, local, remote_write, or on 同步级别 remote_apply：事务commit或rollback时，等待其redo在primary、以及同步standby(s)已持久化，并且其redo在同步 standby(s)已apply。 on：事务commit或rollback时，……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/postgres/replication02/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/postgres/pg_rman/" title="pg_rman 备份恢复数据库">pg_rman 备份恢复数据库</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年3月9日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/postgres'>postgres</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            适用场景 PG_RMAN 基于本地数据拷贝的方式，要求与数据库需要安装在同一个机器节点上。 适用于项目初期，对数据库的规划处于初级阶段。实体机不充分的情况是个很好的选择。 数据库使用ssd盘，备份磁盘采用企业sata大盘。或nfs网盘等。 PG_RMAN 支持全备份，增量备份，备份验证，保留策略等 应用软件包地址 https://github.com/ossc-db/pg_rman/releases 基……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/postgres/pg_rman/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/postgres/patroni02/" title="Patroni 高可用管理进阶">Patroni 高可用管理进阶</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年3月5日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/postgres'>postgres</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            完成目标 主从同步策略 异地多机房策略 failover 触发详情 访问认证 watch-dog 配置文件详情 fencing DCS 失效处理 加入节点复制数据限流 主从切换流量,避免重新拉取 级联复制 callback 日志&amp;监控 主从同步策略 数据库主从之间同步类型 Synchronous state of this standby server. Possible values are: async: This standby server is asynchronous. potential: This standby server is now asynchronous, but can potentially become synchronous if one of current synchronous ones fails. sync: This standby server is synchronous. quorum: This standby server is considered as……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/postgres/patroni02/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/postgres/thinking_in_db_performance/" title="数据库优化思考-性能优化">数据库优化思考-性能优化</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年2月26日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/postgres'>postgres</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            为什么要优化 首先了解一个概念，什么是·熵增· 物理定义：熵增过程是一个自发的由有序向无序发展的过程(Bortz, 1986; Roth, 1993) 在一个孤立的系统里，如果没有外力做工，其总混乱度（即熵）会不断增大，直至系统彻底变得无序 从系统软件的角度： 从应用系统上线那一刻开始，随着用户量的增加、业务功能的持续……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/postgres/thinking_in_db_performance/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/postgres/hotupdate/" title="hot update">hot update</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年1月14日
+        </date>
+        
+        <div class="post-content">
+            What is HOT HOT是“Heap Only Tuple”（仅元组堆）的缩写, 用来提高update效率。 行的新版本和旧版本位于同一块中时，该行的外部地址（原始行指针）保持不变，利用hot link指针进行转发地址。索引不需要任何改动。 前提条件 包含更新行的块中必须有足够的空间 在已修改值的任何列上均未定义……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/postgres/hotupdate/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/postgres/thinking_in_db_tune/" title="数据库优化思考 - 模块调优">数据库优化思考 - 模块调优</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年1月13日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/postgres'>postgres</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            开始乱说 主要是结合postgres数据库自身特点，根据具体的业务场景，作出相应调整，使其更加合理。 数据库作为一个整体对外提供服务，单是其内部是由不同的功能模块组成，相互协调来共同完成任务。 各个功能模块完成不同的功能，每个模块的特点也不同，在调整的时候至少需要理解各个模块实现的基本……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/postgres/thinking_in_db_tune/">阅读全文</a></p>
+    </article>
+    
+    
+    
+
+
+
+<ol class="page-navigator">
+    
+    <li class="prev">
+        <a href="https://bodani.github.io/postgres/page/2/">上一页</a>
+    </li>
+    
+
+    
+    <li >
+        <a href="https://bodani.github.io/postgres/">1</a>
+    </li>
+    
+    <li >
+        <a href="https://bodani.github.io/postgres/page/2/">2</a>
+    </li>
+    
+    <li  class="current">
+        <a href="https://bodani.github.io/postgres/page/3/">3</a>
+    </li>
+    
+    <li >
+        <a href="https://bodani.github.io/postgres/page/4/">4</a>
+    </li>
+    
+    <li >
+        <a href="https://bodani.github.io/postgres/page/5/">5</a>
+    </li>
+    
+    <li >
+        <a href="https://bodani.github.io/postgres/page/6/">6</a>
+    </li>
+    
+    <li >
+        <a href="https://bodani.github.io/postgres/page/7/">7</a>
+    </li>
+    
+    <li >
+        <a href="https://bodani.github.io/postgres/page/8/">8</a>
+    </li>
+    
+    <li >
+        <a href="https://bodani.github.io/postgres/page/9/">9</a>
+    </li>
+    
+    <li >
+        <a href="https://bodani.github.io/postgres/page/10/">10</a>
+    </li>
+    
+
+    
+    <li class="next">
+        <a href="https://bodani.github.io/postgres/page/4/">下一页</a>
+    </li>
+    
+</ol>
+
+
+
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2018 - 2024 <a href="https://bodani.github.io"> By Eamon</a>
+        
+        | <a rel="nofollow" target="_blank" href="http://beian.miit.gov.cn/">辽ICP备2022000054号-1</a>
+        
+    </div>
+    <br />
+  
+</footer>
+
+
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+
+
+
+    <script src='/js/douban.js'></script>
+
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://bodani.github.io/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://bodani.github.io">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://bodani.github.io/python/pip/" title="python pip">python pip</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/postgres/repmgrd/" title="repmgrd介绍">repmgrd介绍</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/linux/linux_tunning/" title="Linux 优化指南">Linux 优化指南</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/monitor/nginx-log-exporter/" title="prometheus-nginxlog-exporter构建Nginx日志监控">prometheus-nginxlog-exporter构建Nginx日志监控</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/postgres/logical-replication_failover/" title="逻辑复制故障转移">逻辑复制故障转移</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/linux/nice/" title="nice, ionice, cpulimit">nice, ionice, cpulimit</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/linux/backlog-config/" title="Linux backlog/somaxconn 内核参数">Linux backlog/somaxconn 内核参数</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/storage/minio_ec/" title="Minio存储类别">Minio存储类别</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/postgres/wal_lsn/" title="LSN 和 wal日志文件名对应关系">LSN 和 wal日志文件名对应关系</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/middleware/kafka_install/" title="Kafka集群安装">Kafka集群安装</a>
+    </li>
+    
+</ul>
+
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/categories'>分类</a></h3>
+<ul class="widget-list">
+    
+    <li><a href="https://bodani.github.io/categories/ansible/">ansible (4)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/docker/">docker (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/etcd/">etcd (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/haproxy/">haproxy (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/kafka/">kafka (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/kvm/">kvm (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/linux/">linux (21)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/minio/">minio (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/mysql/">mysql (4)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/nginx/">nginx (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/postgres/">postgres (48)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/python/">python (18)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/rabbitmq/">rabbitmq (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/redis/">redis (9)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/tidb/">tidb (5)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件 (8)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E5%AD%98%E5%82%A8/">存储 (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E5%AE%89%E5%85%A8/">安全 (3)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E6%95%B0%E4%BB%93/">数仓 (3)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E7%9B%91%E6%8E%A7/">监控 (3)</a></li>
+    
+</ul>
+
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/tags.html'>标签</a></h3>
+<div class="tagcloud">
+    
+    <a href="https://bodani.github.io/tags/%E4%BC%98%E5%8C%96/">优化</a>
+    
+    <a href="https://bodani.github.io/tags/%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86/">配置管理</a>
+    
+    <a href="https://bodani.github.io/tags/%E9%AB%98%E5%8F%AF%E7%94%A8/">高可用</a>
+    
+</div>
+
+    </section>
+
+    
+<section class="widget">
+    <h3 class="widget-title">友情链接</h3>
+    <ul class="widget-list">
+        
+        <li>
+            <a target="_blank" href="http://www.cnblogs.com/zhangeamon" title="历史博客">历史博客</a>
+        </li>
+        
+    </ul>
+</section>
+
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://bodani.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+   
+</body>
+
+</html>

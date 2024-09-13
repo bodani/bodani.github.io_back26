@@ -1,0 +1,558 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+	<meta name="generator" content="Hugo 0.81.0" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>Let&#39;s go 🐌 🐌 🐌 | Let&#39;s build our own cloud native together  </title>
+    <meta property="og:title" content="Let&#39;s go 🐌 🐌 🐌 | Let&#39;s build our own cloud native together  ">
+    <meta property="og:type" content="website">
+    <meta name="Keywords" content="postgres 、python、pg 、linix 、docker、 kubernetes、 cloud、hadoop、promethues ">
+    <meta name="description" content="python 软件架构等">
+    <meta property="og:url" content="https://bodani.github.io/">
+    <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <link rel="alternate" type="application/rss+xml+xml" href="https://bodani.github.io/index.xml" title="Let's go 🐌 🐌 🐌" />
+    
+    
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+   
+    
+    
+    
+    
+    
+    
+        <link rel="stylesheet" href='/css/douban.css'>
+    
+        <link rel="stylesheet" href='/css/other.css'>
+    
+   
+        <a href=https://github.com/eamonzhang><img style="position: absolute; top: 0; left: 0; border: 0;" src="/images/forkme_left_red_aa0000.png" alt="Fork me on GitHub" data-canonical-src="/images/forkme_left_red_aa0000.png"></a>
+
+   
+        <script>
+          var _hmt = _hmt || [];
+            (function() {
+            var hm = document.createElement("script");
+            <!-- hm.src = "https://hm.baidu.com/hm.js?1f6605a363a50554aa03adcc685b7699"; -->
+            hm.src = "https://hm.baidu.com/hm.js?0010600e9ae6ff8f5814bb7ec6b36072";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+          })();
+       </script>
+</head>
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <h1>
+                        <a id="logo" href="https://bodani.github.io">
+                            Let&#39;s go 🐌 🐌 🐌
+                        </a>
+                    </h1>
+                
+                <p class="description">Let&#39;s build our own cloud native together  </p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://bodani.github.io">首页</a>
+                    
+                    <a  href="https://bodani.github.io/archives" title="归档">归档</a>
+                    
+                    <a  href="https://bodani.github.io/postgresql" title="Postgres">Postgres</a>
+                    
+                    <a  href="https://bodani.github.io/linux" title="Linux">Linux</a>
+                    
+                    <a  href="https://bodani.github.io/about/me" title="关于">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/postgres/checkpoint/" title="checkpoint 检查点">checkpoint 检查点</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年3月13日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/postgres'>postgres</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            作用 一般checkpoint会将某个时间点之前的脏数据全部刷新到磁盘，以实现数据的一致性与完整性。其主要目的是为了缩短崩溃恢复时间。 数据库靠谱的原因 一条DML 写入过程 在写入数据的时，当事务提交后修改信息顺序同步写入wal。shared buffer中信息并不是马上落盘。异步同步磁盘……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/postgres/checkpoint/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/postgres/adlock/" title="咨询锁 adlock">咨询锁 adlock</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年3月7日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/postgres'>postgres</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            https://github.com/digoal/blog/blob/master/201805/20180524_02.md 行级锁 select .. for update select .. for update skip locked select .. for share……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/postgres/adlock/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/rabbitmq/manager01/" title="rabbitmq 简单应用">rabbitmq 简单应用</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年2月26日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/rabbitmq'>rabbitmq</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            启动 rabbitmq-server &amp; 队列重置（清空队列、用户等） rabbitmqctl stop_app rabbitmqctl reset rabbitmqctl stop 关闭 rabbitmqctl stop 列举所有用户 rabbitmqctl list_users 列举所有队列 rabbitmqctl list_queues 添加用户 rabbitmqctl add_user user_name user_passwd 设置用户角色为管理员 rabbitmqctl set_user_tags user_name administrator 权限设置 rabbitmqctl set_permissions -p / user_name &quot;.*&quot; &quot;.*&quot; &quot;.*&quot; 操作举例（添加用户admin） sudo rabbitmqctl add_user admin admin sudo rabbitmqctl set_user_tags admin administrator sudo rabbitmqctl set_permissions -p / admin &quot;.*&quot; &quot;.*&quot; &quot;.*&quot; 查看状态 rabbitmqctl status 安装 RabbitMQWeb管理插件 rabbitmq-plugins enable rabbitmq_management 可以……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/rabbitmq/manager01/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/monitor/influxdb01/" title="Telegraf&#43;Influxdb&#43;Grafana">Telegraf&#43;Influxdb&#43;Grafana</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年2月26日
+        </date>
+        
+        <div class="post-content">
+            架构组建介绍 telegraf 数据采集 Agent for collecting and Reporting Metrics and Events. influxdb 时序数据库存储 Purpose Buid time series databases. granafa 数据展现……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/monitor/influxdb01/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/network-security/iptables01/" title="iptables查看、添加、删除规则">iptables查看、添加、删除规则</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年2月25日
+        </date>
+        
+        <div class="post-content">
+            查看 iptables -nvL –line-number -L 查看当前表的所有规则，默认查看的是filter表，如果要查看NAT表，可以加上-t NAT参数 -n 不对ip地址进行反查，加上这个参数显示速度会快很多 -v 输出详细信息，包含通过该规则的数据包数量，总字节数及相应的网络接口 –line-number 显示规则的……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/network-security/iptables01/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/linux/wind-run/" title="DOS 常用命令">DOS 常用命令</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年2月25日
+        </date>
+        
+        <div class="post-content">
+            运行 cmd command regedit 注册表 calc 计算器 notepad 笔记本 mspaint 图画板 winver window版本 shutdown 60秒关机 cmd ipconfig /all 查看 ip信息 cd 切换目录 D: 切换到D目录 dir 当前目录下文件信息 ipconfig /flushdns 刷新本地dns缓存 ipconfig /displaydns 显示dns缓存……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/linux/wind-run/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/mysql/over-view/" title="Mysql 入门">Mysql 入门</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年2月21日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/mysql'>mysql</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            安装 &amp; 启动 安装 rpm -i https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm yum install mysql-community-server.x86_64 启动 systemctl start mysqld systemctl enable mysqld 查看临时密码 #sudo grep 'temporary password' /var/log/mysqld.log 2019-05-15T06:42:54.826106Z 5 [Note] [MY-010454] [Server] A temporary password is generated for root@localhost: DVjSsl-ZX5f7 修改密码 #mysql -uroot -p ALTER USER 'root'@'localhost' IDENTIFIED BY 'MyNewPass4!'; 常用命令 连接 mysql -h127.0.0.1 -P 3306 -uroot -p 版本 #mysql -V mysql Ver 8.0.26 for Linux on x86_64 (MySQL Community Server - GPL) 数据库命令 mysql&gt;help show 权限管理 mysql登陆用户权限校验主要是通过用户名密码+访问来源主机方式 创建用户 CREATE USER 'finley'@'localhost' IDENTIFIED BY 'password'; 赋……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/mysql/over-view/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/tidb/tree/" title="二叉树、B-Tree、B&#43;Tree、B*Tree">二叉树、B-Tree、B&#43;Tree、B*Tree</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年2月18日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/tidb'>tidb</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            二叉树：二叉树，每个结点只存储一个关键字，等于则命中，小于走左边，大于走右边； B-Tree：多路搜索树，每个结点存储【M/2-1，M-1]个关键字，非叶子结点存储指向关键字范围的子节点；所有关键字在整棵树中出现【且只出现一次】，非叶子结点可以命中。 B+Tree：在B-Tree基础……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/tidb/tree/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/linux/fu-cmd/" title="Linux 常用命令">Linux 常用命令</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年2月18日
+        </date>
+        
+        <div class="post-content">
+            线上查询及帮助命令 man 查看命令帮助，命令的词典，更复杂的还有info，但不常用。 help 查看Linux内置命令的帮助，比如cd命令。 文件和目录操作命令 ls 全拼list，功能是列出目录的内容及其内容属性信息。 cd 全拼change directory，功能是从当前工作目录切换到指定的工作目录。 cp 全……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/linux/fu-cmd/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/mysql/book-list/" title="Mysql 书单">Mysql 书单</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年2月13日
+        </date>
+        
+        <div class="post-content">
+            入门： 《涂抹MySQL：跟着三思一步一步学MySQL》 《MySQL数据库应用从入门到精通（第2版）》 《MySQL核心技术手册》 《MySQL技术内幕（第5版）》 运维实践： 《高性能MySQL》 经典必读 《MySQL管理之道：性能调优、高可用与监控（第2版） 》贺春旸 《深入理解MySQL核……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/mysql/book-list/">阅读全文</a></p>
+    </article>
+    
+    
+
+
+
+<ol class="page-navigator">
+    
+    <li class="prev">
+        <a href="https://bodani.github.io/page/16/">上一页</a>
+    </li>
+    
+
+    
+
+    
+        
+        
+    
+    
+
+    
+        
+        
+        <li >
+            <a href="https://bodani.github.io/">1</a>
+        </li>
+        
+    
+        
+        <li>
+            <span>...</span>
+        </li>
+        
+    
+        
+        
+        <li >
+            <a href="https://bodani.github.io/page/15/">15</a>
+        </li>
+        
+    
+        
+        
+        <li >
+            <a href="https://bodani.github.io/page/16/">16</a>
+        </li>
+        
+    
+        
+        
+        <li  class="current">
+            <a href="https://bodani.github.io/page/17/">17</a>
+        </li>
+        
+    
+        
+        
+        <li >
+            <a href="https://bodani.github.io/page/18/">18</a>
+        </li>
+        
+    
+        
+        
+        <li >
+            <a href="https://bodani.github.io/page/19/">19</a>
+        </li>
+        
+    
+        
+        <li>
+            <span>...</span>
+        </li>
+        
+    
+        
+        
+        <li >
+            <a href="https://bodani.github.io/page/29/">29</a>
+        </li>
+        
+    
+
+    
+    
+
+    <li class="next">
+        <a href="https://bodani.github.io/page/18/">下一页</a>
+    </li>
+    
+</ol>
+
+
+
+
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2018 - 2024 <a href="https://bodani.github.io"> By Eamon</a>
+        
+        | <a rel="nofollow" target="_blank" href="http://beian.miit.gov.cn/">辽ICP备2022000054号-1</a>
+        
+    </div>
+    <br />
+  
+</footer>
+
+
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+
+
+
+    <script src='/js/douban.js'></script>
+
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://bodani.github.io/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://bodani.github.io">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://bodani.github.io/python/pip/" title="python pip">python pip</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/postgres/repmgrd/" title="repmgrd介绍">repmgrd介绍</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/linux/linux_tunning/" title="Linux 优化指南">Linux 优化指南</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/monitor/nginx-log-exporter/" title="prometheus-nginxlog-exporter构建Nginx日志监控">prometheus-nginxlog-exporter构建Nginx日志监控</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/postgres/logical-replication_failover/" title="逻辑复制故障转移">逻辑复制故障转移</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/linux/nice/" title="nice, ionice, cpulimit">nice, ionice, cpulimit</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/linux/backlog-config/" title="Linux backlog/somaxconn 内核参数">Linux backlog/somaxconn 内核参数</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/storage/minio_ec/" title="Minio存储类别">Minio存储类别</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/postgres/wal_lsn/" title="LSN 和 wal日志文件名对应关系">LSN 和 wal日志文件名对应关系</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/middleware/kafka_install/" title="Kafka集群安装">Kafka集群安装</a>
+    </li>
+    
+</ul>
+
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/categories'>分类</a></h3>
+<ul class="widget-list">
+    
+    <li><a href="https://bodani.github.io/categories/ansible/">ansible (4)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/docker/">docker (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/etcd/">etcd (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/haproxy/">haproxy (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/kafka/">kafka (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/kvm/">kvm (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/linux/">linux (21)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/minio/">minio (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/mysql/">mysql (4)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/nginx/">nginx (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/postgres/">postgres (48)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/python/">python (18)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/rabbitmq/">rabbitmq (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/redis/">redis (9)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/tidb/">tidb (5)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件 (8)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E5%AD%98%E5%82%A8/">存储 (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E5%AE%89%E5%85%A8/">安全 (3)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E6%95%B0%E4%BB%93/">数仓 (3)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E7%9B%91%E6%8E%A7/">监控 (3)</a></li>
+    
+</ul>
+
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/tags.html'>标签</a></h3>
+<div class="tagcloud">
+    
+    <a href="https://bodani.github.io/tags/%E4%BC%98%E5%8C%96/">优化</a>
+    
+    <a href="https://bodani.github.io/tags/%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86/">配置管理</a>
+    
+    <a href="https://bodani.github.io/tags/%E9%AB%98%E5%8F%AF%E7%94%A8/">高可用</a>
+    
+</div>
+
+    </section>
+
+    
+<section class="widget">
+    <h3 class="widget-title">友情链接</h3>
+    <ul class="widget-list">
+        
+        <li>
+            <a target="_blank" href="http://www.cnblogs.com/zhangeamon" title="历史博客">历史博客</a>
+        </li>
+        
+    </ul>
+</section>
+
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://bodani.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+   
+</body>
+
+</html>

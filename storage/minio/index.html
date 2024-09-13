@@ -1,0 +1,665 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>minio 轻量级对象存储 | Let&#39;s go 🐌 🐌 🐌</title>
+    <meta property="og:title" content="minio 轻量级对象存储 - Let&#39;s go 🐌 🐌 🐌">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content='2019-03-18T16:59:48&#43;08:00'>
+        
+        
+    <meta property="article:modified_time" content='2019-03-18T16:59:48&#43;08:00'>
+        
+    <meta name="Keywords" content="postgres 、python、pg 、linix 、docker、 kubernetes、 cloud、hadoop、promethues ">
+    <meta name="description" content="minio 轻量级对象存储">
+        
+    <meta name="author" content="Eamon">
+    <meta property="og:url" content="https://bodani.github.io/storage/minio/">
+    <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    
+    
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+   
+    
+    
+    
+    
+    
+    
+        <link rel="stylesheet" href='/css/douban.css'>
+    
+        <link rel="stylesheet" href='/css/other.css'>
+    
+   
+        <a href=https://github.com/eamonzhang><img style="position: absolute; top: 0; left: 0; border: 0;" src="/images/forkme_left_red_aa0000.png" alt="Fork me on GitHub" data-canonical-src="/images/forkme_left_red_aa0000.png"></a>
+
+   
+        <script>
+          var _hmt = _hmt || [];
+            (function() {
+            var hm = document.createElement("script");
+            <!-- hm.src = "https://hm.baidu.com/hm.js?1f6605a363a50554aa03adcc685b7699"; -->
+            hm.src = "https://hm.baidu.com/hm.js?0010600e9ae6ff8f5814bb7ec6b36072";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+          })();
+       </script>
+</head>
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://bodani.github.io">
+                        Let&#39;s go 🐌 🐌 🐌
+                    </a>
+                
+                <p class="description">Let&#39;s build our own cloud native together  </p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="" href="https://bodani.github.io">首页</a>
+                    
+                    <a  href="https://bodani.github.io/archives" title="归档">归档</a>
+                    
+                    <a  href="https://bodani.github.io/postgresql" title="Postgres">Postgres</a>
+                    
+                    <a  href="https://bodani.github.io/linux" title="Linux">Linux</a>
+                    
+                    <a  href="https://bodani.github.io/about/me" title="关于">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    <style type="text/css">
+    .post-toc {
+        position: fixed;
+        width: 200px;
+        margin-left: -210px;
+        padding: 5px 10px;
+        font-family: Athelas, STHeiti, Microsoft Yahei, serif;
+        font-size: 12px;
+        border: 1px solid rgba(0, 0, 0, .07);
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.98);
+        background-clip: padding-box;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        word-wrap: break-word;
+        white-space: nowrap;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        z-index: 999;
+        cursor: pointer;
+        max-height: 70%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .post-toc .post-toc-title {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 20px;
+        font-weight: 400;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .post-toc .post-toc-content {
+        font-size: 15px;
+    }
+
+    .post-toc .post-toc-content>nav>ul {
+        margin: 10px 0;
+    }
+
+    .post-toc .post-toc-content ul {
+        padding-left: 20px;
+        list-style: square;
+        margin: 0.5em;
+        line-height: 1.8em;
+    }
+
+    .post-toc .post-toc-content ul ul {
+        padding-left: 15px;
+        display: none;
+    }
+
+    @media print,
+    screen and (max-width:1057px) {
+        .post-toc {
+            display: none;
+        }
+    }
+</style>
+<div class="post-toc" style="position: absolute; top: 188px;">
+    <h2 class="post-toc-title">目录</h2>
+    <div class="post-toc-content">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#简单了解">简单了解</a></li>
+    <li><a href="#安装及简单使用">安装及简单使用</a></li>
+    <li><a href="#服务管理">服务管理</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#监控">监控</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#应用案例">应用案例</a></li>
+    <li><a href="#用户管理">用户管理</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var postToc = $(".post-toc");
+        if (postToc.length) {
+            var leftPos = $("#main").offset().left;
+            if(leftPos<220){
+                postToc.css({"width":leftPos-10,"margin-left":(0-leftPos)})
+            }
+
+            var t = postToc.offset().top - 20,
+                a = {
+                    start: {
+                        position: "absolute",
+                        top: t
+                    },
+                    process: {
+                        position: "fixed",
+                        top: 20
+                    },
+                };
+            $(window).scroll(function () {
+                var e = $(window).scrollTop();
+                e < t ? postToc.css(a.start) : postToc.css(a.process)
+            })
+        }
+    })
+</script>
+
+    <article class="post">
+        <header>
+            <h1 class="post-title">minio 轻量级对象存储</h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年3月18日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/minio'>minio</a></span>
+            
+        </div>
+        
+        
+        
+        <div class="clear" style="display: none">
+            <div class="toc-article">
+                <div class="toc-title">文章目录</div>
+            </div>
+        </div>
+        
+        <div class="post-content">
+            <h2 id="简单了解">简单了解</h2>
+<p>minio 完全实现了s3协议，使用简单方便。 支持多机模式，提高数据可用性和整体容量。</p>
+<p>限制，  单个文件最大5T。</p>
+<p>缺点， 不能在线扩容。开发者认为扩容应该是开发人员需要解决的问题。</p>
+<h2 id="安装及简单使用">安装及简单使用</h2>
+<p>服务端</p>
+<pre><code>#下载
+wget https://dl.minio.io/server/minio/release/linux-amd64/minio
+mv minio /usr/local/bin/
+chmod 777 /usr/local/bin/minio 
+
+#启动服务
+minio server minidata/
+
+Endpoint:  http://10.1.88.74:9000  http://172.17.0.1:9000  http://172.19.0.1:9000  http://172.21.0.1:9000  http://172.22.0.1:9000  http://172.23.0.1:9000  http://127.0.0.1:9000      
+AccessKey: ZSYLNWA109W0Q4DWDS73 
+SecretKey: kuqn+i1MpR0yoE9RoT59gYjRuB5IJdz8IhIZOqP9 
+
+Browser Access:
+   http://10.1.88.74:9000  http://172.17.0.1:9000  http://172.19.0.1:9000  http://172.21.0.1:9000  http://172.22.0.1:9000  http://172.23.0.1:9000  http://127.0.0.1:9000      
+
+Command-line Access: https://docs.minio.io/docs/minio-client-quickstart-guide
+   $ mc config host add myminio http://10.1.88.74:9000 ZSYLNWA109W0Q4DWDS73 kuqn+i1MpR0yoE9RoT59gYjRuB5IJdz8IhIZOqP9
+
+Object API (Amazon S3 compatible):
+   Go:         https://docs.minio.io/docs/golang-client-quickstart-guide
+   Java:       https://docs.minio.io/docs/java-client-quickstart-guide
+   Python:     https://docs.minio.io/docs/python-client-quickstart-guide
+   JavaScript: https://docs.minio.io/docs/javascript-client-quickstart-guide
+   .NET:       https://docs.minio.io/docs/dotnet-client-quickstart-guide
+
+#后台启动,也可做成服务模式，由systemd管理
+nohup minio server minidata/ &gt; log &amp;
+</code></pre><p>客户端</p>
+<pre><code>#下载
+wget https://dl.minio.io/client/mc/release/linux-amd64/mc
+mv mc /usr/local/bin/
+chmod 777 /usr/local/bin/mc 
+#根据服务启动信息配置连接
+mc config host add myminio http://10.1.88.74:9000 ZSYLNWA109W0Q4DWDS73 kuqn+i1MpR0yoE9RoT59gYjRuB5IJdz8IhIZOqP9
+
+#简单应用
+mc  cp  /var/lib/pgsql/10/data/pg_wal/00000001000000C40000006A myminio/mb1
+...sql/10/data/pg_wal/00000001000000C40000006A:  16.00 MB / 16.00 MB ┃▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓┃ 100.00% 96.81 MB/s 0s
+
+</code></pre><h2 id="服务管理">服务管理</h2>
+<p>通过服务的方式管理minio</p>
+<h4 id="添加用户用户组">添加用户，用户组</h4>
+<pre><code>groupadd  minio:minio
+
+useradd -g minio minio
+</code></pre><h4 id="设置存储位置用户权限">设置存储位置用户权限</h4>
+<pre><code>chown minio:minio /data/ -R
+</code></pre><h4 id="设置可执行服务所属用户组">设置可执行服务所属用户组</h4>
+<pre><code>chown minio:minio /usr/local/bin/minio
+</code></pre><h4 id="配置管理">配置管理</h4>
+<p>vi /etc/minio.conf</p>
+<pre><code>MINIO_VOLUMES=&quot;/data&quot;
+MINIO_OPTS=&quot;-C /minio/etc --address 192.168.6.14:9000 --console-address 192.168.6.14:19000&quot;
+MINIO_ROOT_USER='admin123'
+MINIO_ROOT_PASSWORD='admin456'
+</code></pre><h4 id="配置服务">配置服务</h4>
+<p>vi /etc/systemd/system/minio.service</p>
+<pre><code>[Unit]
+Description=MinIO
+Documentation=https://docs.min.io
+Wants=network-online.target
+After=network-online.target
+AssertFileIsExecutable=/usr/local/bin/minio 
+[Service]
+User=minio
+Group=minio
+EnvironmentFile=/etc/minio.conf
+ExecStart=/usr/local/bin/minio server $MINIO_OPTS $MINIO_VOLUMES
+Restart=always
+LimitNOFILE=65536
+TimeoutStopSec=infinity
+SendSIGKILL=no
+[Install]
+WantedBy=multi-user.target
+</code></pre><h4 id="启动管理">启动管理</h4>
+<pre><code>systemctl daemon-reload
+systemctl restart minio
+systemctl enable minio
+</code></pre><h4 id="压缩存储">压缩存储</h4>
+<p>查看可压缩类型</p>
+<pre><code>mc admin config get myminio compression
+compression enable=off allow_encryption=off extensions=.txt,.log,.csv,.json,.tar,.xml,.bin mime_types=text/*,application/json,application/xml,binary/octet-stream 
+</code></pre><p>开启压缩</p>
+<pre><code>export MINIO_COMPRESS=&quot;on&quot;
+export MINIO_COMPRESS_EXTENSIONS=&quot;.pdf,.doc&quot;
+export MINIO_COMPRESS_MIME_TYPES=&quot;application/pdf&quot;
+</code></pre><h4 id="查看日志">查看日志</h4>
+<pre><code>tail -f /var/log/
+</code></pre><h4 id="控制台管理">控制台管理</h4>
+<p>在浏览器中访问 http://192.168.6.14:19000</p>
+<h4 id="用户及权限管理">用户及权限管理</h4>
+<p>略</p>
+<h4 id="ningx-代理">ningx 代理</h4>
+<p>负载均衡 略</p>
+<h2 id="监控">监控</h2>
+<h4 id="健康检测">健康检测</h4>
+<p>单机 Status 200</p>
+<pre><code># curl -I http://192.168.6.14:9000/minio/health/live
+HTTP/1.1 200 OK
+Accept-Ranges: bytes
+Content-Length: 0
+Content-Security-Policy: block-all-mixed-content
+Server: MinIO
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+Vary: Origin
+X-Amz-Request-Id: 169CA53FFA7B7FE6
+X-Content-Type-Options: nosniff
+X-Xss-Protection: 1; mode=block
+</code></pre><p>集群</p>
+<pre><code> /minio/health/cluster
+</code></pre><h4 id="使用prometheus-监控">使用prometheus 监控</h4>
+<p>通过命令 <code>mc admin prometheus generate </code> 自动生成</p>
+<p>认证模式 prometheus 配置</p>
+<pre><code>scrape_configs:
+- job_name: minio-job
+  bearer_token: &lt;secret&gt;
+  metrics_path: /minio/v2/metrics/cluster
+  scheme: http
+  static_configs:
+  - targets: ['localhost:9000']
+
+</code></pre><p>免认证模式</p>
+<pre><code>#添加环境变量 /etc/minio.conf
+MINIO_PROMETHEUS_AUTH_TYPE=&quot;public&quot;
+</code></pre><p>prometheus 配置</p>
+<p>集群</p>
+<pre><code>scrape_configs:
+- job_name: minio-job
+  metrics_path: /minio/v2/metrics/cluster
+  scheme: http
+  static_configs:
+  - targets: ['localhost:9000']
+</code></pre><p>单机</p>
+<pre><code>scrape_configs:
+- job_name: minio-job
+  metrics_path: /minio/v2/metrics/node
+  scheme: http
+  static_configs:
+  - targets: ['localhost:9000']
+</code></pre><h2 id="应用案例">应用案例</h2>
+<p>自动同步备份数据</p>
+<pre><code>mc mirror --force --remove --watch  pgsql/data/ myminio/pgsqlbkp
+</code></pre><p><a href="../rclone/">rclone备份应用参考</a></p>
+<h2 id="用户管理">用户管理</h2>
+<p>minio 通过策略管理用户权限</p>
+<p>定义策略</p>
+<pre><code>cat &gt; getonly.json &lt;&lt; EOF
+{
+  &quot;Version&quot;: &quot;2012-10-17&quot;,
+  &quot;Statement&quot;: [
+    {
+      &quot;Action&quot;: [
+        &quot;s3:GetObject&quot;
+      ],
+      &quot;Effect&quot;: &quot;Allow&quot;,
+      &quot;Resource&quot;: [
+        &quot;arn:aws:s3:::my-bucketname/*&quot;
+      ],
+      &quot;Sid&quot;: &quot;&quot;
+    }
+  ]
+}
+EOF
+</code></pre><p>设置策略</p>
+<pre><code>mc admin policy add myminio getonly getonly.json
+</code></pre><p>创建用户并绑定策略</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">mc admin user add myminio newuser newuser123
+mc admin policy <span style="color:#0086b3">set</span> myminio getonly <span style="color:#008080">user</span><span style="color:#000;font-weight:bold">=</span>newuser
+</code></pre></td></tr></table>
+</div>
+</div><p>自定义其他策略</p>
+<pre><code>cat mypolicy.json
+{
+  &quot;Version&quot;: &quot;2022&quot;,         
+  &quot;Statement&quot;: [
+    {
+      &quot;Effect&quot;: &quot;Allow&quot;,
+      &quot;Action&quot;: [                      //  可以做出的行动（权限）
+		&quot;s3:ListAllMyBuckets&quot;,          //  查看所有的“桶”列表
+		&quot;s3:ListBucket&quot;,               //  查看桶内的对象列表
+		&quot;s3:GetBucketLocation&quot;,         
+		&quot;s3:GetObject&quot;,               //   下载对象
+		&quot;s3:PutObject&quot;,               //   上传对象
+		&quot;s3:DeleteObject&quot;             //   删除对象
+      ],
+      &quot;Resource&quot;: [
+        &quot;arn:aws:s3:::*&quot;              // （应用到的资源，*表示所有，也可以用路径来控制范围。arn:aws:s3是命名空间）
+      ]
+    }
+  ]
+}
+</code></pre>
+        </div>
+
+        
+
+
+        
+
+<div class="post-archive">
+    <h2>其他文章</h2>
+    <ul class="listing">
+        
+        <li><a href="/docker/manager/">docker 磁盘空间管理</a></li>
+        
+        <li><a href="/postgres/checkpoint/">checkpoint 检查点</a></li>
+        
+        <li><a href="/postgres/adlock/">咨询锁 adlock</a></li>
+        
+    </ul>
+</div>
+
+
+
+        <div class="post-meta meta-tags">
+            
+            没有标签
+            
+        </div>
+    </article>
+    
+    
+
+    
+    
+    <div class="post bg-white">
+      <script src="https://utteranc.es/client.js"
+            repo= "your github repo"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+      </script>
+    </div>
+    
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2018 - 2024 <a href="https://bodani.github.io"> By Eamon</a>
+        
+        | <a rel="nofollow" target="_blank" href="http://beian.miit.gov.cn/">辽ICP备2022000054号-1</a>
+        
+    </div>
+    <br />
+  
+</footer>
+
+
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+
+
+
+    <script src='/js/douban.js'></script>
+
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://bodani.github.io/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://bodani.github.io">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://bodani.github.io/python/pip/" title="python pip">python pip</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/postgres/repmgrd/" title="repmgrd介绍">repmgrd介绍</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/linux/linux_tunning/" title="Linux 优化指南">Linux 优化指南</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/monitor/nginx-log-exporter/" title="prometheus-nginxlog-exporter构建Nginx日志监控">prometheus-nginxlog-exporter构建Nginx日志监控</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/postgres/logical-replication_failover/" title="逻辑复制故障转移">逻辑复制故障转移</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/linux/nice/" title="nice, ionice, cpulimit">nice, ionice, cpulimit</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/linux/backlog-config/" title="Linux backlog/somaxconn 内核参数">Linux backlog/somaxconn 内核参数</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/storage/minio_ec/" title="Minio存储类别">Minio存储类别</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/postgres/wal_lsn/" title="LSN 和 wal日志文件名对应关系">LSN 和 wal日志文件名对应关系</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/middleware/kafka_install/" title="Kafka集群安装">Kafka集群安装</a>
+    </li>
+    
+</ul>
+
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/categories'>分类</a></h3>
+<ul class="widget-list">
+    
+    <li><a href="https://bodani.github.io/categories/ansible/">ansible (4)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/docker/">docker (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/etcd/">etcd (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/haproxy/">haproxy (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/kafka/">kafka (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/kvm/">kvm (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/linux/">linux (21)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/minio/">minio (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/mysql/">mysql (4)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/nginx/">nginx (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/postgres/">postgres (48)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/python/">python (18)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/rabbitmq/">rabbitmq (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/redis/">redis (9)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/tidb/">tidb (5)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件 (8)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E5%AD%98%E5%82%A8/">存储 (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E5%AE%89%E5%85%A8/">安全 (3)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E6%95%B0%E4%BB%93/">数仓 (3)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E7%9B%91%E6%8E%A7/">监控 (3)</a></li>
+    
+</ul>
+
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/tags.html'>标签</a></h3>
+<div class="tagcloud">
+    
+    <a href="https://bodani.github.io/tags/%E4%BC%98%E5%8C%96/">优化</a>
+    
+    <a href="https://bodani.github.io/tags/%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86/">配置管理</a>
+    
+    <a href="https://bodani.github.io/tags/%E9%AB%98%E5%8F%AF%E7%94%A8/">高可用</a>
+    
+</div>
+
+    </section>
+
+    
+<section class="widget">
+    <h3 class="widget-title">友情链接</h3>
+    <ul class="widget-list">
+        
+        <li>
+            <a target="_blank" href="http://www.cnblogs.com/zhangeamon" title="历史博客">历史博客</a>
+        </li>
+        
+    </ul>
+</section>
+
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://bodani.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+   
+</body>
+
+</html>

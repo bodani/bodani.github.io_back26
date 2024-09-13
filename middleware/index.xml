@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Middlewares on Let&#39;s go 🐌 🐌 🐌</title>
+    <link>https://bodani.github.io/middleware/</link>
+    <description>Recent content in Middlewares on Let&#39;s go 🐌 🐌 🐌</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 02 Aug 2022 15:54:04 +0800</lastBuildDate><atom:link href="https://bodani.github.io/middleware/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kafka集群安装</title>
+      <link>https://bodani.github.io/middleware/kafka_install/</link>
+      <pubDate>Tue, 02 Aug 2022 15:54:04 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/middleware/kafka_install/</guid>
+      <description>环境 操作系统 centos7 openjdk11 集群规划 IP地址 10.10.2.11/node0 zk &amp;amp; kafka 10.10.2.12/node1 zk &amp;amp; kafka 10.10.2.13/node2 zk &amp;amp; kafka 准备阶段 软件准备 kafka 下载地址 https://dlcdn.apache.org/kafka/3.2.0/kafka_2.13-3.2.0.tgz connetor plugins jdbc 下载地址 https://d1i4a15mxbxib1.cloudfront.net/api/plugins/confluentinc/kafka-connect-jdbc/versions/10.5.1/confluentinc-kafka-connect-jdbc-10.5.1.zip debezium 下载地址 https://repo1.maven.org/maven2/io/debezium/debezium-connector-postgres/1.9.5.Final/debezium-connector-postgres-1.9.5.Final-plugin.tar.gz 安装jdk yum install java-11-openjdk-devel yum install java-11-openjdk -y jdk 下载地址 https://www.oracle.com/java/technologies/downloads/ 系统用户 group add kafka useradd kafka -g kafka 配置信息 hosts 配置 #vi /etc/hosts 10.10.2.11 node0 10.10.2.12 node1 10.10.2.13 node2 zk 配置 # vi zookeeper.properties tickTime=2000 initLimit=10 syncLimit=5 dataDir=/tmp/zookeeper clientPort=2181 server.1=node0:2888:3888 server.2=node1:2888:3888 server.3=node2:2888:3888 # myid echo &amp;quot;1&amp;quot; &amp;gt; /tmp/zookeeper/myid echo &amp;quot;2&amp;quot; &amp;gt; /tmp/zookeeper/myid echo &amp;quot;3&amp;quot; &amp;gt; /tmp/zookeeper/myid broker 配置 # vi config/server.properties broker.id=1 # 每个节点</description>
+    </item>
+    
+    <item>
+      <title>Haproxy  编译安装配置 </title>
+      <link>https://bodani.github.io/middleware/haproxy_install/</link>
+      <pubDate>Fri, 25 Mar 2022 15:31:27 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/middleware/haproxy_install/</guid>
+      <description>编译安装Haproxy 2.4 下载预备 sudo wget https://www.haproxy.org/download/2.4/src/haproxy-2.4.15.tar.gz -O /usr/local/src/haproxy-2.4.15.tar.gz sudo wget http://www.lua.org/ftp/lua-5.3.5.tar.gz -O /usr/local/src/lua-5.3.5.tar.gz sudo yum install make gcc build-essential libssl-devel zlib1g-devel pcre3 pcre3-devel systemd-devel readline-devel openssl openssl-devel -y 编译安装 lua cd /usr/local/src &amp;amp;&amp;amp; tar -zxvf lua-5.3.5.tar.gz cd /usr/local/src/lua-5.3.5 &amp;amp;&amp;amp; make linux src/lua -v haproxy cd /usr/local/src &amp;amp;&amp;amp; tar -zxvf haproxy-2.4.15.tar.gz cd /usr/local/src/haproxy-2.4.15 make -j `lscpu |awk &#39;NR==4{print $2}&#39;` ARCH=x86_64 TARGET=linux-glibc USE_PCRE=1 USE_ZLIB=1 USE_SYSTEMD=1 USE_CPU_AFFINITY=1 USE_LUA=1 LUA_INC=/usr/local/src/lua-5.3.5/src/ LUA_LIB=/usr/local/src/lua-5.3.5/src/ PREFIX=/usr/local/haproxy make install PREFIX=/usr/local/haproxy /usr/local/haproxy/sbin/haproxy -v 如果想添加 openssl 支持参考 In order to link OpenSSL statically against HAProxy, first download OpenSSL from https://www.openssl.org/ then build it with the &amp;quot;no-shared&amp;quot; keyword and install it to a local directory, so your system is not affected : $ export STATICLIBSSL=/tmp/staticlibssl $ ./config --prefix=$STATICLIBSSL no-shared</description>
+    </item>
+    
+    <item>
+      <title>配置管理 confd</title>
+      <link>https://bodani.github.io/middleware/confd/</link>
+      <pubDate>Fri, 02 Apr 2021 15:26:49 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/middleware/confd/</guid>
+      <description>https://github.com/kelseyhightower/confd 配置信息存放在ectd KV存储中 更新 ectd 中的内容， confd 负责将变更同步到本地服务配置文件，并通知本地服务进行重新加载重启等。</description>
+    </item>
+    
+    <item>
+      <title>etcd 访问控制</title>
+      <link>https://bodani.github.io/middleware/etcd_auth/</link>
+      <pubDate>Fri, 29 Jan 2021 09:37:26 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/middleware/etcd_auth/</guid>
+      <description>介绍 etcd 默认没有开启访问控制。 在生产环境中使用属于裸奔。 开启访问控制有两种方式 密钥证书验证 用户名密码验证 本篇实验用户名密码验证方式 用户 开启访问认证需要创建root 用户，root 用户默认自动拥有root角色的权限，及超级管理员。 角色 角色理解为指定权限的集合，权限包括 read 、write、 readwrite</description>
+    </item>
+    
+    <item>
+      <title>Consul DNS 服务</title>
+      <link>https://bodani.github.io/middleware/consul/</link>
+      <pubDate>Mon, 29 Jun 2020 11:09:52 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/middleware/consul/</guid>
+      <description>实现目标 多IP解析，负载轮询 自动检查后端服务状态，自动剔除不可用后端 别名配置 上游DNS支持 ttl cache 支持 前两点由cousul实现 后两点由dnsmasq实现 别名配置未实现 简单应用 集群配置 10.1.88.84 10.1.88.85 10.1.88.86 consul agent -server -bootstrap-expect=3 -data-dir=/tmp/consul -node=10.1.88.84 -bind=10.1.88.84 -client=0.0.0.0 -datacenter=bj -domain=zhangeamon.com -config-dir=/etc/consul.d -ui consul agent -server -bootstrap-expect=3 -data-dir=/tmp/consul -node=10.1.88.85 -bind=10.1.88.85 -client=0.0.0.0 -datacenter=bj -domain=zhangeamon.com -join=10.1.88.84 -config-dir=/etc/consul.d -ui consul agent -server -bootstrap-expect=3 -data-dir=/tmp/consul -node=10.1.88.86 -bind=10.1.88.86 -client=0.0.0.0 -datacenter=bj -domain=zhangeamon.com -join=10.1.88.84 -config-dir=/etc/consul.d -ui 服务发现配置 cat /etc/consul.d.web.json { &amp;quot;services&amp;quot;:[</description>
+    </item>
+    
+    <item>
+      <title>coredns</title>
+      <link>https://bodani.github.io/middleware/coredns/</link>
+      <pubDate>Mon, 22 Jun 2020 13:25:08 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/middleware/coredns/</guid>
+      <description>背景 致力于打造云原生中的dns服务和服务发现。 各种功能都是通过插件方式实现 简单例子 服务 cat /usr/lib/systemd/system/coredns.service [Unit] Description=CoreDNS DNS server Documentation=https://coredns.io After=network.target [Service] PermissionsStartOnly=true LimitNOFILE=1048576 LimitNPROC=512 CapabilityBoundingSet=CAP_NET_BIND_SERVICE AmbientCapabilities=CAP_NET_BIND_SERVICE NoNewPrivileges=true User=coredns WorkingDirectory=~ ExecStart=/usr/local/bin/coredns -conf=/etc/coredns/Corefile ExecReload=/bin/kill -SIGUSR1 $MAINPID Restart=on-failure [Install] WantedBy=multi-user.target 配置文件 cat /etc/coredns/Corefile .:53 { # 绑定interface ip bind 127.0.0.1 # 先走本机的hosts # https://coredns.io/plugins/hosts/ hosts { # 自定义sms.service search.service 的解析 # 因为解析的域名少我们这里直接</description>
+    </item>
+    
+    <item>
+      <title>nginx</title>
+      <link>https://bodani.github.io/middleware/nginx/</link>
+      <pubDate>Tue, 09 Apr 2019 15:42:15 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/middleware/nginx/</guid>
+      <description>性能优化 CPU 亲和性 worker_processes 4; # 比如物理CPU的数量为4 worker_cpu_affinity 0001 0010 0100 1000; Nginx最大打开文件数 worker_rlimit_nofile 65535; ulimit -n的值保持一致 GZIP 压缩 节约带宽，加快传输速度。需要CPU资源 压缩： 文本，js，html，css，不压缩: 图片，视频，flash gzip on; # 开启 gzip_min_length 2k; # 小于 2k 不压缩 gzip_buffers 4 32k; # 压缩缓冲区 gzip_http_version 1.1; gzip_comp_level 6; # 压缩比例 1-9 ,9</description>
+    </item>
+    
+    <item>
+      <title>DNS Bind9 &amp; NamedManager </title>
+      <link>https://bodani.github.io/middleware/bind9/</link>
+      <pubDate>Thu, 04 Apr 2019 15:14:47 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/middleware/bind9/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Centos FTP 服务</title>
+      <link>https://bodani.github.io/middleware/vsftp/</link>
+      <pubDate>Wed, 05 Dec 2018 09:24:29 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/middleware/vsftp/</guid>
+      <description>利用vsftpd 搭建FTP 服务器 安装 yum -y install vsftpd 添加用户及设置密码 useradd -s /sbin/nologin -d /home/ftp_test ftp_test passwd ftp_test -s 禁止ssh登录主机 -d 设置ftp_test 用户home 目录，用于存放数据 基础配置 vi /etc/vsftpd/vsftpd.conf # 禁止匿名访问 anonymous_enable=NO # 禁止dns解析 reverse_lookup_enable=NO 启动&amp;amp;开机自启 systemctl start vsftpd.service systemctl enable vsftpd.service filezilla 客户端验证 host: 服务器IP port: 默认 user: password: 测试本地上传，远</description>
+    </item>
+    
+    <item>
+      <title>Haproxy 算法</title>
+      <link>https://bodani.github.io/middleware/haproxy/</link>
+      <pubDate>Mon, 26 Nov 2018 08:53:09 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/middleware/haproxy/</guid>
+      <description>blance roundrobin # 轮询，软负载均衡基本都具备这种算法 balance static-rr # 根据权重，不支持慢启动 。建议使用 balance leastconn # 最少连接者先处理，建议使用 balance source # 根据请求源IP，建议使用 balance uri # 根据请求的URI balance url_param，# 根据请求的URl参数&amp;rsquo;balance url_param&#39; requires an URL parameter name balance hdr(name) # 根据HTTP请求头来锁定每一</description>
+    </item>
+    
+    <item>
+      <title>Sysbench 测试</title>
+      <link>https://bodani.github.io/middleware/sysbench/</link>
+      <pubDate>Fri, 16 Nov 2018 19:25:45 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/middleware/sysbench/</guid>
+      <description>下载安装 1.0.15 sysbench官网 curl -s https://packagecloud.io/install/repositories/akopytov/sysbench/script.rpm.sh | sudo bash sudo yum -y install sysbench 参数说明 sysbench --help Usage: sysbench [options]... [testname] [command] Commands implemented by most tests: prepare run cleanup help General options: --threads=N number of threads to use [1] 线程数 --events=N limit for total number of events [0] 事务数 --time=N limit for total execution time in seconds [10] 测压时间 --forced-shutdown=STRING number of seconds to wait after the --time limit before forcing shutdown, or &#39;off&#39; to disable [off] --thread-stack-size=SIZE size of stack per thread [64K] --rate=N average transactions rate. 0 for unlimited rate [0] --report-interval=N periodically report intermediate statistics with a specified interval in seconds. 0 disables intermediate reports [0] --report-checkpoints=[LIST,...] dump full statistics and reset all counters</description>
+    </item>
+    
+    <item>
+      <title>Keepalived 问题集</title>
+      <link>https://bodani.github.io/middleware/keepalived01/</link>
+      <pubDate>Mon, 05 Nov 2018 10:08:23 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/middleware/keepalived01/</guid>
+      <description>问题描述 Q1 ip address associated with VRID 51 not present in MASTER advert : 10.1.7.58 其中 51 为 virtual_router_id 10.1.7.58 为虚拟IP 可能原因 ntp 时间不同步 局域网内 virtual_router_id 与其他集群配置冲突。 另外 router_id 主机标示，一般为hostname即可。 解决方法： unicast_peer{ } 配置成单播模式 Q2 keepalived ping不通 解决办法,注释掉配置文件中的 vrrp_strict Q3 not a regular file 解决方法 chmod 644 keepalived.conf Q4 virtual_server 该部分是用来管理LVS的，</description>
+    </item>
+    
+    <item>
+      <title>代理</title>
+      <link>https://bodani.github.io/middleware/proxy/</link>
+      <pubDate>Wed, 31 Oct 2018 14:42:10 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/middleware/proxy/</guid>
+      <description>科普 正向代理 对服务端来说是无感的，服务端无需配置，要在客户端指定。代理的是客户端。 访问原来无法访问的资源 用作缓存，加速访问速度 对客户端访问授权，上网进行认证 代理可以记录用户访问记录（上网行为管理），对外隐藏用户信息 反向代理 对客户端来说的无感的，客户端无需配置，要在服务端实现。代理</description>
+    </item>
+    
+  </channel>
+</rss>

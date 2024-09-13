@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>消息推送 | Let&#39;s go 🐌 🐌 🐌</title>
+    <meta property="og:title" content="消息推送 - Let&#39;s go 🐌 🐌 🐌">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content='2021-11-15T13:47:33&#43;08:00'>
+        
+        
+    <meta property="article:modified_time" content='2021-11-15T13:47:33&#43;08:00'>
+        
+    <meta name="Keywords" content="postgres 、python、pg 、linix 、docker、 kubernetes、 cloud、hadoop、promethues ">
+    <meta name="description" content="消息推送">
+        
+    <meta name="author" content="Eamon">
+    <meta property="og:url" content="https://bodani.github.io/python/push_messages/">
+    <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    
+    
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+   
+    
+    
+    
+    
+    
+    
+        <link rel="stylesheet" href='/css/douban.css'>
+    
+        <link rel="stylesheet" href='/css/other.css'>
+    
+   
+        <a href=https://github.com/eamonzhang><img style="position: absolute; top: 0; left: 0; border: 0;" src="/images/forkme_left_red_aa0000.png" alt="Fork me on GitHub" data-canonical-src="/images/forkme_left_red_aa0000.png"></a>
+
+   
+        <script>
+          var _hmt = _hmt || [];
+            (function() {
+            var hm = document.createElement("script");
+            <!-- hm.src = "https://hm.baidu.com/hm.js?1f6605a363a50554aa03adcc685b7699"; -->
+            hm.src = "https://hm.baidu.com/hm.js?0010600e9ae6ff8f5814bb7ec6b36072";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+          })();
+       </script>
+</head>
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://bodani.github.io">
+                        Let&#39;s go 🐌 🐌 🐌
+                    </a>
+                
+                <p class="description">Let&#39;s build our own cloud native together  </p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="" href="https://bodani.github.io">首页</a>
+                    
+                    <a  href="https://bodani.github.io/archives" title="归档">归档</a>
+                    
+                    <a  href="https://bodani.github.io/postgresql" title="Postgres">Postgres</a>
+                    
+                    <a  href="https://bodani.github.io/linux" title="Linux">Linux</a>
+                    
+                    <a  href="https://bodani.github.io/about/me" title="关于">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    
+
+    <article class="post">
+        <header>
+            <h1 class="post-title">消息推送</h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年11月15日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/python'>python</a></span>
+            
+        </div>
+        
+        
+        
+        <div class="post-content">
+            <h2 id="基于jango-channel-实现推送">基于jango channel 实现推送</h2>
+<p>在官方demo 的基础上自定义推送 Consumer 。</p>
+<p>由于只是服务端到客户端单方向推送信息。类中只实现如下3个方法即可</p>
+<pre><code>
+&quot;&quot;&quot;
+connect 建立连接
+disconnet 断开连接
+push_messages 推送消息
+&quot;&quot;&quot;
+
+from channels.generic.websocket import  AsyncWebsocketConsumer
+
+# # 推送consumer
+class PushConsumer(AsyncWebsocketConsumer):
+    async def connect(self):
+      # 将username名称设定为 group 名
+      # self.group_name = self.scope['url_route']['kwargs']['username']
+      self.room_name = self.scope['url_route']['kwargs']['room_name']
+      self.room_group_name = 'chat_%s' % self.room_name
+      await self.channel_layer.group_add(
+        self.room_group_name,
+        self.channel_name
+      )
+      await self.accept()
+
+    async def disconnect(self, close_code):
+      await self.channel_layer.group_discard(
+        self.room_group_name,
+        self.channel_name
+      )
+    # print(PushConsumer.chats)
+    async def push_message(self, event):
+      message = event['message']
+      # 可记录消息是否推送成功
+      print(&quot;push messsage  %s to %s &quot; % (message, self.room_group_name))
+      await self.send(text_data=json.dumps({
+        &quot;message&quot;: message
+      }))
+</code></pre><h2 id="推送方法实现">推送方法实现</h2>
+<pre><code>### python manage.py shell
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
+
+def push(username, message):
+    channel_layer = get_channel_layer()
+    async_to_sync(channel_layer.group_send)(
+        username,
+        {
+            &quot;type&quot;: &quot;push.message&quot;,
+            &quot;message&quot;: message
+        }
+    )
+</code></pre><h2 id="调用推送">调用推送</h2>
+<pre><code>push(&quot;username&quot;,&quot;your message&quot;)
+</code></pre><h2 id="点对点通信的一些思路">点对点通信的一些思路</h2>
+<p>聊天组的命名形式为user_a的id加上下划线_加上user_b的id，其中id值从小到大放置，例如： 123_125。 通信双方可以确定唯一groupname。</p>
+<p>在全局。比如redis中记录groupname中双方是否同时在线。如果同时在线，则发送方直接将信息发送的group中。如果对方不在先。则向对方发送一条推送消息唤醒对方连接到group中。</p>
+<pre><code>async def receive_json(self, message, **kwargs):
+   # 收到信息时调用
+   to_user = message.get('to_user')
+   # 信息发送
+   length = redis.connection.get[self.group_name]
+   # 判断对方是否在group中存在连接
+   if length == 2:
+     await self.channel_layer.group_send(
+       self.group_name,
+       {
+         &quot;type&quot;: &quot;chat.message&quot;,
+         &quot;message&quot;: message.get('message'),
+       },
+     )
+   else:
+     await self.channel_layer.group_send(
+       to_user,
+       {
+         &quot;type&quot;: &quot;push.message&quot;,
+         &quot;event&quot;: {'message': message.get('message'), 'group': self.group_name}
+       },
+     )
+ async def chat_message(self, event):
+   # Handles the &quot;chat.message&quot; event when it's sent to us.
+   await self.send_json({
+     &quot;message&quot;: event[&quot;message&quot;],
+   })
+</code></pre><h2 id="客户端代码">客户端代码</h2>
+<h4 id="服务端准备">服务端准备</h4>
+<p>由于官方示例服务<code>ws://echo.websocket.org/</code> 不再维护。 以下利用channel 简单实现。</p>
+<p>consumers.py</p>
+<pre><code>from asgiref.sync import async_to_sync
+from channels.generic.websocket import WebsocketConsumer
+
+class EchoConsumer(WebsocketConsumer):
+
+   def connect(self):
+        self.accept()
+        print(&quot;已经建立连接&quot;)
+
+   def disconnect(self, code):
+        self.close()
+
+   def receive(self, text_data=None, bytes_data=None):
+        self.send(text_data=text_data)
+</code></pre><p>routing.py</p>
+<pre><code>websocket_urlpatterns = [
+    re_path(r'ws/echo/$', consumers.EchoConsumer.as_asgi()),
+]
+</code></pre><h4 id="长连接调用">长连接调用</h4>
+<pre><code>pip3 install websocket-client
+</code></pre><pre><code>import websocket
+import _thread
+import time
+
+def on_message(ws, message):
+    print(&quot;receive :&quot;+message)
+
+def on_error(ws, error):
+    print(error)
+
+def on_close(ws, close_status_code, close_msg):
+    print(&quot;### closed ###&quot;)
+
+def on_open(ws):
+    print(&quot;### open ###&quot;)
+    def run(*args):
+        for i in range(30):
+            time.sleep(1)
+            ws.send(&quot;Hello %d&quot; % i)
+            print(&quot;send : %d &quot; % (i))
+        time.sleep(1)
+        print(&quot;thread terminating...&quot;)
+        ws.close()
+    _thread.start_new_thread(run, ())
+
+if __name__ == &quot;__main__&quot;:
+    # websocket.enableTrace(True)
+    ws = websocket.WebSocketApp(&quot;ws://127.0.0.1:8000/ws/echo/&quot;,
+                              on_open=on_open,
+                              on_message=on_message,
+                              on_error=on_error,
+                              on_close=on_close)
+    ## 心跳保持连接
+    ws.run_forever(ping_interval=60,ping_timeout=50)
+</code></pre><h4 id="短连接调用">短连接调用</h4>
+<pre><code>from websocket import create_connection
+ws = create_connection(&quot;ws://127.0.0.1:8000/ws/echo/&quot;)
+print(&quot;Sending 'Hello, World'...&quot;)
+ws.send(&quot;Hello, World&quot;)
+print(&quot;Sent&quot;)
+print(&quot;Receiving...&quot;)
+result =  ws.recv()
+print(&quot;Received '%s'&quot; % result)
+ws.close()
+</code></pre><p>官网 <a href="https://pypi.org/project/websocket-client/">https://pypi.org/project/websocket-client/</a></p>
+
+        </div>
+
+        
+
+
+        
+
+<div class="post-archive">
+    <h2>其他文章</h2>
+    <ul class="listing">
+        
+        <li><a href="/postgres/pg_elk/">数据库日志分析</a></li>
+        
+        <li><a href="/linux/findhidpid/">Linux 找出隐藏进程</a></li>
+        
+        <li><a href="/network-security/wazuh/">Wazuh 功能简介</a></li>
+        
+    </ul>
+</div>
+
+
+
+        <div class="post-meta meta-tags">
+            
+            没有标签
+            
+        </div>
+    </article>
+    
+    
+
+    
+    
+    <div class="post bg-white">
+      <script src="https://utteranc.es/client.js"
+            repo= "your github repo"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+      </script>
+    </div>
+    
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2018 - 2024 <a href="https://bodani.github.io"> By Eamon</a>
+        
+        | <a rel="nofollow" target="_blank" href="http://beian.miit.gov.cn/">辽ICP备2022000054号-1</a>
+        
+    </div>
+    <br />
+  
+</footer>
+
+
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+
+
+
+    <script src='/js/douban.js'></script>
+
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://bodani.github.io/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://bodani.github.io">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://bodani.github.io/python/pip/" title="python pip">python pip</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/postgres/repmgrd/" title="repmgrd介绍">repmgrd介绍</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/linux/linux_tunning/" title="Linux 优化指南">Linux 优化指南</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/monitor/nginx-log-exporter/" title="prometheus-nginxlog-exporter构建Nginx日志监控">prometheus-nginxlog-exporter构建Nginx日志监控</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/postgres/logical-replication_failover/" title="逻辑复制故障转移">逻辑复制故障转移</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/linux/nice/" title="nice, ionice, cpulimit">nice, ionice, cpulimit</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/linux/backlog-config/" title="Linux backlog/somaxconn 内核参数">Linux backlog/somaxconn 内核参数</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/storage/minio_ec/" title="Minio存储类别">Minio存储类别</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/postgres/wal_lsn/" title="LSN 和 wal日志文件名对应关系">LSN 和 wal日志文件名对应关系</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/middleware/kafka_install/" title="Kafka集群安装">Kafka集群安装</a>
+    </li>
+    
+</ul>
+
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/categories'>分类</a></h3>
+<ul class="widget-list">
+    
+    <li><a href="https://bodani.github.io/categories/ansible/">ansible (4)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/docker/">docker (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/etcd/">etcd (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/haproxy/">haproxy (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/kafka/">kafka (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/kvm/">kvm (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/linux/">linux (21)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/minio/">minio (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/mysql/">mysql (4)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/nginx/">nginx (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/postgres/">postgres (48)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/python/">python (18)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/rabbitmq/">rabbitmq (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/redis/">redis (9)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/tidb/">tidb (5)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件 (8)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E5%AD%98%E5%82%A8/">存储 (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E5%AE%89%E5%85%A8/">安全 (3)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E6%95%B0%E4%BB%93/">数仓 (3)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E7%9B%91%E6%8E%A7/">监控 (3)</a></li>
+    
+</ul>
+
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/tags.html'>标签</a></h3>
+<div class="tagcloud">
+    
+    <a href="https://bodani.github.io/tags/%E4%BC%98%E5%8C%96/">优化</a>
+    
+    <a href="https://bodani.github.io/tags/%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86/">配置管理</a>
+    
+    <a href="https://bodani.github.io/tags/%E9%AB%98%E5%8F%AF%E7%94%A8/">高可用</a>
+    
+</div>
+
+    </section>
+
+    
+<section class="widget">
+    <h3 class="widget-title">友情链接</h3>
+    <ul class="widget-list">
+        
+        <li>
+            <a target="_blank" href="http://www.cnblogs.com/zhangeamon" title="历史博客">历史博客</a>
+        </li>
+        
+    </ul>
+</section>
+
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://bodani.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+   
+</body>
+
+</html>

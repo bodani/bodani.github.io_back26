@@ -1,0 +1,526 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>Postgres | Let&#39;s go 🐌 🐌 🐌</title>
+    <meta property="og:title" content="Postgres - Let&#39;s go 🐌 🐌 🐌">
+    <meta property="og:type" content="article">
+        
+        
+    <meta name="Keywords" content="postgres 、python、pg 、linix 、docker、 kubernetes、 cloud、hadoop、promethues ">
+    <meta name="description" content="Postgres">
+        
+    <meta name="author" content="Eamon">
+    <meta property="og:url" content="https://bodani.github.io/postgres/">
+    <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <link rel="alternate" type="application/rss+xml+xml" href="https://bodani.github.io/postgres/index.xml" title="Let's go 🐌 🐌 🐌" />
+    
+    
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+   
+    
+    
+    
+    
+    
+    
+        <link rel="stylesheet" href='/css/douban.css'>
+    
+        <link rel="stylesheet" href='/css/other.css'>
+    
+   
+        <a href=https://github.com/eamonzhang><img style="position: absolute; top: 0; left: 0; border: 0;" src="/images/forkme_left_red_aa0000.png" alt="Fork me on GitHub" data-canonical-src="/images/forkme_left_red_aa0000.png"></a>
+
+   
+        <script>
+          var _hmt = _hmt || [];
+            (function() {
+            var hm = document.createElement("script");
+            <!-- hm.src = "https://hm.baidu.com/hm.js?1f6605a363a50554aa03adcc685b7699"; -->
+            hm.src = "https://hm.baidu.com/hm.js?0010600e9ae6ff8f5814bb7ec6b36072";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+          })();
+       </script>
+</head>
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://bodani.github.io">
+                        Let&#39;s go 🐌 🐌 🐌
+                    </a>
+                
+                <p class="description">Let&#39;s build our own cloud native together  </p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="" href="https://bodani.github.io">首页</a>
+                    
+                    <a  href="https://bodani.github.io/archives" title="归档">归档</a>
+                    
+                    <a  href="https://bodani.github.io/postgresql" title="Postgres">Postgres</a>
+                    
+                    <a  href="https://bodani.github.io/linux" title="Linux">Linux</a>
+                    
+                    <a  href="https://bodani.github.io/about/me" title="关于">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/postgres/readonly/" title="创建只读用户">创建只读用户</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年9月8日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/postgres'>postgres</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            创建只读用户readonly 1.创建一个用户名为readonly密码为ropass的用户 CREATE USER readonly WITH ENCRYPTED PASSWORD 'ropass'; 2.用户只读事务 alter user readonly set default_transaction_read_only=on; 3.把所有库的语言的USAGE权限给到readonly GRANT USAGE ON SCHEMA public to readonly; 4.授予select权限(这句要进入具体数据库操作在哪个db环境执行就授予那个db的……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/postgres/readonly/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/postgres/oom/" title="数据库 OOM 预防">数据库 OOM 预防</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年6月30日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/postgres'>postgres</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            降低主进程被OOM kill 掉的风险 restart_after_crash 默认崩溃重启 postgres=# show restart_after_crash; restart_after_crash --------------------- on (1 row) vm.overcommit # vi /etc/sysctl.conf # 0 表示内核将检查是否有足够的可用内存供应用进程使用；如果有足够的可用内存，内存申请允许；否则，内存申请失败，并把错误返回给应用进程 # 1 表示内核允许分配所有的物理内存，而不管当前的内存状态如何 # 2 表示内核允许分配超……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/postgres/oom/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/postgres/ssl/" title="数据库 ssl认证">数据库 ssl认证</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年6月3日
+        </date>
+        
+        <div class="post-content">
+            SSL双向认证和SSL单向认证的区别 双向认证 SSL 协议要求服务器和用户双方都有证书。单向认证 SSL 协议不需要客户拥有CA证书，服务器端不会验证客户证书，以及在协商对称密码方案，对称通话密钥时，服务器发送给客户的是没有加过密的(这并不影响 SSL 过程的安全性)密码方案。 这样，双方具体的通讯内容，……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/postgres/ssl/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/postgres/awsome-postgres/" title="工作中所使用的postgres">工作中所使用的postgres</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年5月27日
+        </date>
+        
+        <div class="post-content">
+            Postgres 实际应用概览 MVCC 多版本控制 一个绕不开的话题， 主要是对抗表空间的膨胀。解决垃圾回收问题，主从库之间从库查询冲突问题。 目前方法每日低峰期定时 vaccum ，gocron自定定时任务 。 根据pgstattuple对磁盘空间利用率进行分析。决定是否vaccum full ,pg_repack 流复制 主从复制，读写分离的基础。五种同……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/postgres/awsome-postgres/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/postgres/pg_prewarm/" title="数据预加载">数据预加载</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年5月27日
+        </date>
+        
+        <div class="post-content">
+            https://blog.csdn.net/Hehuyi_In/article/details/102653909……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/postgres/pg_prewarm/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/postgres/index-bloom/" title="Bloom 索引">Bloom 索引</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年4月23日
+        </date>
+        
+        <div class="post-content">
+            Bloom 索引 Bloom 过滤器代表的是一组值。它的作用是检测一个元素是否可能属于集合，它可以允许有一些false positive，但是不允许存在false negative。也就是说，尽管某个元素不在集合中，测试也可能返回true。然而，如果元素在集合中，就不可能返回false。 创建在一组列中的B……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/postgres/index-bloom/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/postgres/FunctionsandOperators/" title="方法和函数">方法和函数</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年4月13日
+        </date>
+        
+        <div class="post-content">
+            条件表达式 https://www.postgresql.org/docs/10/functions-conditional.html postgresql支持CASE,COALESCE,NULLIF,GREATEST,LEAST条件表达式，使用它们有时候可以简化许多功能实现。 CASE CASE类似其他语言中的if/else等，当符合不同条件时则进行不同的运算 tbl_001表 create table tbl_001(id int,name varchar(32),sex varchar(1)); insert into tbl_001 values(1……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/postgres/FunctionsandOperators/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/postgres/daily_management/" title="数据库日常管理">数据库日常管理</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年4月7日
+        </date>
+        
+        <div class="post-content">
+            日常管理 可用性 监测项 可用性 主从 HA 全量备份 增量备份 恢复 监测项 磁盘空间 全库 select pg_size_pretty(sum(pg_database_size(oid))) from pg_database; 数据库 select datname, pg_size_pretty(pg_database_size(oid)) from pg_database order by pg_database_size(oid) desc limit 10; 表总 SELECT table_schema || '.' || table_name AS table_full_name, pg_size_pretty(pg_total_relation_size('&quot;' || table_schema || '&quot;.&quot;' || table_name || '&quot;')) AS size FROM information_schema.tables where table_schema = 'public' ORDER BY pg_total_relation_size('&quot;' || table_schema || '&quot;.&quot;' || table_name || '&quot;') DESC limit 10; 表 索引 冷热数据 上次统计信息更新时间 热表dml qps io 热表qdml 冷数据 冷索引 索引利用 全表扫描次数……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/postgres/daily_management/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/postgres/lock_wait/" title="锁等待">锁等待</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年3月27日
+        </date>
+        
+        <div class="post-content">
+            锁等待场景 一个事务尚未执行提交时持有锁，当另一个事务需要持有改行的锁时则需要等待。 Session 1 postgres=# \d+ wt Table &quot;public.wt&quot; Column | Type | Collation | Nullable | Default | Storage | Stats target | Description --------+---------+-----------+----------+---------+----------+--------------+------------- id | integer | | | | plain | | t | text | | | | extended | | postgres=# begin; BEGIN postgres=# update wt set t = 'aaaa' where id = 1; UPDATE 1 postgres=# select pg_backend_pid(); pg_backend_pid ---------------- 20034 (1 row) Session 2 postgres=# begin ; BEGIN postgres=# update wt set t = 'bbbb' where id = 1; Session 3 select * from pg_stat_activity; -[ RECORD 3 ]----+---------------------------------------- datid | 436980 datname……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/postgres/lock_wait/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/postgres/install02/" title="数据库安装 Postgres12 Ubuntu18">数据库安装 Postgres12 Ubuntu18</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年3月19日
+        </date>
+        
+        <div class="post-content">
+            软件源 echo &quot;deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main&quot; &gt;&gt; /etc/apt/sources.list.d/pgdg.list wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add - sudo apt-get update -y 安装 apt-get install postgresql-12 postgresql-client-12 postgresql-12-postgis-2.5 postgresql-contrib -y 初始化 /usr/pgsql-12/bin/postgresql-12-setup initdb 启动 systemctl start postgresql systemctl stop postgresql systemctl status postgresql systemctl enable postgresql 配置 cd /etc/postgresql/12/main/ vi postgres.conf vi pg_hba.conf……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/postgres/install02/">阅读全文</a></p>
+    </article>
+    
+    
+    
+
+
+
+<ol class="page-navigator">
+    
+    <li class="prev">
+        <a href="https://bodani.github.io/postgres/page/4/">上一页</a>
+    </li>
+    
+
+    
+    <li >
+        <a href="https://bodani.github.io/postgres/">1</a>
+    </li>
+    
+    <li >
+        <a href="https://bodani.github.io/postgres/page/2/">2</a>
+    </li>
+    
+    <li >
+        <a href="https://bodani.github.io/postgres/page/3/">3</a>
+    </li>
+    
+    <li >
+        <a href="https://bodani.github.io/postgres/page/4/">4</a>
+    </li>
+    
+    <li  class="current">
+        <a href="https://bodani.github.io/postgres/page/5/">5</a>
+    </li>
+    
+    <li >
+        <a href="https://bodani.github.io/postgres/page/6/">6</a>
+    </li>
+    
+    <li >
+        <a href="https://bodani.github.io/postgres/page/7/">7</a>
+    </li>
+    
+    <li >
+        <a href="https://bodani.github.io/postgres/page/8/">8</a>
+    </li>
+    
+    <li >
+        <a href="https://bodani.github.io/postgres/page/9/">9</a>
+    </li>
+    
+    <li >
+        <a href="https://bodani.github.io/postgres/page/10/">10</a>
+    </li>
+    
+
+    
+    <li class="next">
+        <a href="https://bodani.github.io/postgres/page/6/">下一页</a>
+    </li>
+    
+</ol>
+
+
+
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2018 - 2024 <a href="https://bodani.github.io"> By Eamon</a>
+        
+        | <a rel="nofollow" target="_blank" href="http://beian.miit.gov.cn/">辽ICP备2022000054号-1</a>
+        
+    </div>
+    <br />
+  
+</footer>
+
+
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+
+
+
+    <script src='/js/douban.js'></script>
+
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://bodani.github.io/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://bodani.github.io">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://bodani.github.io/python/pip/" title="python pip">python pip</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/postgres/repmgrd/" title="repmgrd介绍">repmgrd介绍</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/linux/linux_tunning/" title="Linux 优化指南">Linux 优化指南</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/monitor/nginx-log-exporter/" title="prometheus-nginxlog-exporter构建Nginx日志监控">prometheus-nginxlog-exporter构建Nginx日志监控</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/postgres/logical-replication_failover/" title="逻辑复制故障转移">逻辑复制故障转移</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/linux/nice/" title="nice, ionice, cpulimit">nice, ionice, cpulimit</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/linux/backlog-config/" title="Linux backlog/somaxconn 内核参数">Linux backlog/somaxconn 内核参数</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/storage/minio_ec/" title="Minio存储类别">Minio存储类别</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/postgres/wal_lsn/" title="LSN 和 wal日志文件名对应关系">LSN 和 wal日志文件名对应关系</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/middleware/kafka_install/" title="Kafka集群安装">Kafka集群安装</a>
+    </li>
+    
+</ul>
+
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/categories'>分类</a></h3>
+<ul class="widget-list">
+    
+    <li><a href="https://bodani.github.io/categories/ansible/">ansible (4)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/docker/">docker (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/etcd/">etcd (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/haproxy/">haproxy (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/kafka/">kafka (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/kvm/">kvm (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/linux/">linux (21)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/minio/">minio (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/mysql/">mysql (4)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/nginx/">nginx (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/postgres/">postgres (48)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/python/">python (18)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/rabbitmq/">rabbitmq (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/redis/">redis (9)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/tidb/">tidb (5)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件 (8)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E5%AD%98%E5%82%A8/">存储 (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E5%AE%89%E5%85%A8/">安全 (3)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E6%95%B0%E4%BB%93/">数仓 (3)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E7%9B%91%E6%8E%A7/">监控 (3)</a></li>
+    
+</ul>
+
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/tags.html'>标签</a></h3>
+<div class="tagcloud">
+    
+    <a href="https://bodani.github.io/tags/%E4%BC%98%E5%8C%96/">优化</a>
+    
+    <a href="https://bodani.github.io/tags/%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86/">配置管理</a>
+    
+    <a href="https://bodani.github.io/tags/%E9%AB%98%E5%8F%AF%E7%94%A8/">高可用</a>
+    
+</div>
+
+    </section>
+
+    
+<section class="widget">
+    <h3 class="widget-title">友情链接</h3>
+    <ul class="widget-list">
+        
+        <li>
+            <a target="_blank" href="http://www.cnblogs.com/zhangeamon" title="历史博客">历史博客</a>
+        </li>
+        
+    </ul>
+</section>
+
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://bodani.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+   
+</body>
+
+</html>

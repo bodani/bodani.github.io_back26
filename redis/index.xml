@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Redis on Let&#39;s go 🐌 🐌 🐌</title>
+    <link>https://bodani.github.io/redis/</link>
+    <description>Recent content in Redis on Let&#39;s go 🐌 🐌 🐌</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 16 Nov 2021 13:56:39 +0800</lastBuildDate><atom:link href="https://bodani.github.io/redis/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>长轮询</title>
+      <link>https://bodani.github.io/redis/long-polling/</link>
+      <pubDate>Tue, 16 Nov 2021 13:56:39 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/redis/long-polling/</guid>
+      <description>长轮询 实现原理： 与传统的轮询方式不同的是，当服务端接收到客户端的请求的时候，如果没有最新消息时不是立刻返回请求，而是等待一个最大超时时间。如果等待期间有最新消息则立刻返回。 相对于暴力的轮询，长轮询能够很大程度的减少客户端与服务端的连接进而缓解服务端的压力。 利用长轮询模拟推送服务，</description>
+    </item>
+    
+    <item>
+      <title>联想搜索</title>
+      <link>https://bodani.github.io/redis/automated-keyword/</link>
+      <pubDate>Tue, 16 Nov 2021 10:30:23 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/redis/automated-keyword/</guid>
+      <description>Redis 联想搜索实现 基于redis ZSET 例子: 当输入n时显示所有n开头的数据，当输入nb时显示所有nb开头的数据。 # 数据录入 127.0.0.1:6379&amp;gt; ZADD ss 0 &#39;n&#39; (integer) 1 127.0.0.1:6379&amp;gt; ZADD ss 0 &#39;nb&#39; (integer) 1 127.0.0.1:6379&amp;gt; ZADD ss 0 &#39;nba&#39; (integer) 1 # 搜索n 127.0.0.1:6379&amp;gt; ZRANK ss &#39;n&#39; (integer) 0 127.0.0.1:6379&amp;gt; ZRANGE ss 0 -1 1) &amp;quot;n&amp;quot; 2) &amp;quot;nb&amp;quot; 3) &amp;quot;nba&amp;quot; # 搜索nb 127.0.0.1:6379&amp;gt; ZRANK ss &#39;nb&#39; (integer) 1 127.0.0.1:6379&amp;gt; ZRANGE ss 1 -1 1) &amp;quot;nb&amp;quot; 2) &amp;quot;nba&amp;quot;</description>
+    </item>
+    
+    <item>
+      <title>发布订阅</title>
+      <link>https://bodani.github.io/redis/pubsub/</link>
+      <pubDate>Thu, 12 Aug 2021 10:44:01 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/redis/pubsub/</guid>
+      <description>发布订阅 消息多播，一个发布消息可以同时被多个订阅者收听 常用命令 发布 PUBLISH channel message 订阅 SUBSCRIBE channel [channel ...] PSUBSCRIBE pattern [pattern ...] python demo #!/usr/bin/env python import redis import time redis_pool = redis.ConnectionPool(host=&amp;quot;192.168.6.14&amp;quot;,port=&amp;quot;6379&amp;quot;) redis_client = redis.Redis(connection_pool=redis_pool) #生产者 def publishMessages(): while True: redis_client.publish(&amp;quot;channel.shenyang&amp;quot;,&amp;quot;hello news &amp;quot;+time.asctime(time.localtime(time.time()))) time.sleep(2) #消费者 def subscibeMessages(): p = redis_client.pubsub() p.subscribe(&amp;quot;channel.shenyang&amp;quot;) while True: message = p.get_message() if message: print(message) else: time.sleep(1) ##加入超时时间堵塞读 def subscibeMessages(): p = redis_client.pubsub() p.subscribe(&amp;quot;channel.shenyang&amp;quot;) while True: message = p.get_message(timeout=10) # 10秒等待 if message: print(message) #阻塞消费者 def subscibeBlockMessages(): p = redis_client.pubsub() p.subscribe(&amp;quot;channel.shenyang&amp;quot;) for item in p.listen(): print(item[&#39;type&#39;])</description>
+    </item>
+    
+    <item>
+      <title>基于Redis 的分布式锁实现</title>
+      <link>https://bodani.github.io/redis/distributedlock/</link>
+      <pubDate>Tue, 10 Aug 2021 15:05:28 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/redis/distributedlock/</guid>
+      <description>分布式锁场景 秒杀抢购茅台，车票 提前预约抢订车位，共享单车 特点，多个用户同一时间对同一个资源进行申请，并且只能允许一个用户申请成功。 分布式锁必要条件 布式系统环境下，一个方法在同一时间只能被一个机器的一个线程执行； 高可用的获取锁与释放锁； 高性能的获取锁与释放锁； 具备可重入特性； 具备锁</description>
+    </item>
+    
+    <item>
+      <title>Redis 应用场景</title>
+      <link>https://bodani.github.io/redis/redis-scence/</link>
+      <pubDate>Tue, 09 Mar 2021 17:23:59 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/redis/redis-scence/</guid>
+      <description>应用场景 作为一名匠人，当熟悉手里各样工具的特点。用起来才能得心应手。什么时候使用锯子，什么时候当用斧子。 同理熟知产品的技术特性，方可灵活运用。 在面对不同的业务需求时才能提供具有针对性的解决方案。 不求十八般兵器样样精通，但求不置斧锯于一旁只顾轮打锤。 Redis 都能干点啥 缓存 消息队列 循环列表</description>
+    </item>
+    
+    <item>
+      <title>Redis 持久化策略</title>
+      <link>https://bodani.github.io/redis/redis-durability/</link>
+      <pubDate>Tue, 09 Mar 2021 17:04:58 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/redis/redis-durability/</guid>
+      <description>持久化的两种方式 RDB 快照 AOF 日志 RDB 快照 快照一次全量备份。 特点： 保存时比较耗系统资源容易造成业务卡顿，恢复比较快。 原理： 使用操作系统的多进程COW(COPY ON Write)机制来实现快照持久化 命令： 堵塞 save ，非堵塞后台执行 bgsave 配置： save m n #配置快照(rdb)促发规则，格式：save &amp;lt;seconds&amp;gt; &amp;lt;changes&amp;gt; #save 900 1</description>
+    </item>
+    
+    <item>
+      <title>Redis Cluster</title>
+      <link>https://bodani.github.io/redis/redis-cluster/</link>
+      <pubDate>Tue, 09 Mar 2021 17:00:05 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/redis/redis-cluster/</guid>
+      <description>主从复制 原理说明参考 https://www.cnblogs.com/daofaziran/p/10978628.html 基本原理 主要是Redis没有wal日志机制。aof是先执行命令再记录。主从同步不是依赖aof日志。 通过单独的进程完成主从的同步。 初始时全量复制，SYNC。 然后进行增量复制PSYNC。在主库内存中维护一个偏移量master run id 。 当断开重新连接上比较偏移量，尝试</description>
+    </item>
+    
+    <item>
+      <title>Redis 6.0安装配置管理</title>
+      <link>https://bodani.github.io/redis/install/</link>
+      <pubDate>Fri, 12 Jun 2020 14:48:56 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/redis/install/</guid>
+      <description>安装 yum 方式 yum install -y http://rpms.famillecollet.com/enterprise/remi-release-7.rpm yum --enablerepo=remi install redis make 方式 升级gcc 版本临时生效,否则编译错误 yum -y install centos-release-scl yum -y install devtoolset-9-gcc devtoolset-9-gcc-c++ devtoolset-9-binutils scl enable devtoolset-9 bash wget http://download.redis.io/releases/redis-6.0.1.tar.gz tar -xvf redis-6.0.1.tar.gz cd /usr/local/redis-6.0.1/ make PREFIX=/usr/local/redis install 启动 systemctl start redis systemctl enalbe redis 配置 系统参数 vi /etc/sysctl.conf net.ipv4.tcp_tw_recycle = 1 net.ipv4.tcp_tw_reuse = 1 kernel.shmmax = 68719476736 kernel.shmall = 4294967296 net.core.netdev_max_backlog = 262144 net.core.somaxconn = 40960 net.ipv4.tcp_max_orphans = 3276800 net.ipv4.tcp_max_syn_backlog = 262144 服务参数 vi /etc/redis.conf daemonize yes pidfile /var/run/redis.pid bind * #绑定网卡 timeout 300 #当客户端闲置多长时间后关闭连接，如果指定为0</description>
+    </item>
+    
+    <item>
+      <title>Redis 常用数据结构</title>
+      <link>https://bodani.github.io/redis/data-type/</link>
+      <pubDate>Wed, 13 Feb 2019 14:41:54 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/redis/data-type/</guid>
+      <description>基本类型 String： 字符串。整数，浮点数 。底层数据结构 字符数组。 类似于ARRYLIST Hash：健值对的无序散列列表 。 List：链表 。 底层数据结构 qucklist。 类似于LISKLIST Set：无序集合 Zset：有序集合 。底层数据结构，跳跃列表 高级类型 BitMap GEO HyperLogLog 其他 Stream https://www.cnblogs.com/knowledgesea/category/722602.html</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>linux on Let&#39;s go 🐌 🐌 🐌</title>
+    <link>https://bodani.github.io/categories/linux/</link>
+    <description>Recent content in linux on Let&#39;s go 🐌 🐌 🐌</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Wed, 07 Sep 2022 14:49:31 +0800</lastBuildDate><atom:link href="https://bodani.github.io/categories/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>nice, ionice, cpulimit</title>
+      <link>https://bodani.github.io/linux/nice/</link>
+      <pubDate>Wed, 07 Sep 2022 14:49:31 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/linux/nice/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>高压缩比工具 XZ</title>
+      <link>https://bodani.github.io/linux/xz/</link>
+      <pubDate>Wed, 22 Dec 2021 10:08:23 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/linux/xz/</guid>
+      <description>压缩比 xz &amp;gt;biz2 &amp;gt; gzip 安装 默认系统自带 yum install epel-release yum install xz 解压缩 xz -d --threads=`nproc` -k -v hits_v1.tsv.xz 压缩 xz -z --threads=`nproc` -k -v hits_v1.tsv 参数说明 # xz --help Usage: xz [OPTION]... [FILE]... Compress or decompress FILEs in the .xz format. -z, --compress force compression -d, --decompress force decompression -t, --test test compressed file integrity -l, --list list information about .xz files -k, --keep keep (don&#39;t delete) input files -f, --force force overwrite of output file and (de)compress links -c, --stdout write to standard output and don&#39;t delete input files -0 ... -9 compression preset; default is 6; take compressor *and* decompressor memory usage into account before using 7-9! -e, --extreme try to improve compression ratio by using more CPU time; does not affect</description>
+    </item>
+    
+    <item>
+      <title>Linux 系统登陆记录</title>
+      <link>https://bodani.github.io/linux/last/</link>
+      <pubDate>Thu, 28 Oct 2021 16:12:40 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/linux/last/</guid>
+      <description>背景 登陆系统时，尤其是具有外网ip的主机时经常会看到类似如下信息。 There were 12039 failed login attempts since the last successful login. 说明你的系统被尝试登陆破解。 大部分的破解基本都是自动机器扫描，配合自己的数据字典暴力破解。 系统登陆成功记录 查看命令 last 原理 读取解析 /var/log/wtmp 例如: 查看最近十次登陆记录 last -10 查看某个时间段的登陆记录 last -s 2021-10-10 -t</description>
+    </item>
+    
+    <item>
+      <title>Ubuntu20.04 装机后</title>
+      <link>https://bodani.github.io/linux/ubuntu2004-qa/</link>
+      <pubDate>Wed, 20 Oct 2021 15:04:04 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/linux/ubuntu2004-qa/</guid>
+      <description>关闭cloud init systemctl stop cloud-init-local cloud-init cloud-config cloud-final systemctl disable cloud-init-local cloud-init cloud-config cloud-final</description>
+    </item>
+    
+    <item>
+      <title>搭建VPN服务</title>
+      <link>https://bodani.github.io/linux/openvpn/</link>
+      <pubDate>Tue, 18 May 2021 09:03:44 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/linux/openvpn/</guid>
+      <description>利用Openven搭建VPN服务 服务端 参考 https://github.com/kylemanna/docker-openvpn 初始化 OVPN_DATA=&amp;quot;ovpn-data-example&amp;quot; docker volume create --name $OVPN_DATA docker run -v $OVPN_DATA:/etc/openvpn --rm kylemanna/openvpn ovpn_genconfig -u udp://VPN.SERVERNAME.COM docker run -v $OVPN_DATA:/etc/openvpn --rm -it kylemanna/openvpn ovpn_initpki 其中 VPN.SERVERNAME.COM 为访问域名 启动服务 docker run -v $OVPN_DATA:/etc/openvpn -d -p 1194:1194/udp --cap-add=NET_ADMIN kylemanna/openvpn 生成key docker run -v $OVPN_DATA:/etc/openvpn --rm -it kylemanna/openvpn easyrsa build-client-full CLIENTNAME nopass docker run -v $OVPN_DATA:/etc/openvpn --rm kylemanna/openvpn ovpn_getclient CLIENTNAME &amp;gt; CLIENTNAME.ovpn 客户端 openvpn --config CLIENTNAME.ovpn 验证 curl ipinfo.io 查看upd 端口 nc -vu ip port</description>
+    </item>
+    
+    <item>
+      <title>远程管理卡 命令管理IPMI</title>
+      <link>https://bodani.github.io/linux/ipmi/</link>
+      <pubDate>Mon, 10 May 2021 16:58:56 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/linux/ipmi/</guid>
+      <description>IPMI IPMI，即智能平台管理接口（Intelligent Platform Management Interface），IPMI的核心是一个专用芯片/控制器(BMC)，独立于操作系统、BIOS和处理器，因此属于带外管理设备。正是因为如此，我们可以通过BMC来控制或者获取系统的各种信息，而不需要关注系统是否正常。比如，系</description>
+    </item>
+    
+    <item>
+      <title>Centos7 重置密码</title>
+      <link>https://bodani.github.io/linux/resetpasswd-centos7/</link>
+      <pubDate>Fri, 09 Apr 2021 11:26:16 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/linux/resetpasswd-centos7/</guid>
+      <description>进入开机界面 按e 后 修改如下两处 ctrl+X 进入系统 上图中最后一个指令为保持设置 touch /.autorelabel 重新进入系统 exec /sbin/init</description>
+    </item>
+    
+    <item>
+      <title>CPU亲和性(亲和力)</title>
+      <link>https://bodani.github.io/linux/cpu-affinity/</link>
+      <pubDate>Fri, 09 Apr 2021 09:35:25 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/linux/cpu-affinity/</guid>
+      <description>基础知识 查看cpu #lscpu Architecture: x86_64 CPU op-mode(s): 32-bit, 64-bit Byte Order: Little Endian CPU(s): 128 On-line CPU(s) list: 0-127 Thread(s) per core: 2 Core(s) per socket: 32 Socket(s): 2 NUMA node(s): 2 # 查看物理CPU个数 cat /proc/cpuinfo|grep &amp;quot;physical id&amp;quot;|sort -u|wc -l # 查看每个物理CPU中core的个数(即核数) cat /proc/cpuinfo|grep &amp;quot;cpu cores&amp;quot;|uniq # 查看逻辑CPU的个数 cat /proc/cpuinfo|grep &amp;quot;processor&amp;quot;|wc -l # 查看CPU的名称型号 cat /proc/cpuinfo|grep &amp;quot;name&amp;quot;|cut -f2 -d:|uniq 关系 CPU数量 = Thread(s) per core * Socket(s) * Core(s) per socket Linux查看某个进</description>
+    </item>
+    
+    <item>
+      <title>CPU频率管理</title>
+      <link>https://bodani.github.io/linux/cpu_utilize/</link>
+      <pubDate>Thu, 08 Apr 2021 09:44:39 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/linux/cpu_utilize/</guid>
+      <description>介绍 CPU动态节能技术用于降低服务器功耗，通过选择系统空闲状态不同的电源管理策略，可以实现不同程度降低服务器功耗，更低的功耗策略意味着CPU唤醒更慢对性能影响更大。对于对时延和性能要求高的应用，建议关闭CPU的动态调节功能，禁止 CPU休眠，并把CPU频率固定到最高。 cpufreq</description>
+    </item>
+    
+    <item>
+      <title>存储设备几个物理概念</title>
+      <link>https://bodani.github.io/linux/hard_store/</link>
+      <pubDate>Mon, 29 Mar 2021 16:16:38 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/linux/hard_store/</guid>
+      <description>硬盘 HDD 机械硬盘 SSD 固态硬盘 物理接口 接口的物理形态 SATA mSTATA 迷你SATA m.2 曾用名NG(NEXT GERNERATION) 根据宽度分为(m.2 2242 2260 2280) u.2 统一了 SATA ，PCIe，SAS 接口 AIC ADD IN CARD 标准PCIe金手指 通信协议 数据通信逻辑协议标准 AHCI SAS NVME (Non-Volatile Memory Host Controller Interface) 总线标准 数据总线标准,硬盘与CPU通过总线传输数据 SATA PCIE 在传统SAT</description>
+    </item>
+    
+    <item>
+      <title>修改远程管理卡密码</title>
+      <link>https://bodani.github.io/linux/bmcpasswd/</link>
+      <pubDate>Mon, 29 Mar 2021 16:09:34 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/linux/bmcpasswd/</guid>
+      <description>更改BMC密码 BMC：基板管理控制器 Baseboard Management Controller 更改BMC密码，需要基于Ipmitool工具实现，需要先下载该工具 安装ipmitool ubuntu安装命令： sudo apt-get -y install ipmitool centos安装命令： yum -y install epel-release（先） yum -y install ipmitool（后） 查看登陆账户名列表 ipmitool user list 2（技嘉主</description>
+    </item>
+    
+    <item>
+      <title>SSD IO request Time Out</title>
+      <link>https://bodani.github.io/linux/ssdiotimeout/</link>
+      <pubDate>Mon, 29 Mar 2021 09:30:42 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/linux/ssdiotimeout/</guid>
+      <description>Intel 论坛相似问题讨论 https://community.intel.com/t5/Solid-State-Drives/I-O-request-timeouts-on-Linux-with-Intel-P3520-P4600-NVMe-PCIe/td-p/577474 临时解决 mkfs.xfs -K /dev/nvme01 -K Do not attempt to discard blocks at mkfs time. 带来问题 [Tue Mar 30 12:19:12 2021] [&amp;lt;ffffffffa8188cf9&amp;gt;] schedule_preempt_disabled+0x29/0x70 [Tue Mar 30 12:19:12 2021] [&amp;lt;ffffffffa8186c67&amp;gt;] __mutex_lock_slowpath+0xc7/0x1d0 [Tue Mar 30 12:19:12 2021] [&amp;lt;ffffffffa818603f&amp;gt;] mutex_lock+0x1f/0x2f [Tue Mar 30 12:19:12 2021] [&amp;lt;ffffffffa7d2d596&amp;gt;] ima_file_check+0xa6/0x1b0 [Tue Mar 30 12:19:12 2021] [&amp;lt;ffffffffa7c5dfba&amp;gt;] do_last+0x59a/0x1340 [Tue Mar 30 12:19:12 2021] [&amp;lt;ffffffffa7c28ba6&amp;gt;] ? kmem_cache_alloc_trace+0x1d6/0x200 [Tue Mar 30 12:19:12 2021] [&amp;lt;ffffffffa7c5ee2d&amp;gt;] path_openat+0xcd/0x5a0 [Tue Mar 30 12:19:12 2021] [&amp;lt;ffffffffa7c01158&amp;gt;] ? page_add_new_anon_rmap+0xb8/0x170 [Tue Mar 30 12:19:12 2021] [&amp;lt;ffffffffa7c6107d&amp;gt;] do_filp_open+0x4d/0xb0 [Tue Mar 30 12:19:12 2021] [&amp;lt;ffffffffa7c6f177&amp;gt;] ? __alloc_fd+0x47/0x170 [Tue Mar 30 12:19:12 2021] [&amp;lt;ffffffffa7c4cbc4&amp;gt;] do_sys_open+0x124/0x220 [Tue Mar 30 12:19:12 2021] [&amp;lt;ffffffffa7c4ccde&amp;gt;] SyS_open+0x1e/0x20 [Tue Mar 30 12:19:12 2021] [&amp;lt;ffffffffa8194f92&amp;gt;] system_call_fastpath+0x25/0x2a [Tue Mar 30 12:19:12 2021] INFO: task postmaster:119438 blocked for more than 120 seconds. [Tue</description>
+    </item>
+    
+    <item>
+      <title>网络穿透</title>
+      <link>https://bodani.github.io/linux/frp/</link>
+      <pubDate>Sun, 01 Nov 2020 17:03:10 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/linux/frp/</guid>
+      <description>背景 一个类似于花生壳的服务。将一个内网服务暴露在公网中提供访问。 前提条件 拥有公网IP的服务器。比如 xx云服务器 准备 下载安装包 wget https://github.com/fatedier/frp/releases/download/v0.38.0/frp_0.38.0_linux_amd64.tar.gz 解压后 . ├── frpc ├── frpc_full.ini ├── frpc.ini ├── frps ├── frps_full.ini ├── frps.ini ├── LICENSE └── systemd ├── frpc.service ├── frpc@.service ├── frps.service └── frps@.service 分为客户端和服务端 客户端： 内网服务器 服务端： 拥有</description>
+    </item>
+    
+    <item>
+      <title>Ubuntu 20.04 网络配置</title>
+      <link>https://bodani.github.io/linux/ubuntu2004-network/</link>
+      <pubDate>Mon, 21 Sep 2020 16:48:24 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/linux/ubuntu2004-network/</guid>
+      <description>配置 vim /etc/netplan/00-installer-config.yaml # This is the network config written by &#39;subiquity&#39; network: ethernets: enp2s0: addresses: - 192.168.6.111/24 gateway4: 192.168.6.1 nameservers: addresses: [119.29.29.29] version: 2 生效 netplan apply 查看网卡 #ethtool enp2s0 Settings for enp2s0: Supported ports: [ TP MII ] Supported link modes: 10baseT/Half 10baseT/Full 100baseT/Half 100baseT/Full 1000baseT/Full Supported pause frame use: Symmetric Receive-only Supports auto-negotiation: Yes Supported FEC modes: Not reported Advertised link modes: 10baseT/Half 10baseT/Full 100baseT/Half 100baseT/Full 1000baseT/Full Advertised pause frame use: Symmetric Receive-only Advertised auto-negotiation: Yes Advertised FEC modes: Not reported Link partner advertised link modes: 10baseT/Half 10baseT/Full 100baseT/Half 100baseT/Full Link partner advertised pause frame use: Symmetric Receive-only Link partner advertised auto-negotiation: Yes Link partner advertised FEC modes: Not reported Speed: 100Mb/s Duplex: Full Port: MII PHYAD: 0 Transceiver: internal Auto-negotiation: on Supports Wake-on: pumbg Wake-on: d Current message level: 0x00000033 (51)</description>
+    </item>
+    
+    <item>
+      <title>Linux 获取CPU温度</title>
+      <link>https://bodani.github.io/linux/cpu_temp/</link>
+      <pubDate>Thu, 07 May 2020 14:02:02 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/linux/cpu_temp/</guid>
+      <description>直接读取系统信息 可以通过读取如下路径中的数据来获取cpu的温度信息，不过读取的数据没有经过处理。 cpu0： cat /sys/class/thermal/thermal_zone0/temp cpu1： cat /sys/class/thermal/thermal_zone1/temp 通过命令行的方式获取 安装 lm_sensors 软件包： # rpm yum install lm_sensors # deb apt-get install lm-sensors 执行命令sensors-detect，进行简单配置，此命令执行后会出现一系列选项，一直yes即可； 执行</description>
+    </item>
+    
+    <item>
+      <title>vim 编辑</title>
+      <link>https://bodani.github.io/linux/cmd-vim/</link>
+      <pubDate>Tue, 22 Oct 2019 10:01:42 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/linux/cmd-vim/</guid>
+      <description>字符串查找 a.查找一个字符串使用：“/你要查询的内容” b.查找下一个 ：“/你要查询的内容” 再输入”n“跳到下一个 字符串替换 a. 文件内全部替换： %s#abc#def#g（用def替换文件中所有的abc） 例如把一个文本文件里面的“linuxidc.com”全部替换成“linuxidc.</description>
+    </item>
+    
+    <item>
+      <title>pmap Linux 进程内存分析</title>
+      <link>https://bodani.github.io/linux/pmap/</link>
+      <pubDate>Tue, 19 Mar 2019 08:58:40 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/linux/pmap/</guid>
+      <description>介绍 pmap - report memory map of a process(查看进程的内存映像信息) 参数说明 x extended Show the extended format. 显示扩展格式 d device Show the deviceformat. 显示设备格式 结果查看说明 Address: start address ofmap 映像起始地址 Kbytes: size of map in kilobytes 映像大小 RSS: resident set size inkilobytes 驻留集大小 Dirty: dirty pages (both sharedand private) in kilobytes 脏页大小 Mode: permissions on map 映像权限: r=read,w=write, x=execute, s=shared, p=private (copy on write) Mapping: file backing the map ,or &amp;lsquo;[ anon ]&amp;rsquo; for allocated memory, or &amp;lsquo;[ stack ]&amp;rsquo; for the program stack.</description>
+    </item>
+    
+    <item>
+      <title>meminfo Linux 内存信息</title>
+      <link>https://bodani.github.io/linux/meminfo/</link>
+      <pubDate>Tue, 08 Jan 2019 09:04:15 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/linux/meminfo/</guid>
+      <description>介绍 /proc/meminfo是了解Linux系统内存使用状况的主要接口，我们最常用的”free”、”vmstat”等命令就是通过它获取数据的 内容解读 cat /proc/meminfo MemTotal: 8009504 kB 除了bios ，kernel本身占用的内存以外，可以被kernel所分配的内存。一般这个值固定不变。 MemFree: 2385828 kB 未被使用的内存 MemAvailable:</description>
+    </item>
+    
+    <item>
+      <title>smartctl 硬盘检测</title>
+      <link>https://bodani.github.io/linux/smartctl/</link>
+      <pubDate>Mon, 03 Dec 2018 14:21:00 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/linux/smartctl/</guid>
+      <description>SMART 简介 S.M.A.R.T.，全称为“Self-Monitoring Analysis and Reporting Technology”，即“自我监测、分析及报告技术”。是一种自动的硬盘状态检测与预警系统和规范。通过在硬盘硬件内的检测指令对硬盘的硬件如磁头、盘片、马达、电路的运行情况进行监控、记录并与厂商所设定的预设安全</description>
+    </item>
+    
+    <item>
+      <title>Centos 初始化配置</title>
+      <link>https://bodani.github.io/linux/init-centos/</link>
+      <pubDate>Mon, 03 Dec 2018 10:34:06 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/linux/init-centos/</guid>
+      <description>网络配置 设置IP 略 ip_froward 查看 sysctl -a | grep ip_ 修改 vi /etc/sysctl.conf net.ipv4.ip_forward = 1 最大使用内存 vm.max_map_count=262144 生效 sysctl -p 系统更新 yum -y update 安装扩展及工具 yum -y install epel-release net-tools bind-utils telnet wget sysstat 文件链接限制 查看 ulimit -n 修改 vi /etc/security/limits.conf * - nofile 65536 * soft nproc 65536 * hard nproc 65536 * soft nofile 65536 * hard nofile 65536 rm /etc/security/limits.d/* -rf 安全 selinux 查看 getenforce 修改 临时 setenforce 0 永久 vi /etc/sysconfig/selinux sed -i &#39;/SELINUX/s/enforcing/disabled/&#39; /etc/selinux/config setenforce 0 设置 firewalld 设置 ssh vi /etc/ssh/sshd_config 禁用root用户，密钥登陆 切换</description>
+    </item>
+    
+    <item>
+      <title>进程分析 strace,pstack</title>
+      <link>https://bodani.github.io/linux/pstack_strace/</link>
+      <pubDate>Wed, 14 Nov 2018 22:09:54 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/linux/pstack_strace/</guid>
+      <description>https://yq.aliyun.com/articles/647468 基本用法 pstack pid strace -e trace=all -T -tt -p pid strace -o server.strace -Ttt -p pid 应用举例 python while True: print(&#39;hello&#39;) 查看应用进程 ps -ef | grep python root 13491 13054 13 13:27 pts/0 00:00:06 python pstack 13491 #0 0x0000726388f9ea90 in __write_nocancel () at ../sysdeps/unix/syscall-template.S:81 #1 0x0000726388f292f3 in _IO_new_file_write (f=0x726389277400 &amp;lt;_IO_2_1_stdout_&amp;gt;, data=0x72638a18d000, n=2) at fileops.c:1258 #2 0x0000726388f2ab0e in new_do_write (to_do=2, data=0x72638a18d000 &amp;quot;1\n. \b[8@while True:\033[C&amp;quot;, fp=0x726389277400 &amp;lt;_IO_2_1_stdout_&amp;gt;) at fileops.c:519 #3 _IO_new_do_write (fp=0x726389277400 &amp;lt;_IO_2_1_stdout_&amp;gt;, data=0x72638a18d000 &amp;quot;1\n. \b[8@while True:\033[C&amp;quot;, to_do=2) at fileops.c:495 #4 0x0000726388f29a50 in _IO_new_file_xsputn (f=0x726389277400 &amp;lt;_IO_2_1_stdout_&amp;gt;, data=&amp;lt;optimized out&amp;gt;, n=1) at fileops.c:1326 #5 0x0000726388f1e05b in __GI__IO_fputs (str=0x726389cd2a8d &amp;quot;\n&amp;quot;, fp=0x726389277400 &amp;lt;_IO_2_1_stdout_&amp;gt;) at iofputs.c:39 #6 0x0000726389c0b9c0 in PyFile_WriteString () from /lib64/libpython2.7.so.1.0 #7 0x0000726389c80d48 in PyEval_EvalFrameEx () from /lib64/libpython2.7.so.1.0 #8 0x0000726389c8908d in PyEval_EvalCodeEx () from /lib64/libpython2.7.so.1.0 #9 0x0000726389c89192 in PyEval_EvalCode () from /lib64/libpython2.7.so.1.0 #10</description>
+    </item>
+    
+  </channel>
+</rss>

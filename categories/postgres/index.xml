@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>postgres on Let&#39;s go 🐌 🐌 🐌</title>
+    <link>https://bodani.github.io/categories/postgres/</link>
+    <description>Recent content in postgres on Let&#39;s go 🐌 🐌 🐌</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Fri, 24 Mar 2023 16:20:16 +0800</lastBuildDate><atom:link href="https://bodani.github.io/categories/postgres/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>repmgrd介绍</title>
+      <link>https://bodani.github.io/postgres/repmgrd/</link>
+      <pubDate>Fri, 24 Mar 2023 16:20:16 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/repmgrd/</guid>
+      <description>repmgrd介绍 repmgrd 作为运行在集群中每个节点上的一个管理和监控的守护程序，可以自动进行故障转移和维护复制关系，并提供有关每个节点状态的监控信息。 repmgrd 不依赖其他服务 提供的功能包括: 众多的配置项提供选择 根据场景可自定义对应执行脚本 一个命令进入维护模式 多数据中心场景，通过location</description>
+    </item>
+    
+    <item>
+      <title>逻辑复制故障转移</title>
+      <link>https://bodani.github.io/postgres/logical-replication_failover/</link>
+      <pubDate>Wed, 23 Nov 2022 09:33:13 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/logical-replication_failover/</guid>
+      <description>逻辑复制故障转移 主库 10.10.2.11 物理从库 10.10.2.12 逻辑从库 10.10.2.13 测试任务 当主库发生故障，物理复制从库变为新主库。逻辑从库将订阅地址变更为新主库。 开始测试 环境搭建参考 物理复制 逻辑复制 状态查看 复制关系 select * from pg_stat_replication ; -[ RECORD 1 ]----+------------------------------ pid | 2628 usesysid | 24576 usename | repuser application_name | sub1 client_addr | 10.10.2.13 client_hostname | client_port | 40230 backend_start | 2022-11-23 05:46:59.50291+00 backend_xmin | state | streaming sent_lsn | 0/21000140 write_lsn | 0/21000140 flush_lsn | 0/21000140 replay_lsn | 0/21000140 write_lag | flush_lag</description>
+    </item>
+    
+    <item>
+      <title>LSN 和 wal日志文件名对应关系</title>
+      <link>https://bodani.github.io/postgres/wal_lsn/</link>
+      <pubDate>Mon, 08 Aug 2022 14:58:08 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/wal_lsn/</guid>
+      <description>例子 select pg_current_wal_lsn(),pg_walfile_name(pg_current_wal_lsn()),pg_walfile_name_offset(pg_current_wal_lsn()); pg_current_wal_lsn | pg_walfile_name | pg_walfile_name_offset --------------------+--------------------------+------------------------------------ 2478/BB36EC90 | 0000000300002478000000BB | (0000000300002478000000BB,3599504) (1 row) select x&#39;36EC90&#39;::int ; int4 --------- 3599504 (1 row) 说明 方法 pg_current_wal_lsn()：获得当前wal日志写入位置。 pg_walfile_name():转换wal日志位置为文件名。 pg_walfile_name_offset():返回转换后的wal日志文件名和偏移量。</description>
+    </item>
+    
+    <item>
+      <title>upset 用法</title>
+      <link>https://bodani.github.io/postgres/upset/</link>
+      <pubDate>Fri, 29 Jul 2022 08:47:34 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/upset/</guid>
+      <description>创建表 DROP TABLE IF EXISTS &amp;quot;goods&amp;quot;; CREATE TABLE &amp;quot;goods&amp;quot; ( &amp;quot;store_cd&amp;quot; int4 NOT NULL, &amp;quot;good_cd&amp;quot; varchar(50) COLLATE &amp;quot;pg_catalog&amp;quot;.&amp;quot;default&amp;quot; NOT NULL, &amp;quot;name&amp;quot; varchar(255) COLLATE &amp;quot;pg_catalog&amp;quot;.&amp;quot;default&amp;quot; ); INSERT INTO &amp;quot;goods&amp;quot; VALUES (101, &#39;1&#39;, &#39;张三&#39;); INSERT INTO &amp;quot;goods&amp;quot; VALUES (102, &#39;2&#39;, &#39;李四&#39;); INSERT INTO &amp;quot;goods&amp;quot; VALUES (103, &#39;3&#39;, &#39;王五&#39;); ALTER TABLE &amp;quot;goods&amp;quot; ADD CONSTRAINT &amp;quot;pr_cd_key&amp;quot; PRIMARY KEY (&amp;quot;store_cd&amp;quot;, &amp;quot;good_cd&amp;quot;); 数据存在则更新数据，不存在则插入数据 --- INSERT INTO GOODS VALUES ( 104, &#39;4&#39;, &#39;赵六&#39; ) ON CONFLICT ON CONSTRAINT pr_key_cd DO UPDATE SET NAME = &#39;更新&#39; WHERE GOODS.STORE_CD = &#39;104&#39; AND GOODS.GOOD_CD = &#39;4&#39; ---- pr_key_cd为必须为</description>
+    </item>
+    
+    <item>
+      <title>利用debezium 实现数据变更捕获</title>
+      <link>https://bodani.github.io/postgres/debezium/</link>
+      <pubDate>Wed, 27 Jul 2022 10:37:46 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/debezium/</guid>
+      <description>整个实现以功能演示为目标，便于流程的梳理和理解。不适合正式生成环境使用。 debezium的几种使用方式 单独部署 下游数据传输到cloud，官方目前不推荐 与kafka联合使用 下游数据传输到kafka 嵌入式 例如Flink使用的debezium作为数据的source connetor模块使</description>
+    </item>
+    
+    <item>
+      <title>利用hll数据类型进行数据统计</title>
+      <link>https://bodani.github.io/postgres/hll/</link>
+      <pubDate>Thu, 14 Jul 2022 15:44:53 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/hll/</guid>
+      <description>HyperLogLog 使用场景 在应用中统计去重后的个数，传统的方法通常是这么操作 count(distict(xxx))。 如果数据量变大，或统计频繁，性能会越来越差。 可以考虑一个近似统计计算方法hll create extension hll; HyperLogLog 是一种算法, 可以用来估算数据集的基数. 基数是指一个集合中不同值的数目, 等同于 COUNT(DISTINCT field) 返回值. 对于超</description>
+    </item>
+    
+    <item>
+      <title>数据库高可用pgautofailover</title>
+      <link>https://bodani.github.io/postgres/pgautofailover/</link>
+      <pubDate>Mon, 11 Jul 2022 15:15:51 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/pgautofailover/</guid>
+      <description>pg_auto_failover 实践 一个简单的架构 citus同源postgres高可用方案 角色: 主节点 (master) 复制节点 (slave) 监控节点 (monitor) 集群搭建 环境说明 软件版本 postgresql 14.4 pg_auto_failover 1.6.4 centos 7 网络环境 IP 软件 10.10.2.11 monitor 10.10.2.12 master 10.10.2.13 replication 从零开始建设 ​ 没有任何历史包袱，包括数据库自身的搭建 ​ 手动安装 ​ 在所有的节点上执行 -- 数据库安装 sudo yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm sudo yum install -y postgresql14-server # install pg_auto_failover curl https://install.citusdata.com/community/rpm.sh</description>
+    </item>
+    
+    <item>
+      <title>pg_rewrite</title>
+      <link>https://bodani.github.io/postgres/pg_rewrite/</link>
+      <pubDate>Fri, 01 Jul 2022 17:06:25 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/pg_rewrite/</guid>
+      <description>在线分区表 https://github.com/cybertec-postgresql/pg_rewrite 使用测试 PostgreSQL server version 13 or later is required.</description>
+    </item>
+    
+    <item>
+      <title>逻辑复制实现数据迁移</title>
+      <link>https://bodani.github.io/postgres/dts/</link>
+      <pubDate>Fri, 01 Jul 2022 16:36:52 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/dts/</guid>
+      <description>DTS 数据迁移服务 实现目标 ​ 平滑将现有在线业务数据库数据迁移到新数据库中。 ​ 如数据库大版本升级、原pg数据库迁移到citus集群、 多数据源汇总等业务场景。 迁移前原库检查 配置检查 -- 源端 wal_level = logical max_replication_slots = 大于1 max_wal_senders = max_worker_processes -- 目标端 max_replication_slots，大于等于该实例总共需要创建的</description>
+    </item>
+    
+    <item>
+      <title>pg_buffercache</title>
+      <link>https://bodani.github.io/postgres/pg_buffercache/</link>
+      <pubDate>Fri, 01 Jul 2022 09:54:49 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/pg_buffercache/</guid>
+      <description>通过插件查看PG数据缓存 create extension pg_buffercache; 查看当前database缓存使用情况 select c.relname,relname,pg_size_pretty(pg_table_size(c.oid)),pg_size_pretty(count(*) * 8192) as buffered, round(100.0*count(*)/(select setting FROM pg_settings where name = &#39;shared_buffers&#39;)::integer,1) as buffer_percent, round(100.0 * count(*) * 8192/pg_table_size(c.oid)) as percent_of_table from pg_class c inner join pg_buffercache b on b.relfilenode = c.relfilenode inner join pg_database d on (b.reldatabase = d.oid and d.datname = current_database()) group by c.oid ,c.relname order by 3 desc limit 10;</description>
+    </item>
+    
+    <item>
+      <title>数据库免密码登陆</title>
+      <link>https://bodani.github.io/postgres/login_nopasswd/</link>
+      <pubDate>Wed, 23 Mar 2022 14:41:44 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/login_nopasswd/</guid>
+      <description>免密登陆 以下几种PG配置免密的方法。 方法一：设置pg_hab.conf 认证方式为trust #Type database user address method host all postgres 127.0.0.1/32 trust 该方式最不安全，导致通过指定IP连接数据库的连接都可以任意登录数据，毫无安全保障。禁止在生产环境使用。 方法二：设置PG环境变量PGPASSWORD PGPASSWORD是P</description>
+    </item>
+    
+    <item>
+      <title>vacuum 限流</title>
+      <link>https://bodani.github.io/postgres/vacuum_limit/</link>
+      <pubDate>Fri, 11 Feb 2022 13:51:50 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/vacuum_limit/</guid>
+      <description>限流目的 清理是在后台运行的维护任务，对用户查询的影响最小。不应该消耗太多的资源(CPU和磁盘I/O)。 清理成本计算 清理过程相当简单，它从数据文件中读取页面(8kB的数据块)，并检查是否需要清理。如果没有dead tuples，页面将被简单地丢弃，而不进行任何更改。否则，它将被清理(</description>
+    </item>
+    
+    <item>
+      <title>查看数据信息常用sql整理</title>
+      <link>https://bodani.github.io/postgres/monitor-sql/</link>
+      <pubDate>Thu, 10 Feb 2022 10:21:07 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/monitor-sql/</guid>
+      <description>库内存命中率 SELECT &#39;index hit rate&#39; AS name, (sum(idx_blks_hit)) / nullif(sum(idx_blks_hit + idx_blks_read),0) AS ratio FROM pg_statio_user_indexes UNION ALL SELECT &#39;table hit rate&#39; AS name, sum(heap_blks_hit) / nullif(sum(heap_blks_hit) + sum(heap_blks_read),0) AS ratio FROM pg_statio_user_tables; 表内存命中率 SELECT relname AS relation, heap_blks_read AS heap_read, heap_blks_hit AS heap_hit, ((heap_blks_hit*100) / NULLIF((heap_blks_hit + heap_blks_read), 0)) AS ratio FROM pg_statio_user_tables order by ratio; 读IO内存占比 磁盘中读取和在内存中直接读取之间的数字和比 SELECT relname AS &amp;quot;relation&amp;quot;, heap_blks_read AS heap_read, heap_blks_hit AS heap_hit, ( (heap_blks_hit*100) / NULLIF((heap_blks_hit + heap_blks_read), 0)) AS ratioFROM pg_statio_user_tables; 表中索引命中率 SELECT relname, CASE idx_scan WHEN 0 THEN NULL ELSE round(100.0 * idx_scan / (seq_scan + idx_scan), 5) END</description>
+    </item>
+    
+    <item>
+      <title>数据库实时运行信息查看</title>
+      <link>https://bodani.github.io/postgres/pg_activity/</link>
+      <pubDate>Wed, 12 Jan 2022 15:47:07 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/pg_activity/</guid>
+      <description>介绍 类似Linux top 命令 查看数据实时运行情况 https://github.com/dalibo/pg_activity 安装 测试环境centos7 postgresql10 查看已安装的PG版本 如果有9.2 版本，清理,如果没有postgresql10-devel 需要安装 yum list installed | grep postgres 设置环境变量 export PG_HOME=/usr/pgsql-10 export PATH=$PATH:$PG_HOME/bin/ 安装pg_activity python3 -m pip install pg_activity psycopg2-binary 使用 与psql 连接方式相同 pg_activity -U xxx -p xxx 更多</description>
+    </item>
+    
+    <item>
+      <title>数据库的json类型</title>
+      <link>https://bodani.github.io/postgres/pg_json/</link>
+      <pubDate>Mon, 20 Dec 2021 10:51:16 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/pg_json/</guid>
+      <description>json 与 jsonb json 保持原始格式， jsonb是解析输入后保存的二进制，在解析时会过滤掉不必要的空格和重复的健。 SELECT &#39;{&amp;quot;name&amp;quot;: &amp;quot;zhangsan&amp;quot;, &amp;quot;age&amp;quot;: 17, &amp;quot;sex&amp;quot;:&amp;quot;m&amp;quot;,&amp;quot;age&amp;quot;:17.5}&#39;::json; json ------------------------------------------------------------ {&amp;quot;name&amp;quot;: &amp;quot;zhangsan&amp;quot;, &amp;quot;age&amp;quot;: 17, &amp;quot;sex&amp;quot;:&amp;quot;m&amp;quot;,&amp;quot;age&amp;quot;:17.5} SELECT &#39;{&amp;quot;name&amp;quot;: &amp;quot;zhangsan&amp;quot;, &amp;quot;age&amp;quot;: 17, &amp;quot;sex&amp;quot;:&amp;quot;m&amp;quot;,&amp;quot;age&amp;quot;:17.5}&#39;::jsonb; jsonb ----------------------------------------------- {&amp;quot;age&amp;quot;: 17.5, &amp;quot;sex&amp;quot;: &amp;quot;m&amp;quot;, &amp;quot;name&amp;quot;: &amp;quot;zhangsan&amp;quot;} json 插入可能会更快些，jsonb的读取更快 操作符 json ,jsonb 操作符 操作符 右操作数类型 描述 示例 结果 -&amp;gt; int 获取JSON数组元素（索引从0开始） select</description>
+    </item>
+    
+    <item>
+      <title>数据库日志分析</title>
+      <link>https://bodani.github.io/postgres/pg_elk/</link>
+      <pubDate>Fri, 05 Nov 2021 09:44:17 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/pg_elk/</guid>
+      <description>数据库日志分析 整体架构 filebeat -&amp;gt; logstash -&amp;gt; elasticseach -&amp;gt; kibana filebeat 收集日志 logstash 中转及日志规则匹配过滤 elasticsearch 日志存储检索库 kibana 查看界面 postgresql log_destination = &#39;csvlog&#39; logging_collector = &#39;on&#39; log_filename = &#39;postgresql-%Y-%m-%d_%H%M%S.log&#39; log_rotation_age = &#39;1d&#39; log_rotation_size = &#39;100MB&#39; log_min_messages = &#39;info&#39; log_min_duration_statement = &#39;1000&#39; log_statement = &#39;ddl&#39; filebeat filebeat.inputs: - type: log enabled: true paths: - /var/lib/pgsql/***/postgresql-*.csv fields: log_topics: postgresql multiline.pattern: &#39;^[[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3} [A-Z]{3}&#39; multiline.negate: true multiline.match: after filebeat.config.modules: path: ${path.config}/modules.d/*.yml reload.enabled: false setup.template.settings: index.number_of_shards: 1 tags: [&amp;quot;postgesql&amp;quot;] setup.kibana: output.logstash: hosts: [&amp;quot;*.*.*.*:5044&amp;quot;] processors: - add_host_metadata: ~ - add_cloud_metadata: ~ logstash # # this config is use for version logstash 7.3.1 # input { beats { port =&amp;gt; 5044 } #sdtin{ # #} } #</description>
+    </item>
+    
+    <item>
+      <title>客户端故障转移</title>
+      <link>https://bodani.github.io/postgres/libpg/</link>
+      <pubDate>Thu, 22 Jul 2021 11:04:27 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/libpg/</guid>
+      <description>多主机连接 PostgreSQL libpq 是数据库的一个连接驱动，支持多主机配置，同时支持target_session_attrs 主机角色判断配置。 当配置了多个主机时，会按顺序尝试连接，之道获取到成功的连接为止。 利用libpq的这个特性，结合数据库自动HA的一些软件，可以实现在不引入VIP以及中间路由节点的</description>
+    </item>
+    
+    <item>
+      <title>Django CONN_MAX_AGE 对数据连接的影响</title>
+      <link>https://bodani.github.io/python/django_max_con_age/</link>
+      <pubDate>Tue, 20 Apr 2021 13:27:13 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/python/django_max_con_age/</guid>
+      <description>Django的数据库连接 Django对数据库的链接处理是这样的，Django程序接受到请求之后，在第一访问数据库的时候会创建一个数据库连接,直到请求结束，关闭连接。下次请求也是如此。因此，这种情况下，随着访问的并发数越来越高，就会产生大量的数据库连接 使用CONN_MAX_AGE减</description>
+    </item>
+    
+    <item>
+      <title>PG高可用 repmgr 搭建</title>
+      <link>https://bodani.github.io/postgres/repmgr/</link>
+      <pubDate>Wed, 07 Apr 2021 10:12:02 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/repmgr/</guid>
+      <description>基于Repmgr实现数据库高可用 安装环境 软件环境 postgres 10 repmgr 5.3.2 centos7 网络环境 IP地址 运行软件 10.10.2.12/node1 repmgr,repmgrd,pg 10.10.2.13/node2 repmgr,repmgrd,pg 10.10.2.14/node3 repmgr,repmgrd,pg 前期准备 hosts 文件配置 vi /etc/hosts # 10.10.2.12 node1 10.10.2.13 node2 10.10.2.14 node3 安装PG10 $ yum install https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm $ yum update -y $ yum install -y postgresql10-server postgresql10 postgresql10-contrib # 只有主库需要初始化 $ sudo su postgres -c &amp;quot;/usr/pgsql-10/bin/initdb --data-checksums -D /var/lib/pgsql/10/data&amp;quot; 安装repmgr $ yum install -y repmgr10.x86_64 提升postgres 用户具有部分sudo 执行</description>
+    </item>
+    
+    <item>
+      <title>Backgroud Writer 进程</title>
+      <link>https://bodani.github.io/postgres/bgwriter/</link>
+      <pubDate>Wed, 31 Mar 2021 15:13:50 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/bgwriter/</guid>
+      <description>主要作用 负责将shared buffer 中的内容刷写到磁盘中，9.1版之后部分内容交给checkpoint完成。 参数配置 # - Background Writer - #bgwriter_delay = 200ms # 10-10000ms between rounds #bgwriter_lru_maxpages = 100 # 0-1000 max buffers written/round #bgwriter_lru_multiplier = 2.0 # 0-10.0 multiplier on buffers scanned/round #bgwriter_flush_after = 512kB # measured in pages, 0 disables bgwriter_delay 两次写入任务之间的睡眠间隔时间 bgwriter_lru_maxpages 每次bgwriter任务写buffer的最大page数，一旦达</description>
+    </item>
+    
+    <item>
+      <title>数据库试图之 pg_stat_bgwriter</title>
+      <link>https://bodani.github.io/postgres/view_pg_stat_bgwriter/</link>
+      <pubDate>Wed, 31 Mar 2021 09:32:17 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/view_pg_stat_bgwriter/</guid>
+      <description>介绍 可查看 backgroud writer， checkpoint ，backend 进程刷写 Shared buffer 情况视图 pg数据库在写入时先在内存中更新shared buffer ，然后有checkpoint机制将脏数据刷写到磁盘。 视图 select * from pg_stat_bgwriter ; -[ RECORD 1 ]---------+------------------------------ checkpoints_timed | 64017 checkpoints_req | 458 checkpoint_write_time | 9608302902 checkpoint_sync_time | 1189286 buffers_checkpoint | 578367652 buffers_clean | 329022 maxwritten_clean | 2353 buffers_backend | 29802728 buffers_backend_fsync | 0 buffers_alloc | 83826180 stats_reset | 2020-08-20 19:41:20.491551+08 负责将shared buffer 中的内容</description>
+    </item>
+    
+    <item>
+      <title>数据库高可用设计分析</title>
+      <link>https://bodani.github.io/postgres/ha_fd/</link>
+      <pubDate>Tue, 23 Mar 2021 16:32:14 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/ha_fd/</guid>
+      <description>基本概念 集群： 一组多个同时对外提供相同服务的实体机组成一个集群。这里的集群为主从结构，可写节点为主节点，其他只读节点为从节点。 高可用： 在发生局部故障时对整体业务影响很低。即不可用的时间要尽量的短。 对外部应用的访问来说，无需关注如何实现，如同只访问一个节点。并能得到持续的服务能力。</description>
+    </item>
+    
+    <item>
+      <title>pg_rman 备份恢复数据库</title>
+      <link>https://bodani.github.io/postgres/pg_rman/</link>
+      <pubDate>Tue, 09 Mar 2021 13:35:31 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/pg_rman/</guid>
+      <description>适用场景 PG_RMAN 基于本地数据拷贝的方式，要求与数据库需要安装在同一个机器节点上。 适用于项目初期，对数据库的规划处于初级阶段。实体机不充分的情况是个很好的选择。 数据库使用ssd盘，备份磁盘采用企业sata大盘。或nfs网盘等。 PG_RMAN 支持全备份，增量备份，备份验证，保留策略等 应用软件包地址 https://github.com/ossc-db/pg_rman/releases 基</description>
+    </item>
+    
+    <item>
+      <title>Patroni 高可用管理进阶</title>
+      <link>https://bodani.github.io/postgres/patroni02/</link>
+      <pubDate>Fri, 05 Mar 2021 17:06:18 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/patroni02/</guid>
+      <description>完成目标 主从同步策略 异地多机房策略 failover 触发详情 访问认证 watch-dog 配置文件详情 fencing DCS 失效处理 加入节点复制数据限流 主从切换流量,避免重新拉取 级联复制 callback 日志&amp;amp;监控 主从同步策略 数据库主从之间同步类型 Synchronous state of this standby server. Possible values are: async: This standby server is asynchronous. potential: This standby server is now asynchronous, but can potentially become synchronous if one of current synchronous ones fails. sync: This standby server is synchronous. quorum: This standby server is considered as</description>
+    </item>
+    
+    <item>
+      <title>数据库优化思考-性能优化</title>
+      <link>https://bodani.github.io/postgres/thinking_in_db_performance/</link>
+      <pubDate>Fri, 26 Feb 2021 13:33:23 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/thinking_in_db_performance/</guid>
+      <description>为什么要优化 首先了解一个概念，什么是·熵增· 物理定义：熵增过程是一个自发的由有序向无序发展的过程(Bortz, 1986; Roth, 1993) 在一个孤立的系统里，如果没有外力做工，其总混乱度（即熵）会不断增大，直至系统彻底变得无序 从系统软件的角度： 从应用系统上线那一刻开始，随着用户量的增加、业务功能的持续</description>
+    </item>
+    
+    <item>
+      <title>数据库优化思考 - 模块调优</title>
+      <link>https://bodani.github.io/postgres/thinking_in_db_tune/</link>
+      <pubDate>Wed, 13 Jan 2021 09:04:35 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/thinking_in_db_tune/</guid>
+      <description>开始乱说 主要是结合postgres数据库自身特点，根据具体的业务场景，作出相应调整，使其更加合理。 数据库作为一个整体对外提供服务，单是其内部是由不同的功能模块组成，相互协调来共同完成任务。 各个功能模块完成不同的功能，每个模块的特点也不同，在调整的时候至少需要理解各个模块实现的基本</description>
+    </item>
+    
+    <item>
+      <title>误操作闪回</title>
+      <link>https://bodani.github.io/postgres/reback/</link>
+      <pubDate>Mon, 11 Jan 2021 17:19:06 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/reback/</guid>
+      <description>原理 利用mvcc原理，数据在删除或更新时只是标记为删除。当没有发生过gc时历史数据仍然存在。只是对当前事务不可见。 通过修改当前事务号为误操作前的事务号就可以看到历史数据。 例如 T1 （添加数据） T2 - T8（其他操作） T9（删除了T1加入的数据）T10&amp;hellip; (其他操作)。 自需要将</description>
+    </item>
+    
+    <item>
+      <title>数据库优化思考 - 结构设计</title>
+      <link>https://bodani.github.io/postgres/thinking_in_db_fd/</link>
+      <pubDate>Mon, 11 Jan 2021 10:10:42 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/thinking_in_db_fd/</guid>
+      <description>DB 与 APP 的不同 有无状态 无状态应用，每个实例提供的服务都是等价、对等的。APP 应用为无状态应用，DB应用为有状态应用。 数据库正是因为有状态，所以维护起来更有挑战。 APP 在面对大量高并发请求时可以无所顾及的增加实例，加机器进行扩容。处理能里也会将得到线性提升。简单粗暴又有效。 DB 面对同样的压</description>
+    </item>
+    
+    <item>
+      <title>auto vacuum 触发机制</title>
+      <link>https://bodani.github.io/postgres/auto_vacuum_trigger/</link>
+      <pubDate>Fri, 08 Jan 2021 09:20:56 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/auto_vacuum_trigger/</guid>
+      <description>数据库自动垃圾回收触发条件分析 在postgres 中 垃圾回收的重要意义及在执行垃圾回收时具体都做了些什么很多地方都有介绍。 但是何时触发垃圾回收，即垃圾回收的触发条件是什么。 官网的介绍一般是有如下几个参数决定 #autovacuum = on # Enable autovacuum subprocess? &#39;on&#39; #autovacuum_vacuum_threshold = 50 # min number of row updates before vacuum #autovacuum_analyze_threshold = 50 # min number of row updates before analyze #autovacuum_vacuum_scale_factor = 0.2 # fraction of table size</description>
+    </item>
+    
+    <item>
+      <title>创建只读用户</title>
+      <link>https://bodani.github.io/postgres/readonly/</link>
+      <pubDate>Tue, 08 Sep 2020 09:28:59 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/readonly/</guid>
+      <description>创建只读用户readonly 1.创建一个用户名为readonly密码为ropass的用户 CREATE USER readonly WITH ENCRYPTED PASSWORD &#39;ropass&#39;; 2.用户只读事务 alter user readonly set default_transaction_read_only=on; 3.把所有库的语言的USAGE权限给到readonly GRANT USAGE ON SCHEMA public to readonly; 4.授予select权限(这句要进入具体数据库操作在哪个db环境执行就授予那个db的</description>
+    </item>
+    
+    <item>
+      <title>数据库 OOM 预防</title>
+      <link>https://bodani.github.io/postgres/oom/</link>
+      <pubDate>Tue, 30 Jun 2020 09:26:42 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/oom/</guid>
+      <description>降低主进程被OOM kill 掉的风险 restart_after_crash 默认崩溃重启 postgres=# show restart_after_crash; restart_after_crash --------------------- on (1 row) vm.overcommit # vi /etc/sysctl.conf # 0 表示内核将检查是否有足够的可用内存供应用进程使用；如果有足够的可用内存，内存申请允许；否则，内存申请失败，并把错误返回给应用进程 # 1 表示内核允许分配所有的物理内存，而不管当前的内存状态如何 # 2 表示内核允许分配超</description>
+    </item>
+    
+    <item>
+      <title>checkpoint 检查点</title>
+      <link>https://bodani.github.io/postgres/checkpoint/</link>
+      <pubDate>Wed, 13 Mar 2019 15:57:25 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/checkpoint/</guid>
+      <description>作用 一般checkpoint会将某个时间点之前的脏数据全部刷新到磁盘，以实现数据的一致性与完整性。其主要目的是为了缩短崩溃恢复时间。 数据库靠谱的原因 一条DML 写入过程 在写入数据的时，当事务提交后修改信息顺序同步写入wal。shared buffer中信息并不是马上落盘。异步同步磁盘</description>
+    </item>
+    
+    <item>
+      <title>咨询锁 adlock</title>
+      <link>https://bodani.github.io/postgres/adlock/</link>
+      <pubDate>Thu, 07 Mar 2019 16:20:16 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/adlock/</guid>
+      <description>https://github.com/digoal/blog/blob/master/201805/20180524_02.md 行级锁 select .. for update select .. for update skip locked select .. for share</description>
+    </item>
+    
+    <item>
+      <title>pgpoolii 读写分离</title>
+      <link>https://bodani.github.io/postgres/pgpool2/</link>
+      <pubDate>Wed, 30 Jan 2019 15:43:25 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/pgpool2/</guid>
+      <description>https://www.pgpool.net/docs/pgpool-II-3.5.4/doc/tutorial-zh_cn.html#dist-def https://www.xiaomastack.com/2019/08/16/postgresql集群/</description>
+    </item>
+    
+    <item>
+      <title>逻辑复制</title>
+      <link>https://bodani.github.io/postgres/logical-replication/</link>
+      <pubDate>Wed, 30 Jan 2019 15:42:25 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/logical-replication/</guid>
+      <description>逻辑复制 Postgres 10 版本开始， 在内核层面支持基于REDO流的逻辑复制。 控制粒度为表级别 物理复制相同都是基于wal 可指定多个上游数据源 下游数据可读可写 可用于数据汇总，无停服数据迁移,大版本升级等。 基本概念 发布者（publication）， 上游数据 订阅者 (subscrition)， 下游数据 复</description>
+    </item>
+    
+    <item>
+      <title>pg_rewind 时间线对齐</title>
+      <link>https://bodani.github.io/postgres/pg_rewind/</link>
+      <pubDate>Wed, 30 Jan 2019 10:16:17 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/pg_rewind/</guid>
+      <description>pg_rewind requires that the target server either has the wal_log_hints option enabled in postgresql.conf or data checksums enabled when the cluster was initialized with initdb. Neither of these are currently on by default. full_page_writes must also be set to on, but is enabled by default. wal_log_hints 使用场景 在数据库主从结构中，从变成主易。但是由主变为从却需要一番周折。 如果是数据量少时重新使用pg_backup拉一份从即可，但是如果数据量大时，这个过程非常的耗时耗能。对线上业务也会有影</description>
+    </item>
+    
+    <item>
+      <title>PG高可用Patroni</title>
+      <link>https://bodani.github.io/postgres/patroni/</link>
+      <pubDate>Wed, 30 Jan 2019 10:14:55 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/patroni/</guid>
+      <description>环境 操作系统 Centos 7 patroni 版本 2.0.2 postgres 版本 13 实现目标 高可用方案对比 patroni 结构分析 patroni 搭建新集群 patroni 接管现有集群 patroni 管理pg配置 手动swithover 自动failover 维护模式 弹性扩容，缩容 对外提供统一服务 RestFULLAPI 备份恢复 监控 日志 升级 高可用方案对比 pg的高可用方案都是基于流复制来实现 PAF pacemaker + corosyns repmgr repmgr 手动流复制管</description>
+    </item>
+    
+    <item>
+      <title>pg_pathman 分区表</title>
+      <link>https://bodani.github.io/postgres/pg_pathman/</link>
+      <pubDate>Thu, 24 Jan 2019 10:56:06 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/pg_pathman/</guid>
+      <description>介绍 分区表的诉求在现实的生成中的意义不必多说，pg以前的实现方式多采用触发器，rules实现。数据量上来时性能明显不尽如意。 虽然pg10 ，11 版本在分区表的特性上不断发力。但是性能啥还是不够给力。 pg_pathman 分区表功能在目前的pg版本10.6 中优势还是非常明显的。 在期待pg自身分区表特性的</description>
+    </item>
+    
+    <item>
+      <title>引起索引失效</title>
+      <link>https://bodani.github.io/postgres/index-invalid/</link>
+      <pubDate>Thu, 20 Dec 2018 16:34:22 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/index-invalid/</guid>
+      <description>简介 索引的作用，加速检索，排序，分组。 优点： 检索 缺点： 新增，更新时需要维护索引，占磁盘空间，创建时锁表。 维护： 根据统计表发生全表扫描次数，索引使用次数。合理添加删除索引。 索引失效的场景 如果where过滤条件设置不合理，即使索引存在，且where过滤条件中包含索引列，也会导致全表扫</description>
+    </item>
+    
+    <item>
+      <title>DBA 日常</title>
+      <link>https://bodani.github.io/postgres/dba/</link>
+      <pubDate>Wed, 19 Dec 2018 11:33:43 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/dba/</guid>
+      <description>备份 恢复 时时热备 定期冷备 升级 每年大版本小版本升级，新特性调研，性能测试，稳定性。 可用当前最新的上一个版本。 HA 手动 自动 读写分离 sharding 多副本 安全 权限管理 资源隔离 审计 ddl 慢sql 锁长时间占用 巡检 定期巡检 awr 报告 监控 系统 数据库 诊断 优化 背景 应用程序的野蛮生长，由产品为驱动的开发，一切以快速上线为目</description>
+    </item>
+    
+    <item>
+      <title>Postgres 监控常用工具</title>
+      <link>https://bodani.github.io/postgres/monitor/</link>
+      <pubDate>Thu, 06 Dec 2018 16:21:08 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/monitor/</guid>
+      <description>各种监控方式 zabbix Monitor PostgreSQL with Zabbix postgres_exporter A PostgresSQL metric exporter for Prometheus pgwatch2 PostgreSQL metrics monitor/dashboard pgmetrics Collect and display information and stats from a running PostgreSQL server pgdash (收费) pganalyze PostgreSQL Performance Monitoring 参考自己实现 状态查看 pgcenter pgcenter top pgcenter: 2018-12-20 11:10:25, load average: 0.94, 0.84, 0.86 state [ok]: ::1:5432 postgres@postgres (ver: 10.6, up 8 days 19:57:54, recovery: f) %cpu: 15.0 us, 3.7 sy, 0.0 ni, 75.3 id, 5.7 wa, 0.0 hi, 0.2 si, 0.0 st activity: 5/1000 conns, 0/0 prepared, 2 idle, 0 idle_xact, 3 active, 0 waiting, 0 others MiB mem: 7821 total, 162 free, 424 used, 7235 buff/cached autovacuum: 0/3 workers/max, 0 manual, 0 wraparound, 00:00:00 vac_maxtime MiB swap: 1023 total, 903 free, 120 used, 0/0 dirty/writeback statements: 1888 stmt/s,</description>
+    </item>
+    
+    <item>
+      <title>vacuum 垃圾回收器</title>
+      <link>https://bodani.github.io/postgres/vacuum/</link>
+      <pubDate>Wed, 05 Dec 2018 16:48:00 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/vacuum/</guid>
+      <description>介绍 数据库总是不断地在执行删除，更新等操作。良好的空间管理非常重要，能够对性能带来大幅提高。在postgresql中用于维护数据库磁盘空间的工具是VACUUM，其重要的作用是删除那些已经标示为删除的数据并释放空间。 postgresql中执行delete,update操作后，表中的</description>
+    </item>
+    
+    <item>
+      <title>Explain 执行计划</title>
+      <link>https://bodani.github.io/postgres/explain/</link>
+      <pubDate>Wed, 05 Dec 2018 15:27:30 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/explain/</guid>
+      <description>文法 EXPLAIN [ ( option [, ...] ) ] statement EXPLAIN [ ANALYZE ] [ VERBOSE ] statement 这里 option可以是： ANALYZE [ boolean ] VERBOSE [ boolean ] COSTS [ boolean ] BUFFERS [ boolean ] TIMING [ boolean ] SUMMARY [ boolean ] FORMAT { TEXT | XML | JSON | YAML } 注意事项 记住当使用了ANALYZE选项时语句会被实际执行. 如执行dml 时将对数据库进行实际的操作。 避免污染数据的方式 BEGIN; EXPLAIN ANALYZE ...; ROLLBACK; 一个例子 postgres=# explain analyze select * from tbl; QUERY</description>
+    </item>
+    
+    <item>
+      <title>pg_stat_statements 数据库统计信息</title>
+      <link>https://bodani.github.io/postgres/pg_stat_statements/</link>
+      <pubDate>Thu, 29 Nov 2018 11:08:27 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/pg_stat_statements/</guid>
+      <description>pg_stat_statements 扩展 安装 yum install postgresql10-contrib.x86_64 修改配置参数 vi $PGDATA/postgresql.conf shared_preload_libraries=&#39;pg_stat_statements&#39; # 加载模块 需要重启 , 近期测试不需要添加也可以。自带扩展 track_io_timing = on # 跟踪IO耗时 (可选) track_activity_query_size = 2048 # 设置单条SQL的最长长度，超过被截断显示（可选) pg_stat_statements.max = 10000 #在pg_stat_statements中最多保留多少条统计信息，通过LRU算法，覆盖老的记录。 pg_stat_statements.track = all</description>
+    </item>
+    
+    <item>
+      <title>数据库参数</title>
+      <link>https://bodani.github.io/postgres/params/</link>
+      <pubDate>Tue, 27 Nov 2018 09:57:27 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/params/</guid>
+      <description>性能参数 pgtune pgconfig cybertec 日志参数 更多参数详解 管理 listen_addresses = &amp;quot;*&amp;quot; # 连接访问控制，哪些ip可以访问， * 全部。 结合pg_hba.conf , iptables设置。 superuser_reserved_connections = 3 # 预留给超级管理员的连接数。 port = 5432 # 默认访问端口 wal_keep_segments = 1024 # wal 日志保存数量 wal日志 wal_log_hints = on full_page_writes = on 成本因子 # - Planner Cost Constants - #seq_page_cost = 1.0 # measured on an arbitrary scale 顺序扫描</description>
+    </item>
+    
+    <item>
+      <title>数据库备份和恢复</title>
+      <link>https://bodani.github.io/postgres/backup_restore/</link>
+      <pubDate>Tue, 30 Oct 2018 10:18:57 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/backup_restore/</guid>
+      <description>备份恢复命令 备份：pg_dump -U postgres -v -F c -Z 4 -f ***.backup dbname 9压缩率最狠 恢复：pg_restore -U postgres -v -j 8 -d dbname ***.backup 8是采用8个线程 注意事项： 在恢复database前需要先创建好extentions 备份表：pg_dump -U postgres -t tablename dbname &amp;gt; 33.sql 恢复表：psql -U postgres -d dbname &amp;lt; 33.sql 只备份表结构 pg_dump -U postgres -s -t tablename dbname &amp;gt;</description>
+    </item>
+    
+    <item>
+      <title>数据库备份和恢复wal-g 应用</title>
+      <link>https://bodani.github.io/postgres/wal-g/</link>
+      <pubDate>Tue, 30 Oct 2018 10:18:57 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/wal-g/</guid>
+      <description>存储服务 minio 设置用户名和密码 docker run -d -p 9000:9000 -e MINIO_ACCESS_KEY=xxxxx(changeme) -e MINIO_SECRET_KEY=kkkkk(changeme) -v /data/minio/:/data minio/minio server /data 创建 bucket mc mb local/buecket003 wal-g 下载 wget https://github.com/wal-g/wal-g/releases/download/v0.2.9/wal-g.linux-amd64.tar.gz tar -zxvf wal-g.linux-amd64.tar.gz 设置环境变量 minio cat wal-g.env export PGDATA=/var/lib/pgsql/10/data/ export WALG_S3_PREFIX=s3://bucket003/ export PGPORT=5432 export PGUSER=postgres export AWS_SECRET_ACCESS_KEY=xxxxx(changeme) export AWS_REGION=us-east-1 export AWS_ACCESS_KEY_ID=kkkkk(changeme) export AWS_ENDPOINT=http://localhost:9000 export AWS_S3_FORCE_PATH_STYLE=true swift export PGDATA= export WALG_SWIFT_PREFIX=swift://buckt003/ export PGPORT= export PGUSER= export OS_USERNAME= export OS_PASSWORD= export OS_AUTH_URL=http://ip:port/auth/v1.0 全备份 source mydir/wal-g.env &amp;amp;&amp;amp; wal-g backup-push $PGDATA wal 备份 wal_level = archive archive_mode = on ## 从库 always archive_command = &#39;source mydir/wal-g.env &amp;amp;&amp;amp; wal-g wal-push %p&#39; archive_timeout = 60 恢复数据 查看所有全备份 wal-g backup-list name last_modified wal_segment_backup_start base_000000020000001E000000CB 2019-11-07T01:34:08Z 000000020000001E000000CB base_000000020000001E000000CD 2019-11-07T01:37:03Z 000000020000001E000000CD base_000000020000001E000000CF 2019-11-07T02:23:34Z</description>
+    </item>
+    
+    <item>
+      <title>主从流复制</title>
+      <link>https://bodani.github.io/postgres/replication01/</link>
+      <pubDate>Wed, 17 Oct 2018 14:55:38 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/postgres/replication01/</guid>
+      <description>历史演变 replication 主库配置 根据实际情况分配流复制权限 vi pg_hba.conf host replication all 10.2.0.0/0 trust vi postgresql.conf max_wal_senders = 10 wal_level = logical # minimal, replica, or logical hot_standby = on # 正常在从库配置，如果在主库配置完毕，因为从库复制主库配置不需要再修改从库配置。 wal_log_hints = on 从库配置 数据库安装 从主库复制数据 pg_basebackup -h 10.2.0.14 -U postgres -F p -P -R -D /var/lib/pgsql/10/data/ --checkpoint=fast -l postgresback20181219 pg_basebackup支持两种全量备份的</description>
+    </item>
+    
+  </channel>
+</rss>

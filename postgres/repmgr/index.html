@@ -1,0 +1,917 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>PG高可用 repmgr 搭建 | Let&#39;s go 🐌 🐌 🐌</title>
+    <meta property="og:title" content="PG高可用 repmgr 搭建 - Let&#39;s go 🐌 🐌 🐌">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content='2021-04-07T10:12:02&#43;08:00'>
+        
+        
+    <meta property="article:modified_time" content='2021-04-07T10:12:02&#43;08:00'>
+        
+    <meta name="Keywords" content="postgres 、python、pg 、linix 、docker、 kubernetes、 cloud、hadoop、promethues ">
+    <meta name="description" content="PG高可用 repmgr 搭建">
+        
+    <meta name="author" content="Eamon">
+    <meta property="og:url" content="https://bodani.github.io/postgres/repmgr/">
+    <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    
+    
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+   
+    
+    
+    
+    
+    
+    
+        <link rel="stylesheet" href='/css/douban.css'>
+    
+        <link rel="stylesheet" href='/css/other.css'>
+    
+   
+        <a href=https://github.com/eamonzhang><img style="position: absolute; top: 0; left: 0; border: 0;" src="/images/forkme_left_red_aa0000.png" alt="Fork me on GitHub" data-canonical-src="/images/forkme_left_red_aa0000.png"></a>
+
+   
+        <script>
+          var _hmt = _hmt || [];
+            (function() {
+            var hm = document.createElement("script");
+            <!-- hm.src = "https://hm.baidu.com/hm.js?1f6605a363a50554aa03adcc685b7699"; -->
+            hm.src = "https://hm.baidu.com/hm.js?0010600e9ae6ff8f5814bb7ec6b36072";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+          })();
+       </script>
+</head>
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://bodani.github.io">
+                        Let&#39;s go 🐌 🐌 🐌
+                    </a>
+                
+                <p class="description">Let&#39;s build our own cloud native together  </p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="" href="https://bodani.github.io">首页</a>
+                    
+                    <a  href="https://bodani.github.io/archives" title="归档">归档</a>
+                    
+                    <a  href="https://bodani.github.io/postgresql" title="Postgres">Postgres</a>
+                    
+                    <a  href="https://bodani.github.io/linux" title="Linux">Linux</a>
+                    
+                    <a  href="https://bodani.github.io/about/me" title="关于">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    <style type="text/css">
+    .post-toc {
+        position: fixed;
+        width: 200px;
+        margin-left: -210px;
+        padding: 5px 10px;
+        font-family: Athelas, STHeiti, Microsoft Yahei, serif;
+        font-size: 12px;
+        border: 1px solid rgba(0, 0, 0, .07);
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.98);
+        background-clip: padding-box;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        word-wrap: break-word;
+        white-space: nowrap;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        z-index: 999;
+        cursor: pointer;
+        max-height: 70%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .post-toc .post-toc-title {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 20px;
+        font-weight: 400;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .post-toc .post-toc-content {
+        font-size: 15px;
+    }
+
+    .post-toc .post-toc-content>nav>ul {
+        margin: 10px 0;
+    }
+
+    .post-toc .post-toc-content ul {
+        padding-left: 20px;
+        list-style: square;
+        margin: 0.5em;
+        line-height: 1.8em;
+    }
+
+    .post-toc .post-toc-content ul ul {
+        padding-left: 15px;
+        display: none;
+    }
+
+    @media print,
+    screen and (max-width:1057px) {
+        .post-toc {
+            display: none;
+        }
+    }
+</style>
+<div class="post-toc" style="position: absolute; top: 188px;">
+    <h2 class="post-toc-title">目录</h2>
+    <div class="post-toc-content">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#软件环境">软件环境</a></li>
+    <li><a href="#网络环境">网络环境</a></li>
+    <li><a href="#前期准备">前期准备</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#注册主库">注册主库</a></li>
+    <li><a href="#加入从库">加入从库</a></li>
+    <li><a href="#主动switchover">主动switchover</a></li>
+    <li><a href="#修改级联关系">修改级联关系</a></li>
+    <li><a href="#被动switchover">被动switchover</a></li>
+    <li><a href="#自动failover">自动failover</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var postToc = $(".post-toc");
+        if (postToc.length) {
+            var leftPos = $("#main").offset().left;
+            if(leftPos<220){
+                postToc.css({"width":leftPos-10,"margin-left":(0-leftPos)})
+            }
+
+            var t = postToc.offset().top - 20,
+                a = {
+                    start: {
+                        position: "absolute",
+                        top: t
+                    },
+                    process: {
+                        position: "fixed",
+                        top: 20
+                    },
+                };
+            $(window).scroll(function () {
+                var e = $(window).scrollTop();
+                e < t ? postToc.css(a.start) : postToc.css(a.process)
+            })
+        }
+    })
+</script>
+
+    <article class="post">
+        <header>
+            <h1 class="post-title">PG高可用 repmgr 搭建</h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年4月7日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/postgres'>postgres</a></span>
+            
+        </div>
+        
+        
+        
+        <div class="clear" style="display: none">
+            <div class="toc-article">
+                <div class="toc-title">文章目录</div>
+            </div>
+        </div>
+        
+        <div class="post-content">
+            <h1 id="基于repmgr实现数据库高可用">基于Repmgr实现数据库高可用</h1>
+<h1 id="安装环境">安装环境</h1>
+<h2 id="软件环境">软件环境</h2>
+<ul>
+<li>postgres 10</li>
+<li>repmgr 5.3.2</li>
+<li>centos7</li>
+</ul>
+<h2 id="网络环境">网络环境</h2>
+<table>
+<thead>
+<tr>
+<th>IP地址</th>
+<th></th>
+<th>运行软件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10.10.2.12/node1</td>
+<td></td>
+<td>repmgr,repmgrd,pg</td>
+</tr>
+<tr>
+<td>10.10.2.13/node2</td>
+<td></td>
+<td>repmgr,repmgrd,pg</td>
+</tr>
+<tr>
+<td>10.10.2.14/node3</td>
+<td></td>
+<td>repmgr,repmgrd,pg</td>
+</tr>
+</tbody>
+</table>
+<h2 id="前期准备">前期准备</h2>
+<ul>
+<li>
+<p>hosts 文件配置</p>
+<pre><code>vi /etc/hosts # 
+10.10.2.12 node1
+10.10.2.13 node2
+10.10.2.14 node3
+</code></pre></li>
+<li>
+<p>安装PG10</p>
+</li>
+</ul>
+<pre><code> $ yum install https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+  $ yum update -y 
+  $ yum install -y postgresql10-server postgresql10  postgresql10-contrib
+  # 只有主库需要初始化
+  $ sudo su postgres -c  &quot;/usr/pgsql-10/bin/initdb  --data-checksums -D /var/lib/pgsql/10/data&quot; 
+</code></pre><ul>
+<li>
+<p>安装repmgr</p>
+<pre><code>$ yum install -y repmgr10.x86_64 
+</code></pre></li>
+<li>
+<p>提升postgres 用户具有部分sudo 执行权限</p>
+<p>repmgr 需要非root用户管理</p>
+<pre><code>vi /etc/sudoers.d/postgres # chmod 400 /etc/sudoers.d/postgres
+Defaults:postgres !requiretty
+postgres ALL = NOPASSWD: /usr/bin/systemctl stop postgresql-10, \
+/usr/bin/systemctl start postgresql-10, \
+/usr/bin/systemctl restart postgresql-10, \
+/usr/bin/systemctl reload postgresql-10
+</code></pre></li>
+<li>
+<p>ssh 免密互通</p>
+<p>配置ssh免密互通非必须，在执行switchover操作时需要</p>
+<pre><code>$ su - postgres
+$ ssh-keygen
+$ cat .ssh/id_rsa.pub &gt;  .ssh/authorized_keys # 本机免密登录 
+# 将 .ssh 目录下authorized_keys，id_rsa，id_rsa.pub 拷贝到其他节点对应位置上，并赋值对应权限
+$ chmod 600 .ssh/authorized_keys
+$ chmod 600 .ssh/id_rsa
+$ chmod 644 .ssh/id_rsa.pub 
+# 用命令拷贝到其他节点 # 首次连接需要设置密码
+$ ssh-copy-id ${远端服务器} 
+$ ssh $远端服务器}
+</code></pre></li>
+</ul>
+<h4 id="配置">配置</h4>
+<ul>
+<li>
+<p>PG 配置</p>
+<pre><code>vi postgres.conf
+# 必须项
+max_wal_senders = 10
+max_replication_slots = 10 # 复制槽
+wal_level = 'logical' # replica 或 logical ，便于后期应用逻辑复制建议使用logical
+hot_standby = on # 从库在recovery状态下可读
+wal_log_hints = on # pg_rewind 依赖配置
+# 可选，建议开启项目。后期修改可能需要重启数据库
+archive_mode = always # 从库也可做归档
+archive_command = '/bin/true'
+archive_timeout = 300 # 单位秒 ，五分钟
+wal_keep_segments = 1024 # 保留wal文件个数， 如果设置slot 可忽略
+# 访问相关
+listen_addresses = '*'                  # 监听网卡
+port = 5432                             # 端口
+max_connections = 1000                  # 最大连接数
+superuser_reserved_connections = 3     #  超级用户预留
+</code></pre><pre><code>vi pg_hba.conf #  确保本机repmgr 用户可访问
+host    replication   repmgr      127.0.0.1/32            trust
+host    replication   repmgr      0.0.0.0/0               trust
+  
+local   repmgr        repmgr                              trust
+host    repmgr        repmgr      127.0.0.1/32            trust
+host    repmgr        repmgr      0.0.0.0/0               md5
+</code></pre><pre><code># 元数据信息存储设置
+postgres=# create user repmgr;
+CREATE ROLE
+postgres=# alter user repmgr with password 'xxxxx';
+ALTER ROLE
+postgres=# alter user repmgr replication ;
+ALTER ROLE
+postgres=# create database repmgr owner repmgr;
+CREATE DATABASE
+postgres=#\c repmgr
+repmgr=# create extension repmgr;
+CREATE EXTENSION
+repmgr=# GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA repmgr TO repmgr ;
+</code></pre></li>
+<li>
+<p>repmgr</p>
+<pre><code>vi repmgr.conf # /etc/repmgr/10/repmgr.conf
+## 必须项
+node_id=1
+node_name= node1
+conninfo ='host=node1 dbname=repmgr user=repmgr connect_timeout=2'
+data_directory = '/var/lib/pgsql/10/data'
+## 可选项
+config_directory = # pg配置文件位置
+replication_user = repmgr # 默认为conninfo 中使用的user
+location = # 服务器所在物理位置，有助于判断当发生脑裂时网络互通逻辑
+use_replication_slots = true # 是否使用物理复制槽
+log_level = INFO # 日志等级
+log_file =  '/var/log/repmgr/repmgr.log' # 日志输出文件位置 ，结合lograte管理
+# 数据库yum 方式安装，使用systemd 管理时
+service_start_command   = 'sudo systemctl start postgresql-10'
+service_stop_command    = 'sudo systemctl stop postgresql-10'
+service_restart_command = 'sudo systemctl restart postgresql-10'
+service_reload_command  = 'sudo systemctl reload postgresql-10' 
+</code></pre></li>
+</ul>
+<h2 id="注册主库">注册主库</h2>
+<ul>
+<li>
+<p>启动数据库</p>
+<pre><code># 启动数据库服务
+systemctl start postgresql-10
+# 设置开机自启
+systemctl enable postgresql-10
+</code></pre><pre><code># 连接测试 repmgr.conf 中的conninfo 连接串信息测试本地登录
+psql  'host=node1 dbname=repmgr user=repmgr connect_timeout=2'
+</code></pre></li>
+<li>
+<p>注册</p>
+<pre><code>$ su - postgres
+  
+# 测试注册主节点
+$ /usr/pgsql-10/bin/repmgr -f /etc/repmgr/10/repmgr.conf primary register --dry-run -L debug
+INFO: connecting to primary database...
+DEBUG: connecting to: &quot;user=repmgr dbname=repmgr host=node1 port=5432 connect_timeout=2 fallback_application_name=repmgr options=-csearch_path=&quot;
+INFO: &quot;repmgr&quot; extension is already installed
+  
+# 正式注册主节点
+$ /usr/pgsql-10/bin/repmgr -f /etc/repmgr/10/repmgr.conf primary register 
+INFO: connecting to primary database...
+INFO: &quot;repmgr&quot; extension is already installed
+NOTICE: primary node record (ID: 2) registered
+  
+# 查看节点信息
+$ /usr/pgsql-10/bin/repmgr -f /etc/repmgr/10/repmgr.conf cluster show
+ ID | Name  | Role    | Status    | Upstream | Location | Priority | Timeline | Connection string                             
+----+-------+---------+-----------+----------+----------+----------+----------+------------------------------------------------
+ 2  | node1 | primary | * running |          | default  | 100      | 2        | host=node1 port=5432 user=repmgr dbname=repmgr
+  
+</code></pre></li>
+<li>
+<p>在数据库中查看注册信息</p>
+<pre><code>$ repmgr=# set search_path = &quot;$user&quot;, public,repmgr;
+SET
+  
+$ repmgr=# \d+ 
+                            List of relations
+ Schema |        Name        | Type  | Owner  |    Size    | Description 
+--------+--------------------+-------+--------+------------+-------------
+ repmgr | events             | table | repmgr | 16 kB      | 
+ repmgr | monitoring_history | table | repmgr | 0 bytes    | 
+ repmgr | nodes              | table | repmgr | 16 kB      | 
+ repmgr | replication_status | view  | repmgr | 0 bytes    | 
+ repmgr | show_nodes         | view  | repmgr | 0 bytes    | 
+ repmgr | voting_term        | table | repmgr | 8192 bytes | 
+(6 rows)
+  
+$ SELECT * FROM repmgr.nodes;
+-[ RECORD 1 ]----+-----------------------------------------------
+node_id          | 2
+upstream_node_id | 
+active           | t
+node_name        | node1
+type             | primary
+location         | default
+priority         | 100
+conninfo         | host=node1 port=5432 user=repmgr dbname=repmgr
+repluser         | repmgr
+slot_name        | repmgr_slot_2
+config_file      | /etc/repmgr/10/repmgr.conf
+  
+$ SELECT * FROM repmgr.show_nodes ;
+-[ RECORD 1 ]------+-----------------------------------------------
+node_id            | 2
+node_name          | node1
+active             | t
+upstream_node_id   | 
+upstream_node_name | 
+type               | primary
+priority           | 100
+conninfo           | host=node1 port=5432 user=repmgr dbname=repmgr
+</code></pre></li>
+</ul>
+<h2 id="加入从库">加入从库</h2>
+<p>加入node2 ，node3 两个节点</p>
+<ul>
+<li>
+<p>安装PG &amp; repmgr</p>
+</li>
+<li>
+<p>配置repmgr</p>
+</li>
+<li>
+<p>从主节点clone</p>
+<pre><code># 试运行 连接信息 -U -h -d 为主库地址 , 是否使用复制槽 在 repmgr.conf 中指定
+$ /usr/pgsql-10/bin/repmgr -h node1 -U repmgr -d repmgr -f /etc/repmgr/10/repmgr.conf standby clone --dry-run
+  
+# 正式运行
+$ /usr/pgsql-10/bin/repmgr -h node1 -U repmgr -d repmgr -f /etc/repmgr/10/repmgr.conf standby clone 
+# 可选参数
+-c, --fast-checkpoint 主库执行checkpoint
+--upstream-node-id  可用于级联复制
+</code></pre><pre><code># 启动数据库
+$ sudo systemctl start postgresql-10
+# 注册从节点
+$ /usr/pgsql-10/bin/repmgr -f /etc/repmgr/10/repmgr.conf standby register 
+</code></pre><pre><code># 登录主库查看 主从复制信息
+select * from pg_stat_replication ;
+-[ RECORD 1 ]----+------------------------------
+pid              | 12204
+usesysid         | 16384
+usename          | repmgr
+application_name | node3
+client_addr      | 10.10.2.13
+client_hostname  | 
+client_port      | 37412
+backend_start    | 2022-08-11 06:15:08.568251+00
+backend_xmin     | 
+state            | streaming
+sent_lsn         | 0/5000648
+write_lsn        | 0/5000648
+flush_lsn        | 0/5000648
+replay_lsn       | 0/5000648
+write_lag        | 
+flush_lag        | 
+replay_lag       | 
+sync_priority    | 0
+sync_state       | async
+</code></pre><pre><code> select * from pg_replication_slots ;
+-[ RECORD 1 ]-------+--------------
+slot_name           | repmgr_slot_3
+plugin              | 
+slot_type           | physical
+datoid              | 
+database            | 
+temporary           | f
+active              | t
+active_pid          | 12386
+xmin                | 
+catalog_xmin        | 
+restart_lsn         | 0/7001158
+confirmed_flush_lsn | 
+</code></pre><pre><code>/usr/pgsql-10/bin/repmgr -f /etc/repmgr/10/repmgr.conf cluster show
+ ID | Name  | Role    | Status    | Upstream | Location | Priority | Timeline | Connection string                             
+----+-------+---------+-----------+----------+----------+----------+----------+------------------------------------------------
+ 2  | node1 | primary | * running |          | default  | 100      | 2        | host=node1 port=5432 user=repmgr dbname=repmgr
+ 3  | node3 | standby |   running | node1    | default  | 100      | 2        | host=node2 user=repmgr dbname=repmgr          
+</code></pre></li>
+</ul>
+<h2 id="主动switchover">主动switchover</h2>
+<pre><code># 在计划提升为主库的节点上执行
+/usr/pgsql-10/bin/repmgr -f /etc/repmgr/10/repmgr.conf standby switchover --siblings-follow 
+
+# 查看切换结果 
+/usr/pgsql-10/bin/repmgr -f /etc/repmgr/10/repmgr.conf cluster show
+ ID | Name  | Role    | Status    | Upstream | Location | Priority | Timeline | Connection string                                     
+----+-------+---------+-----------+----------+----------+----------+----------+--------------------------------------------------------
+ 1  | node1 | primary | * running |          | default  | 100      | 4        | host=node1 port=5432 user=repmgr dbname=repmgr        
+ 2  | node2 | standby |   running | node1    | default  | 100      | 3        | host=node2 user=repmgr dbname=repmgr                  
+ 3  | node3 | standby |   running | node1    | default  | 100      | 4        | host=node3 dbname=repmgr user=repmgr connect_timeout=2
+  
+</code></pre><p>注意事项，1 原主库上的slot 仍然存在（后期测试几次发现会自动删除） 2 级联复制的情况下避免最下游节点提升主</p>
+<h2 id="修改级联关系">修改级联关系</h2>
+<pre><code>/usr/pgsql-10/bin/repmgr -f /etc/repmgr/10/repmgr.conf standby follow --upstream-node-id 1
+</code></pre><h2 id="被动switchover">被动switchover</h2>
+<p>模拟主节点故障</p>
+<pre><code># node1 关闭
+sudo systemctl stop postgresql-10
+
+# node2 上查看集群状态
+/usr/pgsql-10/bin/repmgr -f /etc/repmgr/10/repmgr.conf cluster show
+ ID | Name  | Role    | Status        | Upstream | Location | Priority | Timeline | Connection string                                     
+----+-------+---------+---------------+----------+----------+----------+----------+--------------------------------------------------------
+ 1  | node1 | primary | ? unreachable | ?        | default  | 100      |          | host=node1 port=5432 user=repmgr dbname=repmgr        
+ 2  | node2 | standby |   running     | ? node1  | default  | 100      | 4        | host=node2 user=repmgr dbname=repmgr                  
+ 3  | node3 | standby |   running     | ? node1  | default  | 100      | 4        | host=node3 dbname=repmgr user=repmgr connect_timeout=2
+
+WARNING: following issues were detected
+  - unable to connect to node &quot;node1&quot; (ID: 1)
+  - node &quot;node1&quot; (ID: 1) is registered as an active primary but is unreachable
+  - unable to connect to node &quot;node2&quot; (ID: 2)'s upstream node &quot;node1&quot; (ID: 1)
+  - unable to determine if node &quot;node2&quot; (ID: 2) is attached to its upstream node &quot;node1&quot; (ID: 1)
+  - unable to connect to node &quot;node3&quot; (ID: 3)'s upstream node &quot;node1&quot; (ID: 1)
+  - unable to determine if node &quot;node3&quot; (ID: 3) is attached to its upstream node &quot;node1&quot; (ID: 1)
+
+HINT: execute with --verbose option to see connection error messages
+</code></pre><p>提升node2 节点为主节点</p>
+<pre><code># 在node2 上执行
+$ /usr/pgsql-10/bin/repmgr -f /etc/repmgr/10/repmgr.conf standby promote
+WARNING: 1 sibling nodes found, but option &quot;--siblings-follow&quot; not specified
+DETAIL: these nodes will remain attached to the current primary:
+  node3 (node ID: 3)
+NOTICE: promoting standby to primary
+DETAIL: promoting server &quot;node2&quot; (ID: 2) using &quot;/usr/pgsql-10/bin/pg_ctl  -w -D '/var/lib/pgsql/10/data' promote&quot;
+waiting for server to promote.... done
+server promoted
+NOTICE: waiting up to 60 seconds (parameter &quot;promote_check_timeout&quot;) for promotion to complete
+NOTICE: STANDBY PROMOTE successful
+DETAIL: server &quot;node2&quot; (ID: 2) was successfully promoted to primary
+
+# 查看集群状态
+$ /usr/pgsql-10/bin/repmgr -f /etc/repmgr/10/repmgr.conf cluster show
+ ID | Name  | Role    | Status    | Upstream | Location | Priority | Timeline | Connection string                                     
+----+-------+---------+-----------+----------+----------+----------+----------+--------------------------------------------------------
+ 1  | node1 | primary | - failed  | ?        | default  | 100      |          | host=node1 port=5432 user=repmgr dbname=repmgr        
+ 2  | node2 | primary | * running |          | default  | 100      | 5        | host=node2 user=repmgr dbname=repmgr                  
+ 3  | node3 | standby |   running | ? node1  | default  | 100      | 4        | host=node3 dbname=repmgr user=repmgr connect_timeout=2
+
+WARNING: following issues were detected
+  - unable to connect to node &amp;quot;node1&amp;quot; (ID: 1)
+  - unable to connect to node &amp;quot;node3&amp;quot; (ID: 3)&amp;apos;s upstream node &amp;quot;node1&amp;quot; (ID: 1)
+  - unable to determine if node &amp;quot;node3&amp;quot; (ID: 3) is attached to its upstream node &amp;quot;node1&amp;quot; (ID: 1)
+
+HINT: execute with --verbose option to see connection error messages
+
+# 如果原来集群中有其他从节点，主节点也指向故障节点node1 ， 在提升node2节点时同时将其他节点指向自己
+$ /usr/pgsql-10/bin/repmgr -f /etc/repmgr/10/repmgr.conf standby promote --siblings-follow 
+</code></pre><p>node3 重新指定主库为node2</p>
+<pre><code># 在node3 上执行
+$ /usr/pgsql-10/bin/repmgr -f /etc/repmgr/10/repmgr.conf standby follow
+# 查看状态
+$ /usr/pgsql-10/bin/repmgr -f /etc/repmgr/10/repmgr.conf cluster show
+ ID | Name  | Role    | Status    | Upstream | Location | Priority | Timeline | Connection string                                     
+----+-------+---------+-----------+----------+----------+----------+----------+--------------------------------------------------------
+ 1  | node1 | primary | - failed  | ?        | default  | 100      |          | host=node1 port=5432 user=repmgr dbname=repmgr        
+ 2  | node2 | primary | * running |          | default  | 100      | 5        | host=node2 user=repmgr dbname=repmgr                  
+ 3  | node3 | standby |   running | node2    | default  | 100      | 4        | host=node3 dbname=repmgr user=repmgr connect_timeout=2
+
+WARNING: following issues were detected
+  - unable to connect to node &quot;node1&quot; (ID: 1)
+
+HINT: execute with --verbose option to see connection error messages
+</code></pre><p>node1 重新加入集群</p>
+<pre><code># 登录到原主node1 节点 ， 确保数据是关闭状态 
+$ /usr/pgsql-10/bin/repmgr node rejoin -f /etc/repmgr/10/repmgr.conf -d 'host=node3 dbname=repmgr user=repmgr'  --force-rewind --config-files=postgresql.conf --verbose --dry-run
+NOTICE: using provided configuration file &quot;/etc/repmgr/10/repmgr.conf&quot;
+NOTICE: rejoin target is node &quot;node3&quot; (ID: 3)
+INFO: replication slots in use, 3 free slots on node 9
+INFO: replication connection to the rejoin target node was successful
+INFO: local and rejoin target system identifiers match
+DETAIL: system identifier is 7129425727714895616
+INFO: prerequisites for using pg_rewind are met
+INFO: temporary archive directory &quot;/tmp/repmgr-config-archive-node1&quot; created
+INFO: file &quot;postgresql.conf&quot; would be copied to &quot;/tmp/repmgr-config-archive-node1/postgresql.conf&quot;
+INFO: 1 files would have been copied to &quot;/tmp/repmgr-config-archive-node1&quot;
+INFO: temporary archive directory &quot;/tmp/repmgr-config-archive-node1&quot; deleted
+INFO: pg_rewind would now be executed
+DETAIL: pg_rewind command is:
+  /usr/pgsql-10/bin/pg_rewind -D '/var/lib/pgsql/10/data' --source-server='host=node3 dbname=repmgr user=repmgr connect_timeout=2'
+INFO: prerequisites for executing NODE REJOIN are met
+
+# 正式执行
+$ /usr/pgsql-10/bin/repmgr node rejoin -f /etc/repmgr/10/repmgr.conf -d 'host=node3 dbname=repmgr user=repmgr'  --force-rewind --config-files=postgresql.conf --verbose
+# 启动数据库
+$ sudo systemctl start postgresql-10
+# 查看结果
+$ /usr/pgsql-10/bin/repmgr -f /etc/repmgr/10/repmgr.conf cluster show
+</code></pre><p>node1 节点故障不可恢复情况</p>
+<pre><code># 将node1 节点从集群中注销, 登录到其他任意节点
+$ /usr/pgsql-10/bin/repmgr -f /etc/repmgr/10/repmgr.conf standby unregister --node-id
+</code></pre><pre><code> $ repmgr -f /etc/repmgr/10/repmgr.conf cluster event
+</code></pre><h2 id="自动failover">自动failover</h2>
+<p>修改配置</p>
+<p>vi postgresql.conf</p>
+<pre><code>shared_preload_libraries = 'repmgr'
+</code></pre><p>vi /etc/repmgr/10/repmgr.conf</p>
+<pre><code>failover=automatic
+promote_command='/usr/pgsql-10/bin/repmgr standby promote -f /etc/repmgr/10/repmgr.conf --log-to-file'
+follow_command='/usr/pgsql-10/bin/repmgr standby follow -f /etc/repmgr/10/repmgr.conf --log-to-file --upstream-node-id=%n'
+log_file='/var/lib/pgsql/repmgrd.log'
+monitoring_history=true #（启用监控参数）
+monitor_interval_secs=5 #（定义监视数据间隔写入时间参数）
+reconnect_attempts=10 #（故障转移之前，尝试重新连接主库次数（默认为6）参数）
+reconnect_interval=5 #（每间隔5s尝试重新连接一次参数
+</code></pre><p>重启 postgres</p>
+<pre><code>repmgr node service --action=restart
+</code></pre><p>启动 repmgrd</p>
+<pre><code>systemctl start repmgr-10
+systemctl enable repmgr-10
+</code></pre><p>测试</p>
+<p>略</p>
+<p>主节点重新加入集群</p>
+<pre><code># 全部原主节点保持关闭状态。 首先将执行pg_rewind -&gt;   自动启动服务 - &gt; 注册服务
+ repmgr node rejoin -d 'host=node1 dbname=repmgr user=repmgr' --force-rewind --config-files=postgresql.conf,postgresql.auto.conf --verbose --dry-run
+ repmgr node rejoin -d 'host=node1 dbname=repmgr user=repmgr' --force-rewind --config-files=postgresql.conf,postgresql.auto.conf --verbose
+</code></pre><h4 id="自动failover-几点说明">自动failover 几点说明</h4>
+<p>为预防网络脑裂发生： repmgr 做了如下努力： 1 ，使用见证节点。主要应用于只有主从两个节点的场景， 将见证节点与主节点部署在同一个网络区间。 当主节点与见证节点同时不可见时，认为是网络错误，不发生切换。当见证节点可见，主节点不可见时，认为主节点失效，触发切换。</p>
+<p>引入见证节点提高了维护成本。</p>
+<p>多IDC网络场景，方案2 ： 使用location 标记服务所在的位置。当与主节点location相同的节点都不可见时，认为是网络错误，不发生切换。如果集群中没有其他节点与主节点的location配置相同，则永远不发生切换。</p>
+<p>举例： 三个IDC，三个pg服务。location分别设置为dc1（主节点），dc2（从节点），dc3（从节点）。 当dc1 节点发生故障时不会发生故障转移。 因为集群中location 为dc1的节点（只有一个）都不可见。</p>
+<p>合理的设置应该为cd1(主节点) ,dc1(一个从)，dc2（另一个从）。 此时当dc1 发生以外时，可故障转移。</p>
+<h4 id="注意事项-当主节点网络问题如网卡网线故障服务正常的情况下集群也会发生故障转移当网络恢复的时候发生脑裂-主要问题当主节点脱离集群时没有彻底关闭服务repmgr不能管理pg服务将其关闭">注意事项： 当主节点网络问题。如网卡，网线故障。服务正常的情况下。集群也会发生故障转移。当网络恢复的时候发生脑裂。 主要问题。当主节点脱离集群时没有彻底关闭服务。repmgr不能管理pg服务,将其关闭。</h4>
+<p>可以如下设置，通过确定与从节点连接个数决定是否关闭当前服务。在command中关闭当前pg</p>
+<pre><code>#child_nodes_check_interval=5           # Interval (in seconds) to check for attached child nodes (standbys)
+#child_nodes_connected_min_count=-1     # Minimum number of child nodes which must remain connected, otherwise
+                                        # disconnection command will be triggered
+#child_nodes_disconnect_min_count=-1    # Minimum number of disconnected child nodes required to execute disconnection command
+                                        # (ignored if &quot;child_nodes_connected_min_count&quot; set)
+#child_nodes_disconnect_timeout=30      # Interval between child node disconnection and disconnection command execution
+child_nodes_disconnect_command='' 
+</code></pre><h4 id="location-修改">location 修改</h4>
+<p>localtion 参数在高可用架构中为防止网络分区问题发挥重要作用。 发生故障转移后location 通常也需要重新设计。</p>
+<p>修改 /etc/repmgr/10/repmgr.conf</p>
+<p>生效</p>
+<pre><code>repmgr standby register --force
+systemctl restart repmgr-10
+</code></pre><p>查看</p>
+<pre><code>repmgr cluster show
+或
+select * from repmgr.nodes;
+</code></pre><p><a href="https://repmgr.org/docs/current/repmgrd-basic-configuration.html#REPMGRD-RELOADING-CONFIGURATION">修改location</a></p>
+
+        </div>
+
+        
+
+
+        
+
+<div class="post-archive">
+    <h2>其他文章</h2>
+    <ul class="listing">
+        
+        <li><a href="/python/module-argparse/">模块 argparse</a></li>
+        
+        <li><a href="/middleware/confd/">配置管理 confd</a></li>
+        
+        <li><a href="/postgres/bgwriter/">Backgroud Writer 进程</a></li>
+        
+    </ul>
+</div>
+
+
+
+        <div class="post-meta meta-tags">
+            
+            没有标签
+            
+        </div>
+    </article>
+    
+    
+
+    
+    
+    <div class="post bg-white">
+      <script src="https://utteranc.es/client.js"
+            repo= "your github repo"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+      </script>
+    </div>
+    
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2018 - 2024 <a href="https://bodani.github.io"> By Eamon</a>
+        
+        | <a rel="nofollow" target="_blank" href="http://beian.miit.gov.cn/">辽ICP备2022000054号-1</a>
+        
+    </div>
+    <br />
+  
+</footer>
+
+
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+
+
+
+    <script src='/js/douban.js'></script>
+
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://bodani.github.io/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://bodani.github.io">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://bodani.github.io/python/pip/" title="python pip">python pip</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/postgres/repmgrd/" title="repmgrd介绍">repmgrd介绍</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/linux/linux_tunning/" title="Linux 优化指南">Linux 优化指南</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/monitor/nginx-log-exporter/" title="prometheus-nginxlog-exporter构建Nginx日志监控">prometheus-nginxlog-exporter构建Nginx日志监控</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/postgres/logical-replication_failover/" title="逻辑复制故障转移">逻辑复制故障转移</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/linux/nice/" title="nice, ionice, cpulimit">nice, ionice, cpulimit</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/linux/backlog-config/" title="Linux backlog/somaxconn 内核参数">Linux backlog/somaxconn 内核参数</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/storage/minio_ec/" title="Minio存储类别">Minio存储类别</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/postgres/wal_lsn/" title="LSN 和 wal日志文件名对应关系">LSN 和 wal日志文件名对应关系</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/middleware/kafka_install/" title="Kafka集群安装">Kafka集群安装</a>
+    </li>
+    
+</ul>
+
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/categories'>分类</a></h3>
+<ul class="widget-list">
+    
+    <li><a href="https://bodani.github.io/categories/ansible/">ansible (4)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/docker/">docker (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/etcd/">etcd (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/haproxy/">haproxy (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/kafka/">kafka (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/kvm/">kvm (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/linux/">linux (21)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/minio/">minio (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/mysql/">mysql (4)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/nginx/">nginx (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/postgres/">postgres (48)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/python/">python (18)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/rabbitmq/">rabbitmq (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/redis/">redis (9)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/tidb/">tidb (5)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件 (8)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E5%AD%98%E5%82%A8/">存储 (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E5%AE%89%E5%85%A8/">安全 (3)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E6%95%B0%E4%BB%93/">数仓 (3)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E7%9B%91%E6%8E%A7/">监控 (3)</a></li>
+    
+</ul>
+
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/tags.html'>标签</a></h3>
+<div class="tagcloud">
+    
+    <a href="https://bodani.github.io/tags/%E4%BC%98%E5%8C%96/">优化</a>
+    
+    <a href="https://bodani.github.io/tags/%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86/">配置管理</a>
+    
+    <a href="https://bodani.github.io/tags/%E9%AB%98%E5%8F%AF%E7%94%A8/">高可用</a>
+    
+</div>
+
+    </section>
+
+    
+<section class="widget">
+    <h3 class="widget-title">友情链接</h3>
+    <ul class="widget-list">
+        
+        <li>
+            <a target="_blank" href="http://www.cnblogs.com/zhangeamon" title="历史博客">历史博客</a>
+        </li>
+        
+    </ul>
+</section>
+
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://bodani.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+   
+</body>
+
+</html>

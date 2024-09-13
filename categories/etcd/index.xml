@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>etcd on Let&#39;s go 🐌 🐌 🐌</title>
+    <link>https://bodani.github.io/categories/etcd/</link>
+    <description>Recent content in etcd on Let&#39;s go 🐌 🐌 🐌</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Fri, 29 Jan 2021 09:37:26 +0800</lastBuildDate><atom:link href="https://bodani.github.io/categories/etcd/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>etcd 访问控制</title>
+      <link>https://bodani.github.io/middleware/etcd_auth/</link>
+      <pubDate>Fri, 29 Jan 2021 09:37:26 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/middleware/etcd_auth/</guid>
+      <description>介绍 etcd 默认没有开启访问控制。 在生产环境中使用属于裸奔。 开启访问控制有两种方式 密钥证书验证 用户名密码验证 本篇实验用户名密码验证方式 用户 开启访问认证需要创建root 用户，root 用户默认自动拥有root角色的权限，及超级管理员。 角色 角色理解为指定权限的集合，权限包括 read 、write、 readwrite</description>
+    </item>
+    
+  </channel>
+</rss>

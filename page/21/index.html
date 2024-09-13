@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+	<meta name="generator" content="Hugo 0.81.0" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>Let&#39;s go 🐌 🐌 🐌 | Let&#39;s build our own cloud native together  </title>
+    <meta property="og:title" content="Let&#39;s go 🐌 🐌 🐌 | Let&#39;s build our own cloud native together  ">
+    <meta property="og:type" content="website">
+    <meta name="Keywords" content="postgres 、python、pg 、linix 、docker、 kubernetes、 cloud、hadoop、promethues ">
+    <meta name="description" content="python 软件架构等">
+    <meta property="og:url" content="https://bodani.github.io/">
+    <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <link rel="alternate" type="application/rss+xml+xml" href="https://bodani.github.io/index.xml" title="Let's go 🐌 🐌 🐌" />
+    
+    
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+   
+    
+    
+    
+    
+    
+    
+        <link rel="stylesheet" href='/css/douban.css'>
+    
+        <link rel="stylesheet" href='/css/other.css'>
+    
+   
+        <a href=https://github.com/eamonzhang><img style="position: absolute; top: 0; left: 0; border: 0;" src="/images/forkme_left_red_aa0000.png" alt="Fork me on GitHub" data-canonical-src="/images/forkme_left_red_aa0000.png"></a>
+
+   
+        <script>
+          var _hmt = _hmt || [];
+            (function() {
+            var hm = document.createElement("script");
+            <!-- hm.src = "https://hm.baidu.com/hm.js?1f6605a363a50554aa03adcc685b7699"; -->
+            hm.src = "https://hm.baidu.com/hm.js?0010600e9ae6ff8f5814bb7ec6b36072";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+          })();
+       </script>
+</head>
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <h1>
+                        <a id="logo" href="https://bodani.github.io">
+                            Let&#39;s go 🐌 🐌 🐌
+                        </a>
+                    </h1>
+                
+                <p class="description">Let&#39;s build our own cloud native together  </p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://bodani.github.io">首页</a>
+                    
+                    <a  href="https://bodani.github.io/archives" title="归档">归档</a>
+                    
+                    <a  href="https://bodani.github.io/postgresql" title="Postgres">Postgres</a>
+                    
+                    <a  href="https://bodani.github.io/linux" title="Linux">Linux</a>
+                    
+                    <a  href="https://bodani.github.io/about/me" title="关于">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/linux/mail/" title="Centos mail">Centos mail</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2018年12月29日
+        </date>
+        
+        <div class="post-content">
+            介绍 电子邮件系统包括两个组件： MUA(Mail User Agent,邮件用户代理）为用户提供的可以读写邮件的界面,例如 Foxmail, Outlook MTA(Mail Transport Agent,邮件传送代理）MTA是运行在底层，能够处理邮件的收发工作的程序 邮件的接收是MTA和MUA配合完成的。远程的MUA首先向远程MTA连接并验证发信人身份，然后由远程MT……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/linux/mail/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/postgres/pgbouncer/" title="pgbouncer 连接池">pgbouncer 连接池</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2018年12月27日
+        </date>
+        
+        <div class="post-content">
+            背景介绍 Pgbouncer是一个针对PostgreSQL数据库的轻量级连接池 pgbouncer 的目标是降低因为新连接到 PostgreSQL 的连接而导致的性能损失 使用术语说明： 为了后面的描述更清晰，使用如下术语 Client : 指访问者 Pgboucer: 指连接池 Postgres: 指数据库。 Connetions: 指彼此之间的连接 整体架构 原来: Client -&gt; Postgres 现在: Client -&gt; Pgbounce -&gt; Postgres 优势 内存消耗低(默……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/postgres/pgbouncer/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/linux/cmd-xargs/" title="xargs 命令">xargs 命令</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2018年12月25日
+        </date>
+        
+        <div class="post-content">
+            http://www.cnblogs.com/wangqiguo/p/6464234.html……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/linux/cmd-xargs/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/linux/cmd-sed/" title="sed 命令">sed 命令</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2018年12月25日
+        </date>
+        
+        <div class="post-content">
+            概述 sed命令是一个面向字符流的非交互式编辑器，也就是说sed不允许用户与它进行交互操作。sed是按行来处理文本内容的。在shell中，使用sed来批量修改文本内容是非常方便的。 sed命令的选项 sed [选项] [动作] 选项与参数： -n ：使用安静(silent)模式。在一般 sed 的用法中，所有……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/linux/cmd-sed/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/linux/cmd-awk/" title="awk 命令">awk 命令</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2018年12月25日
+        </date>
+        
+        <div class="post-content">
+            What is awk 官网 man 告诉我们 pattern scanning and processing language 那么awk能做什么，awk适合做什么 ？ awk最常用的工作一般是遍历一个文件中的每一行，然后分别对文件的每一行进行处理。 由于awk天生提供对文件中文本分列进行处理，所以如果一个文件中的每行都被特定的分隔符(常见的是空格)隔开， 我们可以将这个文件看成是由……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/linux/cmd-awk/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/linux/terminal-reuse/" title="终端复用">终端复用</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2018年12月25日
+        </date>
+        
+        <div class="post-content">
+            背景 我们在linux服务器上的工作一般都是通过一个远程的终端连接软件连接到远端系统进行操作，例如使用xshell或者SecureCRT工具通过ssh进行远程连接。 在使用过程中，如果要做比较耗时的操作，例如有时候进行编译，或者下载大文件需要比较长的时间，一般情况下是下班之后直接运行……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/linux/terminal-reuse/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/monitor/zabbix-postgres-fqa/" title="Zabbix Postgres Fqa">Zabbix Postgres Fqa</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2018年12月24日
+        </date>
+        
+        <div class="post-content">
+            如何使用篇 如何使用zabbix监控postgres 我们采用的是github中的开源项目zabbix-extensions中的postgres，iostat对Postgres数据库性能指标及系统IO进行监控。 以及对实体机进行监控，本文主要介绍对postgres的性能进行监控和分析 如……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/monitor/zabbix-postgres-fqa/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/monitor/zabbix-fqa/" title="Zabbix FQA">Zabbix FQA</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2018年12月24日
+        </date>
+        
+        <div class="post-content">
+            如何使用篇 如何安装 安装文档 架构模型为服务端、被监控端。 被监控端agent安装在需要被监控的主机上，负责收集被监控主机相关状态的信息指标如内存，cup，网络等。 服务端负责汇总所有agent的信息，如存储，处理，展现。数据存放在指定的数据库中如mysql pg。 需安装软件说明 zabbix-server-pgsql 服务端 zabbix-web-pgsql……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/monitor/zabbix-fqa/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/linux/kworker/" title="Kworker ">Kworker </a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2018年12月24日
+        </date>
+        
+        <div class="post-content">
+            名字的意思 Kernel Worker 什么时候有的 kworker是3.x内核引入的 这么看 系统中查看 Linux下使用 ps -ef|grep kowrker 显示的内容怎么看 显示的格式kworker/%u:%d%s u：是unbound的缩写，代表没有绑定特定的CPU，kworker /u2:0中的 2 是 work_pool 的ID。 不带u的就是绑定特定cpu的wo……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/linux/kworker/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://bodani.github.io/postgres/index-invalid/" title="引起索引失效">引起索引失效</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2018年12月20日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/postgres'>postgres</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            简介 索引的作用，加速检索，排序，分组。 优点： 检索 缺点： 新增，更新时需要维护索引，占磁盘空间，创建时锁表。 维护： 根据统计表发生全表扫描次数，索引使用次数。合理添加删除索引。 索引失效的场景 如果where过滤条件设置不合理，即使索引存在，且where过滤条件中包含索引列，也会导致全表扫……
+        </div>
+        <p class="readmore"><a href="https://bodani.github.io/postgres/index-invalid/">阅读全文</a></p>
+    </article>
+    
+    
+
+
+
+<ol class="page-navigator">
+    
+    <li class="prev">
+        <a href="https://bodani.github.io/page/20/">上一页</a>
+    </li>
+    
+
+    
+
+    
+        
+        
+    
+    
+
+    
+        
+        
+        <li >
+            <a href="https://bodani.github.io/">1</a>
+        </li>
+        
+    
+        
+        <li>
+            <span>...</span>
+        </li>
+        
+    
+        
+        
+        <li >
+            <a href="https://bodani.github.io/page/19/">19</a>
+        </li>
+        
+    
+        
+        
+        <li >
+            <a href="https://bodani.github.io/page/20/">20</a>
+        </li>
+        
+    
+        
+        
+        <li  class="current">
+            <a href="https://bodani.github.io/page/21/">21</a>
+        </li>
+        
+    
+        
+        
+        <li >
+            <a href="https://bodani.github.io/page/22/">22</a>
+        </li>
+        
+    
+        
+        
+        <li >
+            <a href="https://bodani.github.io/page/23/">23</a>
+        </li>
+        
+    
+        
+        <li>
+            <span>...</span>
+        </li>
+        
+    
+        
+        
+        <li >
+            <a href="https://bodani.github.io/page/29/">29</a>
+        </li>
+        
+    
+
+    
+    
+
+    <li class="next">
+        <a href="https://bodani.github.io/page/22/">下一页</a>
+    </li>
+    
+</ol>
+
+
+
+
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2018 - 2024 <a href="https://bodani.github.io"> By Eamon</a>
+        
+        | <a rel="nofollow" target="_blank" href="http://beian.miit.gov.cn/">辽ICP备2022000054号-1</a>
+        
+    </div>
+    <br />
+  
+</footer>
+
+
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+
+
+
+    <script src='/js/douban.js'></script>
+
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://bodani.github.io/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://bodani.github.io">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://bodani.github.io/python/pip/" title="python pip">python pip</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/postgres/repmgrd/" title="repmgrd介绍">repmgrd介绍</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/linux/linux_tunning/" title="Linux 优化指南">Linux 优化指南</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/monitor/nginx-log-exporter/" title="prometheus-nginxlog-exporter构建Nginx日志监控">prometheus-nginxlog-exporter构建Nginx日志监控</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/postgres/logical-replication_failover/" title="逻辑复制故障转移">逻辑复制故障转移</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/linux/nice/" title="nice, ionice, cpulimit">nice, ionice, cpulimit</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/linux/backlog-config/" title="Linux backlog/somaxconn 内核参数">Linux backlog/somaxconn 内核参数</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/storage/minio_ec/" title="Minio存储类别">Minio存储类别</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/postgres/wal_lsn/" title="LSN 和 wal日志文件名对应关系">LSN 和 wal日志文件名对应关系</a>
+    </li>
+    
+    <li>
+        <a href="https://bodani.github.io/middleware/kafka_install/" title="Kafka集群安装">Kafka集群安装</a>
+    </li>
+    
+</ul>
+
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/categories'>分类</a></h3>
+<ul class="widget-list">
+    
+    <li><a href="https://bodani.github.io/categories/ansible/">ansible (4)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/docker/">docker (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/etcd/">etcd (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/haproxy/">haproxy (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/kafka/">kafka (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/kvm/">kvm (1)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/linux/">linux (21)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/minio/">minio (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/mysql/">mysql (4)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/nginx/">nginx (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/postgres/">postgres (48)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/python/">python (18)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/rabbitmq/">rabbitmq (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/redis/">redis (9)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/tidb/">tidb (5)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件 (8)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E5%AD%98%E5%82%A8/">存储 (2)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E5%AE%89%E5%85%A8/">安全 (3)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E6%95%B0%E4%BB%93/">数仓 (3)</a></li>
+    
+    <li><a href="https://bodani.github.io/categories/%E7%9B%91%E6%8E%A7/">监控 (3)</a></li>
+    
+</ul>
+
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/tags.html'>标签</a></h3>
+<div class="tagcloud">
+    
+    <a href="https://bodani.github.io/tags/%E4%BC%98%E5%8C%96/">优化</a>
+    
+    <a href="https://bodani.github.io/tags/%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86/">配置管理</a>
+    
+    <a href="https://bodani.github.io/tags/%E9%AB%98%E5%8F%AF%E7%94%A8/">高可用</a>
+    
+</div>
+
+    </section>
+
+    
+<section class="widget">
+    <h3 class="widget-title">友情链接</h3>
+    <ul class="widget-list">
+        
+        <li>
+            <a target="_blank" href="http://www.cnblogs.com/zhangeamon" title="历史博客">历史博客</a>
+        </li>
+        
+    </ul>
+</section>
+
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://bodani.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+   
+</body>
+
+</html>

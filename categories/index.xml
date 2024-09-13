@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on Let&#39;s go 🐌 🐌 🐌</title>
+    <link>https://bodani.github.io/categories/</link>
+    <description>Recent content in Categories on Let&#39;s go 🐌 🐌 🐌</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Wed, 26 Apr 2023 09:03:03 +0800</lastBuildDate><atom:link href="https://bodani.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>python</title>
+      <link>https://bodani.github.io/categories/python/</link>
+      <pubDate>Wed, 26 Apr 2023 09:03:03 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/categories/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>postgres</title>
+      <link>https://bodani.github.io/categories/postgres/</link>
+      <pubDate>Fri, 24 Mar 2023 16:20:16 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/categories/postgres/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>linux</title>
+      <link>https://bodani.github.io/categories/linux/</link>
+      <pubDate>Wed, 07 Sep 2022 14:49:31 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/categories/linux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>minio</title>
+      <link>https://bodani.github.io/categories/minio/</link>
+      <pubDate>Mon, 22 Aug 2022 11:37:58 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/categories/minio/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>kafka</title>
+      <link>https://bodani.github.io/categories/kafka/</link>
+      <pubDate>Tue, 02 Aug 2022 15:54:04 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/categories/kafka/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>安全</title>
+      <link>https://bodani.github.io/categories/%E5%AE%89%E5%85%A8/</link>
+      <pubDate>Mon, 09 May 2022 15:07:32 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/categories/%E5%AE%89%E5%85%A8/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>监控</title>
+      <link>https://bodani.github.io/categories/%E7%9B%91%E6%8E%A7/</link>
+      <pubDate>Thu, 14 Apr 2022 15:26:53 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/categories/%E7%9B%91%E6%8E%A7/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>haproxy</title>
+      <link>https://bodani.github.io/categories/haproxy/</link>
+      <pubDate>Fri, 25 Mar 2022 15:31:27 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/categories/haproxy/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>redis</title>
+      <link>https://bodani.github.io/categories/redis/</link>
+      <pubDate>Tue, 16 Nov 2021 13:56:39 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/categories/redis/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>mysql</title>
+      <link>https://bodani.github.io/categories/mysql/</link>
+      <pubDate>Sat, 09 Oct 2021 13:29:05 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/categories/mysql/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>rabbitmq</title>
+      <link>https://bodani.github.io/categories/rabbitmq/</link>
+      <pubDate>Sat, 22 May 2021 14:52:35 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/categories/rabbitmq/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>中间件</title>
+      <link>https://bodani.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/</link>
+      <pubDate>Fri, 02 Apr 2021 15:26:49 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>存储</title>
+      <link>https://bodani.github.io/categories/%E5%AD%98%E5%82%A8/</link>
+      <pubDate>Tue, 09 Mar 2021 16:40:29 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/categories/%E5%AD%98%E5%82%A8/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>etcd</title>
+      <link>https://bodani.github.io/categories/etcd/</link>
+      <pubDate>Fri, 29 Jan 2021 09:37:26 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/categories/etcd/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>kvm</title>
+      <link>https://bodani.github.io/categories/kvm/</link>
+      <pubDate>Mon, 13 Jul 2020 09:32:49 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/categories/kvm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>nginx</title>
+      <link>https://bodani.github.io/categories/nginx/</link>
+      <pubDate>Mon, 20 Apr 2020 11:12:28 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/categories/nginx/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>数仓</title>
+      <link>https://bodani.github.io/categories/%E6%95%B0%E4%BB%93/</link>
+      <pubDate>Thu, 26 Mar 2020 10:20:05 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/categories/%E6%95%B0%E4%BB%93/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>docker</title>
+      <link>https://bodani.github.io/categories/docker/</link>
+      <pubDate>Mon, 18 Mar 2019 08:58:07 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/categories/docker/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tidb</title>
+      <link>https://bodani.github.io/categories/tidb/</link>
+      <pubDate>Mon, 18 Feb 2019 14:00:58 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/categories/tidb/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ansible</title>
+      <link>https://bodani.github.io/categories/ansible/</link>
+      <pubDate>Mon, 29 Oct 2018 14:09:08 +0800</pubDate>
+      
+      <guid>https://bodani.github.io/categories/ansible/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
